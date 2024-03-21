@@ -4,10 +4,12 @@ import { supabase } from "../supabase/client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userSchema } from "../validations/userSchema";
+import { useAuth } from "../context/AuthContext";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const {signin} = useAuth();
   const navigate = useNavigate();
   const {
     register,
@@ -19,18 +21,8 @@ function Login() {
 
   const onSubmit =  async () => {
     // Handle form submission here
-    try{
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password,
-      });
-      if (error) {
-        throw new Error(error.message); // Lanzar un error si hay un error de autenticación
-      }
-      console.log(data)
-    }catch(error){
-      console.error('Error de inicio de sesión:', error.message);
-    }
+    signin(email, password);
+    
   };
 
   return (

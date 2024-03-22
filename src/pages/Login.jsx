@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "../supabase/client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userSchema } from "../validations/userSchema";
@@ -9,7 +8,7 @@ import { useAuth } from "../context/AuthContext";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const {signin} = useAuth();
+  const {signin, isAdmin, isAuthenticated} = useAuth();
   const navigate = useNavigate();
   const {
     register,
@@ -24,9 +23,20 @@ function Login() {
     signin(email, password);
     
   };
+  useEffect(() =>{
+    if(isAuthenticated){
+      if(isAdmin == 1){
+        navigate('/AdminProfile')
+      }else{
+        navigate('/')
+      }
+    }else{
+      console.log("no estas logead0")
+    }
+  },[isAuthenticated, isAdmin, navigate])
 
   return (
-    <div className="bg-blue-500">
+    <div className="bg-blueBase">
       <div className="font-sans text-#333">
         <div className="min-h-screen flex flex-col items-center justify-center py-6">
           <div className="grid md:grid-cols-2 items-center gap-10 max-w-6xl w-full">
@@ -90,7 +100,7 @@ function Login() {
               <div className="mt-10">
                 <button
                   type="submit"
-                  className="w-full shadow-xl py-2.5 px-4 text-sm lg:text-xl font-semibold rounded text-textBlank bg-bottomBlue hover:bg-bottomBlueHover focus:outline-none"
+                  className="w-full shadow-xl py-2.5 px-4 text-sm lg:text-xl font-semibold rounded text-textBlank bg-buttonBase hover:bg-buttonHover focus:outline-none"
                 >
                   Iniciar Sesión
                 </button>

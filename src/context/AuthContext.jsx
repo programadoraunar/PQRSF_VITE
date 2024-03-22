@@ -17,31 +17,33 @@ export const AuthProvider = ({ children }) => {
   // Define estados para el usuario, estado de autenticación y errores.
   const [user, setUser] = useState();
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isAuthenticated, setisAuthenticated] = useState(false);
 
   // Función asincrónica para el inicio de sesión de usuarios.
   const signin = async (email, password) => {
     try {
+      //sola para iniciar sesion la informacion por el momento no la usaremos
+
       const { data, error } = await supabase.auth.signInWithPassword({
         email: email,
         password: password,
       });
-      setUser(data.user);
-      console.log(data.user)
       if (error) {
         throw new Error(error.message); // Lanzar un error si hay un error de autenticación
       }
-
       //obtenesmo la informacion de si es un admin
       const userInfo = await getUserInfo();
+      setUser(userInfo);
+      console.log(userInfo)
       setIsAdmin(userInfo.id_rol);
-      console.log(userInfo.id_rol);
+      setisAuthenticated(true);
     } catch (error) {
       console.error("Error de inicio de sesión:", error.message);
     }
   };
 
   return (
-    <AuthContext.Provider value={{ signin, user, isAdmin }}>
+    <AuthContext.Provider value={{ signin, user, isAdmin, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );

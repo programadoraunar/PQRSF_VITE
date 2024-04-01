@@ -15,7 +15,19 @@ export default {
 				textGrey: '#b4e8ff',
 				buttonBase: '#0485ff',
 				buttonHover: '#006df7',
-
+				'blue-zodiac': {
+					50: '#ecfaff',
+					100: '#d5f1ff',
+					200: '#b4e8ff',
+					300: '#81dbff',
+					400: '#46c4ff',
+					500: '#1ca4ff',
+					600: '#0485ff',
+					700: '#006df7',
+					800: '#0657c7',
+					900: '#0c4c9c',
+					950: '#0b2851',
+				},
 				// light mode
 				tremor: {
 					brand: {

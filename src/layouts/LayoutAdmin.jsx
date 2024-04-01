@@ -1,21 +1,20 @@
-import React from 'react'
-import SliderBar from '../components/admin/SliderBar'
-import Header from '../components/admin/Header'
-import { Outlet } from 'react-router-dom'
+import React from 'react';
+import SliderBar from '../components/admin/SliderBar';
+import Header from '../components/admin/Header';
+import { Outlet } from 'react-router-dom';
 
 function LayoutAdmin() {
-  return (
-    <div className="min-h-screen grid grid-cols-1 xl:grid-cols-6">
-        <SliderBar />
-        <div className="xl:col-span-5">
-            <Header />
-            <div className="h-[90vh] overflow-y-scroll p-8">
-                <Outlet />
-            </div>
-
-        </div>
-    </div>
-  )
+	return (
+		<div className='min-h-screen grid grid-cols-1 xl:grid-cols-6'>
+			<SliderBar />
+			<div className='xl:col-span-5'>
+				<Header />
+				<div className='h-[90vh] overflow-y-scroll p-8'>
+					<Outlet />
+				</div>
+			</div>
+		</div>
+	);
 }
 
-export default LayoutAdmin
+export default LayoutAdmin;

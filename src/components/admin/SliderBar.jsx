@@ -4,6 +4,7 @@ import {
 	RiMenu3Line,
 	RiQuestionAnswerFill,
 	RiQuestionMark,
+	RiLogoutCircleLine,
 } from '@remixicon/react';
 import { Link } from 'react-router-dom';
 function SliderBar() {
@@ -27,22 +28,32 @@ function SliderBar() {
 						<li>
 							<Link
 								to='/'
-								className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors'
+								className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-blue-zodiac-950 transition-colors lg:text-xl'
 							>
-								<RiQuestionMark className='text-primary' /> Solicitudes Anonimas
+								<RiQuestionMark className='text-blue-zodiac-400' /> Solicitudes
+								Anonimas
 							</Link>
 						</li>
 						<li>
 							<Link
 								to='/tickets'
-								className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors'
+								className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-blue-zodiac-950 transition-colors lg:text-xl'
 							>
-								<RiQuestionAnswerFill className='text-primary' />
+								<RiQuestionAnswerFill className='text-blue-zodiac-400' />
 								Solicitudes Normales
 							</Link>
 						</li>
 					</ul>
 				</div>
+				<nav>
+					<Link
+						to='/'
+						className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-blue-950 transition-colors'
+					>
+						<RiLogoutCircleLine className='text-blue-zodiac-400' /> Cerrar
+						sesión
+					</Link>
+				</nav>
 			</div>
 			<button
 				onClick={() => setShowMenu(!showMenu)}

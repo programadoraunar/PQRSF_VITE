@@ -1,8 +1,7 @@
-import { React, createContext, useContext, useState } from 'react';
+import { React, createContext, useContext, useEffect, useState } from 'react';
 import getUserInfo from '../supabase/actions/getUserInfo';
 import { supabase } from '../supabase/client';
 import PropTypes from 'prop-types'; // Importar PropTypes
-
 export const AuthContext = createContext();
 // Hook personalizado que utiliza el contexto de autenticación.
 export const useAuth = () => {
@@ -17,33 +16,26 @@ export const AuthProvider = ({ children }) => {
 	// Define estados para el usuario, estado de autenticación y errores.
 	const [user, setUser] = useState();
 	const [isAdmin, setIsAdmin] = useState(false);
-	const [isAuthenticated, setisAuthenticated] = useState(false);
+	const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-	// Función asincrónica para el inicio de sesión de usuarios.
-	const signin = async (email, password) => {
-		try {
-			// sola para iniciar sesion la informacion por el momento no la usaremos
-
-			const { data, error } = await supabase.auth.signInWithPassword({
-				email,
-				password,
-			});
-			if (error) {
-				throw new Error(error.message); // Lanzar un error si hay un error de autenticación
+	useEffect(() => {
+		const { data } = supabase.auth.onAuthStateChange((event, session) => {
+			if (event === 'SIGNED_IN') {
+				setUser(session.user);
+				setIsAuthenticated(true);
+				console.log('el usuario ah iniciado sesion');
+			} else if (event === 'SIGNED_OUT') {
+				setUser(null);
+				setIsAuthenticated(false);
+				console.log('el usuario ha cerrado sesion');
 			}
-			// obtenesmo la informacion de si es un admin
-			const userInfo = await getUserInfo();
-			setUser(userInfo);
-			console.log(userInfo);
-			setIsAdmin(userInfo.id_rol);
-			setisAuthenticated(true);
-		} catch (error) {
-			console.error('Error de inicio de sesión:', error.message);
-		}
-	};
-
+		});
+		return () => {
+			data.subscription.unsubscribe();
+		};
+	}, []);
 	return (
-		<AuthContext.Provider value={{ signin, user, isAdmin, isAuthenticated }}>
+		<AuthContext.Provider value={{ user, isAdmin, isAuthenticated }}>
 			{children}
 		</AuthContext.Provider>
 	);

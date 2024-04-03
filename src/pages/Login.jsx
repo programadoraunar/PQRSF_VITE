@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { userSchema } from '../validations/userSchema';
-import { useAuth } from '../context/AuthContext';
-
+import { signIn } from '../supabase/actions/auth';
 function Login() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const { signin, isAdmin, isAuthenticated } = useAuth();
+	const [error, setError] = useState(null);
 	const navigate = useNavigate();
 	const {
 		register,
@@ -19,20 +18,15 @@ function Login() {
 	});
 
 	const onSubmit = async () => {
-		// Handle form submission here
-		signin(email, password);
-	};
-	useEffect(() => {
-		if (isAuthenticated) {
-			if (isAdmin === 1) {
-				navigate('/AdminProfile');
-			} else {
-				navigate('/');
-			}
+		const result = await signIn(email, password);
+		if (result.error) {
+			setError(result.error);
+			console.log(error);
 		} else {
-			console.log('no estas logead0');
+			// Manejar el inicio de sesión exitoso
+			navigate('/AdminProfile');
 		}
-	}, [isAuthenticated, isAdmin, navigate]);
+	};
 
 	return (
 		<div className='bg-blueBase'>

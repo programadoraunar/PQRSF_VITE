@@ -6,6 +6,7 @@ import NotFount from './pages/NotFount';
 import { AuthProvider } from './context/AuthContext';
 import LayoutAdmin from './layouts/LayoutAdmin';
 import HomeAdmin from './pages/admin/HomeAdmin';
+import ProtectedRoutes from './ProtectedRoutes';
 
 function App() {
 	return (
@@ -14,9 +15,12 @@ function App() {
 				<Routes>
 					<Route path='/' element={<Home />}></Route>
 					<Route path='/login' element={<Login />}></Route>
-					<Route path='/AdminProfile' element={<LayoutAdmin />}>
-						<Route index element={<HomeAdmin />}></Route>
+					<Route element={<ProtectedRoutes />}>
+						<Route path='/AdminProfile' element={<LayoutAdmin />}>
+							<Route index element={<HomeAdmin />}></Route>
+						</Route>
 					</Route>
+
 					<Route path='*' element={<NotFount />}></Route>
 				</Routes>
 			</AuthProvider>

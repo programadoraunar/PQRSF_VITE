@@ -9,8 +9,24 @@ import {
 import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css';
 import '@szhsin/react-menu/dist/transitions/slide.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { signOut } from '../../supabase/actions/auth';
+import { useAuth } from '../../context/AuthContext';
 function Header() {
+	const { user } = useAuth();
+	console.log(user);
+	const navigate = useNavigate();
+	const handleLogout = async () => {
+		try {
+			await signOut(); // Llama a la función para cerrar sesión
+			// Aquí puedes redirigir al usuario a la página de inicio o realizar cualquier otra acción después de cerrar sesión
+			navigate('/');
+		} catch (error) {
+			console.error('Error al cerrar sesión:', error.message);
+			// Puedes mostrar un mensaje de error al usuario si el cierre de sesión falla
+		}
+	};
+
 	return (
 		<header className='h-[7vh] md:h-[10vh] border-b border-blue-zodiac-900 p-8 flex items-center justify-end'>
 			<nav className='flex items-center gap-2'>
@@ -109,13 +125,13 @@ function Header() {
 						</Link>
 					</MenuItem>
 					<MenuItem className='p-0 hover:bg-transparent'>
-						<Link
-							to='/cerrar-sesion'
+						<button
+							onClick={handleLogout}
 							className='rounded-lg transition-colors text-blue-zodiac-50 hover:bg-blue-zodiac-950 flex items-center gap-x-4 py-2 px-6 flex-1'
 						>
 							<RiLogoutCircleLine />
 							<span className='text-lg'>Cerrar sesión</span>
-						</Link>
+						</button>
 					</MenuItem>
 				</Menu>
 			</nav>

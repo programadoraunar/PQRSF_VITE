@@ -2,11 +2,16 @@ import { supabase } from '../client';
 
 export const signIn = async (email, password) => {
 	try {
-		const result = await supabase.auth.signInWithPassword({
+		const { data, error } = await supabase.auth.signInWithPassword({
 			email,
 			password,
 		});
-		return result;
+
+		if (error) {
+			throw new Error(error.message);
+		}
+
+		return data;
 	} catch (error) {
 		console.error('Error signing in:', error.message);
 		return {
@@ -17,7 +22,7 @@ export const signIn = async (email, password) => {
 
 export const getUserProfile = async () => {
 	try {
-		const user = supabase.auth.user();
+		const user = supabase.auth.getUser();
 
 		if (user) {
 			const { data, error, status } = await supabase

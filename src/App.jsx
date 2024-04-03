@@ -7,6 +7,8 @@ import { AuthProvider } from './context/AuthContext';
 import LayoutAdmin from './layouts/LayoutAdmin';
 import HomeAdmin from './pages/admin/HomeAdmin';
 import ProtectedRoutes from './ProtectedRoutes';
+import SolicitudesAnonimas from './pages/admin/SolicitudesAnonimas';
+import SolicitudesNormales from './pages/admin/SolicitudesNormales';
 
 function App() {
 	return (
@@ -16,8 +18,16 @@ function App() {
 					<Route path='/' element={<Home />}></Route>
 					<Route path='/login' element={<Login />}></Route>
 					<Route element={<ProtectedRoutes />}>
-						<Route path='/AdminProfile' element={<LayoutAdmin />}>
+						<Route path='/AdminProfile/' element={<LayoutAdmin />}>
 							<Route index element={<HomeAdmin />}></Route>
+							<Route
+								path='SolicitudesAnonimas'
+								element={<SolicitudesAnonimas />}
+							></Route>
+							<Route
+								path='SolicitudesNormales'
+								element={<SolicitudesNormales />}
+							></Route>
 						</Route>
 					</Route>
 

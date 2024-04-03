@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { userSchema } from '../validations/userSchema';
 import { signIn } from '../supabase/actions/auth';
+import { Toaster, toast } from 'sonner';
 function Login() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -22,6 +23,11 @@ function Login() {
 		if (result.error) {
 			setError(result.error);
 			console.log(error);
+			toast('Error', {
+				description: String(result.error),
+				duration: 5000,
+				position: 'bottom-center',
+			});
 		} else {
 			// Manejar el inicio de sesión exitoso
 			navigate('/AdminProfile');
@@ -34,7 +40,7 @@ function Login() {
 				<div className='min-h-screen flex flex-col items-center justify-center py-6'>
 					<div className='grid md:grid-cols-2 items-center gap-10 max-w-6xl w-full'>
 						<div className='max-md:text-center'>
-							<h2 className='text-textBlank lg:text-6xl xl:text-7xl text-4xl font-extrabold lg:leading-[55px]'>
+							<h2 className='text-textBlank  lg:text-6xl xl:text-7xl text-3xl font-extrabold lg:leading-[55px]'>
 								Bienvenido al Sistema PQRSF
 							</h2>
 							<p className='text-textGrey text-sm xl:text-xl mt-6'>
@@ -54,7 +60,7 @@ function Login() {
 							className='space-y-6 max-w-md md:max-w-full md:ml-auto max-md:mx-auto w-full border border-y-4 border-bottomBlue rounded-lg px-5 py-10 bg-white'
 							onSubmit={handleSubmit(onSubmit)}
 						>
-							<h3 className='text-center text-gray-600 text-3xl xl:text-4xl font-extrabold mb-8 max-md:text-center'>
+							<h3 className='text-center text-gray-600 text-2xl xl:text-4xl font-extrabold mb-8 max-md:text-center'>
 								Iniciar Sesión
 							</h3>
 							<div className='pb-7 pt-2'>
@@ -63,7 +69,7 @@ function Login() {
 										type='email'
 										autoComplete='email'
 										required
-										className='bg-gray-100 placeholder:text-gray-600 w-full text-sm px-4 py-3.5 rounded-md outline-blue-600 lg:text-xl'
+										className='bg-gray-100 placeholder:text-gray-600 w-full text-sm px-4 py-3.5 rounded-md outline-blue-600 lg:text-xl text-black'
 										placeholder='Email'
 										{...register('email')}
 										value={email}
@@ -78,7 +84,7 @@ function Login() {
 										type='password'
 										autoComplete='current-password'
 										required
-										className='bg-gray-100 placeholder:text-gray-600 w-full text-sm px-4 py-3.5 rounded-md outline-blue-600 lg:text-xl'
+										className='bg-gray-100 placeholder:text-gray-600 w-full text-sm px-4 py-3.5 rounded-md outline-blue-600 lg:text-xl text-black'
 										placeholder='Contraseña'
 										{...register('password')}
 										value={password}
@@ -107,6 +113,16 @@ function Login() {
 					</div>
 				</div>
 			</div>
+			<Toaster
+				toastOptions={{
+					style: {
+						width: '90%', // Ancho relativo
+						maxWidth: '500px', // Ancho máximo
+						fontSize: '17px',
+					},
+					className: 'toast',
+				}}
+			/>
 		</div>
 	);
 }

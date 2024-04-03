@@ -55,16 +55,13 @@ const data = [
 		name: 'Elisabeth Baume-Schneider',
 		Role: 'Federal Councillor',
 		departement: 'The Federal Department of Home Affairs (FDHA)',
-		status: 'active',
+		status: 'cerradas',
 	},
 ];
 
 function HomeAdmin() {
 	return (
 		<div>
-			<div className='flex items-center justify-between mb-10'>
-				<h1 className='text-4xl text-white'>Good morning, jotredev!</h1>
-			</div>
 			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8'>
 				<CardInfo
 					solicitud='total'
@@ -79,7 +76,7 @@ function HomeAdmin() {
 			</div>
 			{/* tabla de prueba */}
 			<div className='py-8'>
-				<Card style={{ backgroundColor: '#0c4c9c' }}>
+				<Card style={{ backgroundColor: '#153a65' }}>
 					<h3 className='text-tremor-content-strong dark:text-dark-tremor-content-strong font-semibold text-xl lg:text-3xl'>
 						Ultimas Solicitudes
 					</h3>
@@ -97,27 +94,19 @@ function HomeAdmin() {
 							</TableRow>
 						</TableHead>
 						<TableBody>
-							{data.map(item => (
-								<TableRow key={item.name}>
-									<TableCell
-										className='lg:text-lg'
-										style={{ backgroundColor: '#0b2851' }}
-									>
-										{item.name}
-									</TableCell>
-									<TableCell
-										className='lg:text-lg'
-										style={{ backgroundColor: '#0b2851' }}
-									>
-										{item.Role}
-									</TableCell>
-									<TableCell
-										className='lg:text-lg'
-										style={{ backgroundColor: '#0b2851' }}
-									>
+							{data.map((item, index) => (
+								<TableRow
+									key={item.name}
+									style={{
+										backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#E2E4E7',
+									}}
+								>
+									<TableCell className='lg:text-lg'>{item.name}</TableCell>
+									<TableCell className='lg:text-lg'>{item.Role}</TableCell>
+									<TableCell className='lg:text-lg'>
 										{item.departement}
 									</TableCell>
-									<TableCell style={{ backgroundColor: '#0b2851' }}>
+									<TableCell>
 										<Badge color='emerald' icon={RiFlag2Line}>
 											{item.status}
 										</Badge>

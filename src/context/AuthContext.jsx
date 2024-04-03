@@ -17,8 +17,28 @@ export const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState();
 	const [isAdmin, setIsAdmin] = useState(false);
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
+	const [loading, setLoading] = useState(true); // Nuevo estado para controlar la carga
 
 	useEffect(() => {
+		const fetchUser = async () => {
+			try {
+				const { data, error } = await supabase.auth.getSession();
+				console.log(data.session.user);
+
+				if (error) {
+					throw error;
+				}
+				if (data) {
+					setUser(data.session.user);
+				}
+			} catch (error) {
+				// console.error('Error fetching user session:', error.message);
+			} finally {
+				setLoading(false); // Marcar que la carga ha terminado
+			}
+		};
+
+		fetchUser();
 		const { data } = supabase.auth.onAuthStateChange((event, session) => {
 			if (event === 'SIGNED_IN') {
 				setUser(session.user);
@@ -34,6 +54,10 @@ export const AuthProvider = ({ children }) => {
 			data.subscription.unsubscribe();
 		};
 	}, []);
+	// Renderizar un indicador de carga mientras se obtiene el usuario
+	if (loading) {
+		return <div>Cargando...</div>;
+	}
 	return (
 		<AuthContext.Provider value={{ user, isAdmin, isAuthenticated }}>
 			{children}

@@ -5,3 +5,9 @@
 ::-webkit-scrollbar {
 	width: 0px;
 }
+/* En tu archivo CSS */
+@media (max-width: 600px) { /* Cambiar el tamaño de fuente para dispositivos con ancho máximo de 600px (generalmente dispositivos móviles) */
+	.toast {
+	  font-size: 10px; /* Tamaño de fuente más pequeño para dispositivos móviles */
+	}
+  }

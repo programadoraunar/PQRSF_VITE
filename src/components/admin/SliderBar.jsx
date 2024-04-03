@@ -27,7 +27,7 @@ function SliderBar() {
 					<ul>
 						<li>
 							<Link
-								to='/'
+								to='/AdminProfile/SolicitudesAnonimas'
 								className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-blue-zodiac-950 transition-colors lg:text-xl'
 							>
 								<RiQuestionMark className='text-blue-zodiac-400' /> Solicitudes
@@ -36,7 +36,7 @@ function SliderBar() {
 						</li>
 						<li>
 							<Link
-								to='/tickets'
+								to='/AdminProfile/SolicitudesNormales'
 								className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-blue-zodiac-950 transition-colors lg:text-xl'
 							>
 								<RiQuestionAnswerFill className='text-blue-zodiac-400' />
@@ -48,7 +48,7 @@ function SliderBar() {
 				<nav>
 					<Link
 						to='/'
-						className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-blue-950 transition-colors'
+						className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-blue-950 transition-colors lg:text-xl'
 					>
 						<RiLogoutCircleLine className='text-blue-zodiac-400' /> Cerrar
 						sesión

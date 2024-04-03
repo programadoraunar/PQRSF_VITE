@@ -12,9 +12,11 @@ import '@szhsin/react-menu/dist/transitions/slide.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { signOut } from '../../supabase/actions/auth';
 import { useAuth } from '../../context/AuthContext';
+import UseProfile from '../../hooks/UseProfile';
 function Header() {
 	const { user } = useAuth();
 	console.log(user);
+	const userProfile = UseProfile();
 	const navigate = useNavigate();
 	const handleLogout = async () => {
 		try {
@@ -28,11 +30,11 @@ function Header() {
 	};
 
 	return (
-		<header className='h-[7vh] md:h-[10vh] border-b border-blue-zodiac-900 p-8 flex items-center justify-end'>
+		<header className='h-[7vh] md:h-[10vh] border-b border-blue-zodiac-950 p-8 flex items-center justify-end bg-blue-zodiac-900'>
 			<nav className='flex items-center gap-2'>
 				<Menu
 					menuButton={
-						<MenuButton className='relative hover:bg-blue-zodiac-900 p-2 rounded-lg transition-colors'>
+						<MenuButton className='relative hover:bg-blue-zodiac-950 p-2 rounded-lg transition-colors'>
 							<RiNotification3Line
 								className='hover:text-blue-zodiac-100'
 								size={30}
@@ -82,7 +84,7 @@ function Header() {
 				</Menu>
 				<Menu
 					menuButton={
-						<MenuButton className='flex items-center gap-x-2 hover:bg-blue-zodiac-900 p-2 rounded-lg transition-colors'>
+						<MenuButton className='flex items-center gap-x-2 hover:bg-blue-zodiac-950 p-2 rounded-lg transition-colors'>
 							<img
 								src='https://img.freepik.com/foto-gratis/feliz-optimista-guapo-gerente-ventas-latina-apuntando-lado-mirando-camara_1262-12679.jpg'
 								className='w-7 h-7 object-cover rounded-full'
@@ -106,7 +108,7 @@ function Header() {
 							/>
 							<div className='flex flex-col text-xl'>
 								<span className='text-xl lg:text-2xl text-blue-zodiac-50'>
-									Adminstrador
+									{userProfile ? userProfile.username : 'Sin Datos'}
 								</span>
 								<span className='text-xs lg:text-base text-blue-zodiac-50'>
 									jorge@gmail.com

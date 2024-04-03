@@ -23,7 +23,7 @@ function CardInfo(props) {
 			break;
 		case 'total':
 			status = 'bg-pink-500/10 text-pink-500';
-			textColor = 'text-pink-100';
+			textColor = 'text-blue-zodiac-950';
 			break;
 	}
 	return (
@@ -32,7 +32,7 @@ function CardInfo(props) {
 				className='mx-auto max-w-x'
 				decoration='top'
 				decorationColor='white'
-				style={{ backgroundColor: '#0c4c9c' }}
+				style={{ backgroundColor: '#fff' }}
 			>
 				<div>
 					<RiListView
@@ -40,16 +40,16 @@ function CardInfo(props) {
 					/>
 				</div>
 				<div>
-					<h1 className='text-4xl text-white font-bold mb-4'>
+					<h1 className='text-4xl text-blue-zodiac-950 font-bold mb-4'>
 						{totalSolicitudes}
 					</h1>
 					<p className={textColor}>{text}</p>
 				</div>
-				<hr className='border border-dashed border-gray-500/50 my-4' />
+				<hr className='border border-dashed border-blue-zodiac-950 my-4' />
 				<div>
 					<Link
 						to='/'
-						className='flex items-center gap-2 text-white hover:underline'
+						className='flex items-center gap-2 text-blue-zodiac-950 hover:underline'
 					>
 						<RiAddLine /> Listar
 					</Link>

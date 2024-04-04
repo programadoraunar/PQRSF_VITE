@@ -8,12 +8,12 @@ export const signIn = async (email, password) => {
 		});
 
 		if (error) {
-			throw new Error(error.message);
+			console.log(error.message);
 		}
 
 		return data;
 	} catch (error) {
-		console.error('Error signing in:', error.message);
+		// console.error('Error signing in:', error.message);
 		return {
 			error: 'Error al iniciar sesión. Por favor, verifica tus credenciales.',
 		};
@@ -34,9 +34,11 @@ export const getUserProfile = async () => {
 				console.error('Error fetching user profile:', error.message);
 				return { error: 'Error al obtener el perfil de usuario.' };
 			}
+			console.log(data);
 
 			return {
 				username: data.nombres,
+				email: data.correo_electronico,
 			};
 		} else {
 			console.error('User is not signed in.');

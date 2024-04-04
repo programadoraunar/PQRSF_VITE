@@ -11,11 +11,8 @@ import '@szhsin/react-menu/dist/index.css';
 import '@szhsin/react-menu/dist/transitions/slide.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { signOut } from '../../supabase/actions/auth';
-import { useAuth } from '../../context/AuthContext';
 import UseProfile from '../../hooks/UseProfile';
 function Header() {
-	const { user } = useAuth();
-	console.log(user);
 	const userProfile = UseProfile();
 	const navigate = useNavigate();
 	const handleLogout = async () => {
@@ -111,7 +108,7 @@ function Header() {
 									{userProfile ? userProfile.username : 'Sin Datos'}
 								</span>
 								<span className='text-xs lg:text-base text-blue-zodiac-50'>
-									jorge@gmail.com
+									{userProfile ? userProfile.email : 'Sin Datos'}
 								</span>
 							</div>
 						</Link>

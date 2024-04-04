@@ -5,6 +5,7 @@ import {
 	RiQuestionAnswerFill,
 	RiQuestionMark,
 	RiLogoutCircleLine,
+	RiHome2Line,
 } from '@remixicon/react';
 import { Link } from 'react-router-dom';
 function SliderBar() {
@@ -25,6 +26,14 @@ function SliderBar() {
 						/>
 					</div>
 					<ul>
+						<li>
+							<Link
+								to='/AdminProfile'
+								className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-blue-zodiac-950 transition-colors lg:text-xl'
+							>
+								<RiHome2Line className='text-blue-zodiac-400' /> Inicio
+							</Link>
+						</li>
 						<li>
 							<Link
 								to='/AdminProfile/SolicitudesAnonimas'

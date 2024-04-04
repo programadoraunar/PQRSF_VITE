@@ -1,5 +1,4 @@
 import { React, createContext, useContext, useEffect, useState } from 'react';
-import getUserInfo from '../supabase/actions/getUserInfo';
 import { supabase } from '../supabase/client';
 import PropTypes from 'prop-types'; // Importar PropTypes
 export const AuthContext = createContext();

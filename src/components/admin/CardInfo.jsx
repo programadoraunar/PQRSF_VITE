@@ -31,7 +31,7 @@ function CardInfo(props) {
 			<Card
 				className='mx-auto max-w-x'
 				decoration='top'
-				decorationColor='white'
+				decorationColor='blue'
 				style={{ backgroundColor: '#fff' }}
 			>
 				<div>

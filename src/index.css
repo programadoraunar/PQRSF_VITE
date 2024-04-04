@@ -2,12 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
-::-webkit-scrollbar {
-	width: 0px;
+/* Estilos para ocultar las barras de desplazamiento en toda la aplicación, excepto en .tableMov */
+*:not(.tableMov)::-webkit-scrollbar {
+    display: none; /* Oculta la barra de desplazamiento */
 }
+
+.custom-select {
+    width: 300px !important; /* Ancho deseado para el componente Select */
+}
+.custom-date {
+    width: 250px !important; /* Ancho deseado para el componente Select */
+    
+}
+
+.tableMov {
+    overflow-x: auto; /* Habilita el scroll horizontal */
+}
+
+.tableMov::-webkit-scrollbar {
+    /* Estilos de la barra de desplazamiento específicos para la clase tableMov */
+    width: 2px;
+	height: 13px;
+    background-color: transparent; /* Cambia el color de fondo de la barra de desplazamiento */
+}
+
+.tableMov::-webkit-scrollbar-thumb {
+    /* Estilos del thumb (agarre) de la barra de desplazamiento */
+    background-color: #124f92;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 /* En tu archivo CSS */
 @media (max-width: 600px) { /* Cambiar el tamaño de fuente para dispositivos con ancho máximo de 600px (generalmente dispositivos móviles) */
 	.toast {
 	  font-size: 10px; /* Tamaño de fuente más pequeño para dispositivos móviles */
 	}
   }
+  .table-header-cell{
+	font-size: 1rem; /* Por ejemplo, puedes ajustar el tamaño de fuente según tus preferencias */
+  	color: #000 !important; /* Color de texto */
+  }
+  .tableMov {
+    overflow-x:auto; /* Habilita el scroll horizontal */
+}
+.custom-select {
+    width: auto !important; /* Ancho deseado para el componente Select */
+}
+.custom-date {
+    width: auto !important; /* Ancho deseado para el componente Select */
+    
+}
+  

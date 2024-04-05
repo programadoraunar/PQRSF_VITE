@@ -48,7 +48,7 @@ function Login() {
 							</p>
 							<div className='flex justify-center py-7'>
 								<img
-									src='/logo-autonoma-de-narino.webp'
+									src='/logo-autonoma-de-narino.png'
 									width={179.5}
 									height={0}
 									alt='Logo autónoma'

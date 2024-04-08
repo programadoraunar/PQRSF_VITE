@@ -14,7 +14,6 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
 	// Define estados para el usuario, estado de autenticación y errores.
 	const [user, setUser] = useState();
-	const [isAdmin, setIsAdmin] = useState(false);
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [loading, setLoading] = useState(true); // Nuevo estado para controlar la carga
 
@@ -22,13 +21,11 @@ export const AuthProvider = ({ children }) => {
 		const fetchUser = async () => {
 			try {
 				const { data, error } = await supabase.auth.getSession();
-				console.log(data.session.user);
-
 				if (error) {
 					throw error;
 				}
 				if (data) {
-					setUser(data.session.user);
+					setUser(data.session);
 				}
 			} catch (error) {
 				// console.error('Error fetching user session:', error.message);
@@ -42,12 +39,14 @@ export const AuthProvider = ({ children }) => {
 			if (event === 'SIGNED_IN') {
 				setUser(session.user);
 				setIsAuthenticated(true);
+
 				console.log('el usuario ah iniciado sesion');
 			} else if (event === 'SIGNED_OUT') {
 				setUser(null);
 				setIsAuthenticated(false);
 				console.log('el usuario ha cerrado sesion');
 			}
+			console.log('te ejecutas cuando ocurre algo');
 		});
 		return () => {
 			data.subscription.unsubscribe();
@@ -58,7 +57,7 @@ export const AuthProvider = ({ children }) => {
 		return <div>Cargando...</div>;
 	}
 	return (
-		<AuthContext.Provider value={{ user, isAdmin, isAuthenticated }}>
+		<AuthContext.Provider value={{ user, isAuthenticated }}>
 			{children}
 		</AuthContext.Provider>
 	);

@@ -3,7 +3,7 @@ import React from 'react';
 function Footer() {
 	return (
 		<div className='bg-blue-zodiac-900 flex flex-col justify-center items-center py-3 px-5 sm:py-4 sm:px-6 md:py-5 md:px-7 lg:py-6 lg:px-24 xl:py-7 xl:px-52 2xl:py-7 2xl:px-60'>
-			<div className='flex items-center flex-col'>
+			<div className='flex items-center flex-col lg:flex-row'>
 				<div className='flex justify-center'>
 					<img
 						src='/logo_aunar2.svg'
@@ -12,7 +12,7 @@ function Footer() {
 					/>
 				</div>
 				<div>
-					<ul className='text-sm text-center lg:text-start'>
+					<ul className='text-sm text-center lg:text-start lg:text-xl'>
 						<li>Corporación Universitaria Autónoma de Nariño</li>
 						<li>NIT: 891224762-9</li>
 						<li>Código SNIES: 3817</li>
@@ -24,11 +24,11 @@ function Footer() {
 			</div>
 
 			<div className='px-4 py-3 lg:px-44'>
-				<p className='text-center text-sm'>
+				<p className='text-center text-sm lg:text-lg'>
 					©Copyright 2024 - Derechos Reservados
 				</p>
 
-				<p className='text-center  text-sm py-3'>
+				<p className='text-center  text-sm py-3 lg:text-lg'>
 					Departamento de Sistemas - AUNAR
 				</p>
 			</div>

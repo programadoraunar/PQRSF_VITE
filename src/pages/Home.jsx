@@ -1,25 +1,27 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import Footer from '../components/home/Footer';
 import CardsInfo from '../components/home/CardsInfo';
+import Header from '../components/home/Header';
+import Buttons from '../components/ui/Buttons';
+import FormularioAnonimo from '../components/home/FormularioAnonimo';
+import { motion } from 'framer-motion';
+
 function Home() {
+	const [mostrarFormularioAnonimo, setMostrarFormularioAnonimo] =
+		useState(false);
+
+	const handleMostrarComponente = () => {
+		setMostrarFormularioAnonimo(true);
+	};
+
+	const handleCerrarComponente = () => {
+		setMostrarFormularioAnonimo(false);
+	};
+
 	return (
 		<div>
 			<div className='py-3 px-5 sm:py-4 sm:px-6 md:py-5 md:px-7 lg:py-6 lg:px-16 xl:py-7 xl:px-36 2xl:py-7 2xl:px-60'>
-				<div className='flex flex-col lg:flex-row items-center justify-between'>
-					<div className='flex justify-center lg:justify-start'>
-						<img
-							src='/logo-autonoma-de-narino.png'
-							alt='Logo De La Auitonoma'
-							className='w-full max-w-[8rem] sm:max-w-[7rem] md:max-w-[8rem]  lg:max-w-[9rem] xl:max-w-[10rem]'
-						/>
-					</div>
-
-					<Link to='/login' className='text-blueBase text-sm lg:text-xl'>
-						ir a login
-					</Link>
-				</div>
-
+				<Header />
 				<section id='informacion'>
 					<p className='text-black text-base md:text-lg lg:text-xl'>
 						La Universidad Autónoma de Nariño ha establecido una alternativa
@@ -41,6 +43,26 @@ function Home() {
 				</section>
 				<section id='definiciones'>
 					<CardsInfo />
+				</section>
+				<section id='formularios'>
+					<div>
+						<Buttons onClick={handleMostrarComponente}>
+							Solicitudes Anónimas
+						</Buttons>
+						<motion.div
+							initial={{ opacity: 0, y: 50 }} // Animación inicial: invisible y desplazada hacia abajo
+							animate={{
+								opacity: mostrarFormularioAnonimo ? 1 : 0,
+								y: mostrarFormularioAnonimo ? 0 : 50,
+							}} // Animación al mostrar/ocultar
+							transition={{ duration: 0.6 }} // Duración de la animación
+						>
+							{mostrarFormularioAnonimo && <FormularioAnonimo />}
+						</motion.div>
+						{mostrarFormularioAnonimo && (
+							<Buttons onClick={handleCerrarComponente}>Cerrar</Buttons>
+						)}
+					</div>
 				</section>
 			</div>
 			<Footer />

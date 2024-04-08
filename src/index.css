@@ -18,6 +18,9 @@
 .tableMov {
     overflow-x: auto; /* Habilita el scroll horizontal */
 }
+.customTextSize{
+    font-size: 25px !important;
+}
 
 .tableMov::-webkit-scrollbar {
     /* Estilos de la barra de desplazamiento específicos para la clase tableMov */

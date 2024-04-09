@@ -1,19 +1,20 @@
 import React from 'react';
 import { Button } from '@tremor/react';
 import PropTypes from 'prop-types';
-function Buttons({ onClick, children }) {
+function Buttons({ onClick, children, className, icon }) {
 	return (
 		<div className='flex justify-center'>
-			<Button
-				onClick={onClick}
-				className='bg-blue-zodiac-900 hover:bg-blue-950'
-			>
+			<Button onClick={onClick} className={`buttonsFontSize ${className}`}>
+				<span className='text-white'>{icon}</span>
 				{children}
 			</Button>
 		</div>
 	);
 }
 Buttons.propTypes = {
-	title: PropTypes.string, // ajusta el tipo según lo que esperas para solicitud
+	onClick: PropTypes.func,
+	children: PropTypes.node.isRequired, // Validar children
+	className: PropTypes.string,
+	icon: PropTypes.node,
 };
 export default Buttons;

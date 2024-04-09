@@ -1,6 +1,8 @@
 import React from 'react';
-import { SearchSelect, SearchSelectItem, Textarea } from '@tremor/react';
 import Buttons from '../ui/Buttons';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { solicitudAnonimaSchema } from '../../validations/formSchema';
 const optionsDependencias = [
 	'Rectoría',
 	'Secretaría General',
@@ -28,62 +30,96 @@ const optionsDependencias = [
 	'Coordinación Mecánica Dental',
 	'Coordinación Ingeniería Informática',
 ];
-function FormularioAnonimo() {
-	const [value, setValue] = React.useState('');
+const optionsSolicitud = [
+	'Peticion',
+	'Queja',
+	'Reclamo',
+	'Suguerencia',
+	'Felicitacion',
+];
 
+function FormularioAnonimo() {
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm({
+		resolver: zodResolver(solicitudAnonimaSchema),
+	});
+	const onSubmit = data => {
+		console.log(data);
+	};
 	return (
-		<div className='border border-blue-zodiac-800 rounded-lg py-5 my-5 mx-32 px-1 shadow-xl flex flex-col items-center bg-white'>
-			<h1 className='text-blue-zodiac-900 text-2xl lg:text-3xl font-semibold '>
+		<div className='border-2 border-blue-zodiac-800 rounded-lg py-5 my-5 px-4 shadow-xl flex flex-col  bg-white'>
+			<h1 className='text-blue-zodiac-900 text-center text-2xl lg:text-3xl font-semibold '>
 				Solicitudes Anonimas
 			</h1>
-			<div>
-				<div className='mb-4 mt-8 text-center text-base lg:text-2xl text-slate-500'>
+			<form onSubmit={handleSubmit(onSubmit)}>
+				<div className='mb-4 mt-8 text-base lg:text-[17px] text-blue-zodiac-950 text-start font-medium'>
 					Tipo de Solicitud
 				</div>
-				<SearchSelect className=''>
-					<SearchSelectItem value='1'>Peticion</SearchSelectItem>
-					<SearchSelectItem value='2'>Queja</SearchSelectItem>
-					<SearchSelectItem value='3'>Reclamo</SearchSelectItem>
-					<SearchSelectItem value='4'>Suguerencia</SearchSelectItem>
-					<SearchSelectItem value='5'>Felicitacion</SearchSelectItem>
-				</SearchSelect>
+				<select
+					className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer'
+					{...register('tipoSolicitud')}
+				>
+					{optionsSolicitud.map((option, index) => (
+						<option key={index} value={option}>
+							{option}
+						</option>
+					))}
+				</select>
+				{errors.tipoSolicitud && (
+					<p className='text-red-500'>{errors.tipoSolicitud.message}</p>
+				)}
 
-				<div className='mb-4 mt-8 text-center text-base text-slate-500 '>
+				<div className='mb-4 mt-8 text-base text-blue-zodiac-950 text-start font-medium'>
 					Dependencia
 				</div>
-				<SearchSelect>
+				<select
+					className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer'
+					{...register('dependencia')}
+				>
 					{/* Mapea sobre las opciones y crea un SearchSelectItem para cada una */}
 					{optionsDependencias.map((option, index) => (
-						<SearchSelectItem key={index} value={option}>
+						<option key={index} value={option}>
 							{option}
-						</SearchSelectItem>
+						</option>
 					))}
-				</SearchSelect>
+				</select>
+				{errors.dependencia && (
+					<p className='text-red-500'>{errors.dependencia.message}</p>
+				)}
 
 				<div className='flex flex-col'>
 					<label
 						htmlFor='description'
-						className=' text-tremor-content dark:text-dark-tremor-content text-base pl-3 py-2'
+						className='text-base py-2 text-blue-zodiac-950 text-start font-medium'
 					>
 						Description
 					</label>
-					<Textarea
-						onChange={e => setValue(e.target.value)}
+					<textarea
+						className='text-blue-zodiac-950 hover:border-blue-zodiac-950'
 						id='description'
 						placeholder='Start typing here...'
 						rows={6}
-						value={value}
+						{...register('description')}
 					/>
+					{errors.description && (
+						<p className='text-red-500'>{errors.description.message}</p>
+					)}
 				</div>
-				<div className='grid grid-cols-2 items-center justify-center py-3'>
-					<input
-						type='file'
-						className='border text-black border-gray-300 p-2 rounded-md'
-					/>
 
-					<Buttons type='submit'>Enviar</Buttons>
-				</div>
-			</div>
+				<input
+					type='file'
+					className='border text-black border-gray-300 p-2 rounded-md'
+					{...register('adjunto')}
+				/>
+				{errors.adjunto && (
+					<p className='text-red-500'>{errors.adjunto.message}</p>
+				)}
+
+				<Buttons type='submit'>Enviar</Buttons>
+			</form>
 		</div>
 	);
 }

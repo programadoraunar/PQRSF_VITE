@@ -5,7 +5,7 @@ import Header from '../components/home/Header';
 import Buttons from '../components/ui/Buttons';
 import FormularioAnonimo from '../components/home/FormularioAnonimo';
 import { motion } from 'framer-motion';
-
+import { RiFileUserFill } from '@remixicon/react';
 function Home() {
 	const [mostrarFormularioAnonimo, setMostrarFormularioAnonimo] =
 		useState(false);
@@ -23,7 +23,7 @@ function Home() {
 			<div className='py-3 px-5 sm:py-4 sm:px-6 md:py-5 md:px-7 lg:py-6 lg:px-16 xl:py-7 xl:px-36 2xl:py-7 2xl:px-60'>
 				<Header />
 				<section id='informacion'>
-					<p className='text-black text-base md:text-lg lg:text-xl'>
+					<p className='text-black text-base md:text-lg lg:text-xl 2xl:text-2xl px-10 py-10'>
 						La Universidad Autónoma de Nariño ha establecido una alternativa
 						para facilitar la radicación de Peticiones, Quejas, Reclamos,
 						Sugerencias y Felicitaciones (PQRSF), a través de su sitio web
@@ -45,23 +45,35 @@ function Home() {
 					<CardsInfo />
 				</section>
 				<section id='formularios'>
-					<div>
-						<Buttons onClick={handleMostrarComponente}>
-							Solicitudes Anónimas
-						</Buttons>
-						<motion.div
-							initial={{ opacity: 0, y: 50 }} // Animación inicial: invisible y desplazada hacia abajo
-							animate={{
-								opacity: mostrarFormularioAnonimo ? 1 : 0,
-								y: mostrarFormularioAnonimo ? 0 : 50,
-							}} // Animación al mostrar/ocultar
-							transition={{ duration: 0.6 }} // Duración de la animación
-						>
-							{mostrarFormularioAnonimo && <FormularioAnonimo />}
-						</motion.div>
-						{mostrarFormularioAnonimo && (
-							<Buttons onClick={handleCerrarComponente}>Cerrar</Buttons>
-						)}
+					<div className='grid grid-cols-1 grid-rows-2 lg:grid-cols-2 lg:grid-rows-1'>
+						<div className=''>
+							<Buttons
+								icon={<RiFileUserFill />}
+								className='py-4 px-10 rounded-b-lg bg-blue-zodiac-900'
+								onClick={handleMostrarComponente}
+							>
+								Solicitudes Anónimas
+							</Buttons>
+							<motion.div
+								initial={{ opacity: 0, y: 50 }}
+								animate={{
+									opacity: mostrarFormularioAnonimo ? 1 : 0,
+									y: mostrarFormularioAnonimo ? 0 : 50,
+								}}
+								exit={{ opacity: 0, y: 50 }}
+								transition={{ duration: 0.6 }}
+							>
+								{mostrarFormularioAnonimo && <FormularioAnonimo />}
+							</motion.div>
+							{mostrarFormularioAnonimo && (
+								<Buttons onClick={handleCerrarComponente}>Cerrar</Buttons>
+							)}
+						</div>
+						<div>
+							<Buttons onClick={handleMostrarComponente}>
+								Solicitudes Normales
+							</Buttons>
+						</div>
 					</div>
 				</section>
 			</div>

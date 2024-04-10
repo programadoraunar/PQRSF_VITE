@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Buttons from '../ui/Buttons';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { solicitudAnonimaSchema } from '../../validations/formSchema';
+import { gsap } from 'gsap';
+import { motion, AnimatePresence } from 'framer-motion';
+import PropTypes from 'prop-types';
+
 const optionsDependencias = [
 	'Rectoría',
 	'Secretaría General',
@@ -38,7 +42,15 @@ const optionsSolicitud = [
 	'Felicitacion',
 ];
 
-function FormularioAnonimo() {
+function FormularioAnonimo({ onClose }) {
+	const ref = useRef(null);
+
+	useEffect(() => {
+		if (ref.current) {
+			gsap.fromTo(ref.current, { opacity: 0 }, { opacity: 1, duration: 0.6 });
+		}
+	}, []);
+
 	const {
 		register,
 		handleSubmit,
@@ -50,78 +62,92 @@ function FormularioAnonimo() {
 		console.log(data);
 	};
 	return (
-		<div className='border-2 border-blue-zodiac-800 rounded-lg py-5 my-5 px-4 shadow-xl flex flex-col  bg-white'>
-			<h1 className='text-blue-zodiac-900 text-center text-2xl lg:text-3xl font-semibold '>
-				Solicitudes Anonimas
-			</h1>
-			<form onSubmit={handleSubmit(onSubmit)}>
-				<div className='mb-4 mt-8 text-base lg:text-[17px] text-blue-zodiac-950 text-start font-medium'>
-					Tipo de Solicitud
-				</div>
-				<select
-					className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer'
-					{...register('tipoSolicitud')}
-				>
-					{optionsSolicitud.map((option, index) => (
-						<option key={index} value={option}>
-							{option}
-						</option>
-					))}
-				</select>
-				{errors.tipoSolicitud && (
-					<p className='text-red-500'>{errors.tipoSolicitud.message}</p>
-				)}
-
-				<div className='mb-4 mt-8 text-base text-blue-zodiac-950 text-start font-medium'>
-					Dependencia
-				</div>
-				<select
-					className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer'
-					{...register('dependencia')}
-				>
-					{/* Mapea sobre las opciones y crea un SearchSelectItem para cada una */}
-					{optionsDependencias.map((option, index) => (
-						<option key={index} value={option}>
-							{option}
-						</option>
-					))}
-				</select>
-				{errors.dependencia && (
-					<p className='text-red-500'>{errors.dependencia.message}</p>
-				)}
-
-				<div className='flex flex-col'>
-					<label
-						htmlFor='description'
-						className='text-base py-2 text-blue-zodiac-950 text-start font-medium'
+		<AnimatePresence>
+			<motion.div
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				exit={{ opacity: 0 }}
+				ref={ref}
+				className='border-2 border-blue-zodiac-800 rounded-lg py-5 my-5 px-4 shadow-xl flex flex-col  bg-white'
+			>
+				<h1 className='text-blue-zodiac-900 text-center text-2xl lg:text-3xl font-semibold '>
+					Solicitudes Anonimas
+				</h1>
+				<form onSubmit={handleSubmit(onSubmit)}>
+					<div className='mb-4 mt-8 text-base lg:text-lg 2xl:text-xl text-blue-zodiac-950 text-start font-medium'>
+						Tipo de Solicitud
+					</div>
+					<select
+						className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer text-base lg:text-lg 2xl:text-xl'
+						{...register('tipoSolicitud')}
 					>
-						Description
-					</label>
-					<textarea
-						className='text-blue-zodiac-950 hover:border-blue-zodiac-950'
-						id='description'
-						placeholder='Start typing here...'
-						rows={6}
-						{...register('description')}
-					/>
-					{errors.description && (
-						<p className='text-red-500'>{errors.description.message}</p>
+						{optionsSolicitud.map((option, index) => (
+							<option key={index} value={option}>
+								{option}
+							</option>
+						))}
+					</select>
+					{errors.tipoSolicitud && (
+						<p className='text-red-500'>{errors.tipoSolicitud.message}</p>
 					)}
-				</div>
 
-				<input
-					type='file'
-					className='border text-black border-gray-300 p-2 rounded-md'
-					{...register('adjunto')}
-				/>
-				{errors.adjunto && (
-					<p className='text-red-500'>{errors.adjunto.message}</p>
-				)}
+					<div className='mb-4 mt-8 text-base text-blue-zodiac-950 text-start font-medium lg:text-lg 2xl:text-xl'>
+						Dependencia
+					</div>
+					<select
+						className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer text-base lg:text-lg 2xl:text-xl'
+						{...register('dependencia')}
+					>
+						{/* Mapea sobre las opciones y crea un SearchSelectItem para cada una */}
+						{optionsDependencias.map((option, index) => (
+							<option key={index} value={option}>
+								{option}
+							</option>
+						))}
+					</select>
+					{errors.dependencia && (
+						<p className='text-red-500'>{errors.dependencia.message}</p>
+					)}
 
-				<Buttons type='submit'>Enviar</Buttons>
-			</form>
-		</div>
+					<div className='flex flex-col'>
+						<label
+							htmlFor='description'
+							className='text-base py-2 text-blue-zodiac-950 text-start font-medium lg:text-lg 2xl:text-xl'
+						>
+							Description
+						</label>
+						<textarea
+							className='text-blue-zodiac-950 hover:border-blue-zodiac-950 text-base lg:text-lg 2xl:text-xl'
+							id='description'
+							placeholder='Start typing here...'
+							rows={6}
+							{...register('description')}
+						/>
+						{errors.description && (
+							<p className='text-red-500'>{errors.description.message}</p>
+						)}
+					</div>
+
+					<input
+						type='file'
+						className='border text-black border-gray-300 p-2 rounded-md text-sm lg:text-xl'
+						{...register('adjunto')}
+					/>
+					{errors.adjunto && (
+						<p className='text-red-500'>{errors.adjunto.message}</p>
+					)}
+
+					<Buttons type='submit'>Enviar</Buttons>
+					<button type='button' className='text-black' onClick={onClose}>
+						Cerrar
+					</button>
+				</form>
+			</motion.div>
+		</AnimatePresence>
 	);
 }
+FormularioAnonimo.propTypes = {
+	onClose: PropTypes.node,
+};
 
 export default FormularioAnonimo;

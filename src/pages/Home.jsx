@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import Footer from '../components/home/Footer';
 import CardsInfo from '../components/home/CardsInfo';
 import Header from '../components/home/Header';
-import Buttons from '../components/ui/Buttons';
 import FormularioAnonimo from '../components/home/FormularioAnonimo';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { RiFileUserFill } from '@remixicon/react';
+
 function Home() {
 	const [mostrarFormularioAnonimo, setMostrarFormularioAnonimo] =
 		useState(false);
@@ -45,34 +45,41 @@ function Home() {
 					<CardsInfo />
 				</section>
 				<section id='formularios'>
-					<div className='grid grid-cols-1 grid-rows-2 lg:grid-cols-2 lg:grid-rows-1'>
-						<div className=''>
-							<Buttons
-								icon={<RiFileUserFill />}
-								className='py-4 px-10 rounded-b-lg bg-blue-zodiac-900'
+					<div className='grid grid-cols-1 grid-rows-2 lg:grid-cols-2 lg:grid-rows-1 lg:gap-20'>
+						<div className='flex flex-col justify-center'>
+							<motion.button
+								whileHover={{ scale: 1.1 }}
+								className='flex items-center justify-center gap-3 py-4 px-10 rounded-b-lg bg-blue-zodiac-900 cursor-pointer text-base lg:text-lg 2xl:text-xl hover:bg-blue-zodiac-950'
 								onClick={handleMostrarComponente}
 							>
-								Solicitudes Anónimas
-							</Buttons>
-							<motion.div
-								initial={{ opacity: 0, y: 50 }}
-								animate={{
-									opacity: mostrarFormularioAnonimo ? 1 : 0,
-									y: mostrarFormularioAnonimo ? 0 : 50,
-								}}
-								exit={{ opacity: 0, y: 50 }}
-								transition={{ duration: 0.6 }}
-							>
-								{mostrarFormularioAnonimo && <FormularioAnonimo />}
-							</motion.div>
-							{mostrarFormularioAnonimo && (
-								<Buttons onClick={handleCerrarComponente}>Cerrar</Buttons>
-							)}
+								<RiFileUserFill />
+								Formulario Aninimo
+							</motion.button>
+
+							<AnimatePresence>
+								{mostrarFormularioAnonimo && (
+									<motion.div
+										initial={{ opacity: 0 }}
+										animate={{ opacity: 1 }}
+										exit={{ opacity: 0 }}
+										transition={{ duration: 0.6 }}
+									>
+										<FormularioAnonimo onClose={handleCerrarComponente} />
+									</motion.div>
+								)}
+							</AnimatePresence>
 						</div>
-						<div>
-							<Buttons onClick={handleMostrarComponente}>
+
+						<div className='flex flex-col justify-center'>
+							<motion.button
+								whileHover={{ scale: 1.1 }}
+								onHoverStart={e => {}}
+								onHoverEnd={e => {}}
+								className='flex items-center justify-center gap-3 py-4 px-10 rounded-b-lg bg-blue-zodiac-900 cursor-pointer text-base lg:text-lg 2xl:text-xl'
+								onClick={handleMostrarComponente}
+							>
 								Solicitudes Normales
-							</Buttons>
+							</motion.button>
 						</div>
 					</div>
 				</section>

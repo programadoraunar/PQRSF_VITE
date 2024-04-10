@@ -9,6 +9,7 @@ import HomeAdmin from './pages/admin/HomeAdmin';
 import ProtectedRoutes from './ProtectedRoutes';
 import SolicitudesAnonimas from './pages/admin/SolicitudesAnonimas';
 import SolicitudesNormales from './pages/admin/SolicitudesNormales';
+import Consulta from './pages/Consulta';
 
 function App() {
 	return (
@@ -17,6 +18,7 @@ function App() {
 				<Routes>
 					<Route path='/' element={<Home />}></Route>
 					<Route path='/login' element={<Login />}></Route>
+					<Route path='/consulta' element={<Consulta />}></Route>
 					<Route element={<ProtectedRoutes />}>
 						<Route path='/AdminProfile/' element={<LayoutAdmin />}>
 							<Route index element={<HomeAdmin />}></Route>

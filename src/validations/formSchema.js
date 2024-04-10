@@ -7,7 +7,7 @@ const tiposSolicitud = [
 	'Suguerencia',
 	'Felicitacion',
 ];
-
+const canal = ['email', 'fisico'];
 const optionsDependencias = [
 	'Rectoría',
 	'Secretaría General',
@@ -35,7 +35,7 @@ const optionsDependencias = [
 	'Coordinación Mecánica Dental',
 	'Coordinación Ingeniería Informática',
 ];
-const allowedExtensions = ['jpg', 'jpeg', 'png', 'pdf'];
+/* const allowedExtensions = ['jpg', 'jpeg', 'png', 'pdf']; */
 // Definir el esquema para el formulario de solicitud anónima
 export const solicitudAnonimaSchema = z.object({
 	tipoSolicitud: z.enum(tiposSolicitud, {
@@ -55,7 +55,12 @@ export const solicitudAnonimaSchema = z.object({
 		.refine(val => val.trim().length > 0, {
 			message: 'La descripción no puede contener solo espacios en blanco',
 		}),
-	adjunto: z
+	canal: z.enum(canal, {
+		errorMap: () => ({
+			message: 'Por favor seleccione una dependencia valida',
+		}),
+	}),
+	/* adjunto: z
 		.instanceof(FileList)
 		.refine(file => file?.length === 1, 'File is required.')
 		.refine(
@@ -69,5 +74,5 @@ export const solicitudAnonimaSchema = z.object({
 			},
 			'Archivo no valido. Las extensiones permitidas son: ' +
 				allowedExtensions.join(', '),
-		),
+		), */
 });

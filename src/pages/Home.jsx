@@ -5,7 +5,7 @@ import Header from '../components/home/Header';
 import FormularioAnonimo from '../components/home/FormularioAnonimo';
 import { motion, AnimatePresence } from 'framer-motion';
 import { RiFileUserFill } from '@remixicon/react';
-
+import { Link } from 'react-router-dom';
 function Home() {
 	const [mostrarFormularioAnonimo, setMostrarFormularioAnonimo] =
 		useState(false);
@@ -45,7 +45,7 @@ function Home() {
 					<CardsInfo />
 				</section>
 				<section id='formularios'>
-					<div className='grid grid-cols-1 grid-rows-2 lg:grid-cols-2 lg:grid-rows-1 lg:gap-20'>
+					<div className='grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-1 lg:gap-20'>
 						<div className='flex flex-col justify-center'>
 							<motion.button
 								whileHover={{ scale: 1.1 }}
@@ -80,6 +80,18 @@ function Home() {
 							>
 								Solicitudes Normales
 							</motion.button>
+						</div>
+						<div className='flex flex-col justify-center'>
+							<Link to='/consulta'>
+								<motion.button
+									whileHover={{ scale: 1.1 }}
+									onHoverStart={e => {}}
+									onHoverEnd={e => {}}
+									className='flex items-center justify-center gap-3 py-4 px-10 rounded-b-lg bg-blue-zodiac-900 cursor-pointer text-base lg:text-lg 2xl:text-xl'
+								>
+									Consultar Estado Solicitud
+								</motion.button>
+							</Link>
 						</div>
 					</div>
 				</section>

@@ -103,7 +103,6 @@ function FormularioAnonimo({ onClose }) {
 					</div>
 					<select
 						className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer text-base lg:text-lg 2xl:text-xl'
-						value={formData.tipoSolicitud}
 						onChange={handleChange}
 						{...register('tipoSolicitud')}
 					>
@@ -122,7 +121,6 @@ function FormularioAnonimo({ onClose }) {
 					</div>
 					<select
 						className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer text-base lg:text-lg 2xl:text-xl'
-						value={formData.dependencia}
 						onChange={handleChange}
 						{...register('dependencia')}
 					>

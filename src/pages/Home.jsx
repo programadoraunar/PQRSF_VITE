@@ -19,9 +19,14 @@ function Home() {
 	};
 
 	return (
-		<div>
-			<div className='py-3 px-5 sm:py-4 sm:px-6 md:py-5 md:px-7 lg:py-6 lg:px-16 xl:py-7 xl:px-36 2xl:py-7 2xl:px-60'>
+		<div className='bg-white'>
+			<div className='py-3 px-5 sm:py-4 sm:px-6 md:py-5 md:px-7 lg:py-6 lg:px-16 xl:py-7 xl:px-36 2xl:py-7 2xl:px-72'>
 				<Header />
+				<section id='titulo'>
+					<h1 className='text-black px-10 pt-5 text-lg md:text-xl lg:text-3xl 2xl:text-3xl'>
+						Peticiones Quejas, Reclamos, Sugerencias, Felicitaciones{' '}
+					</h1>
+				</section>
 				<section id='informacion'>
 					<p className='text-black text-base md:text-lg lg:text-xl 2xl:text-2xl px-10 py-10'>
 						La Universidad Autónoma de Nariño ha establecido una alternativa
@@ -45,7 +50,7 @@ function Home() {
 					<CardsInfo />
 				</section>
 				<section id='formularios'>
-					<div className='grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-1 lg:gap-20'>
+					<div className='grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-1 lg:gap-20 px-0 lg:px-10 py-16'>
 						<div className='flex flex-col justify-center'>
 							<motion.button
 								whileHover={{ scale: 1.1 }}
@@ -81,15 +86,28 @@ function Home() {
 								Solicitudes Normales
 							</motion.button>
 						</div>
+
 						<div className='flex flex-col justify-center'>
 							<Link to='/consulta'>
 								<motion.button
 									whileHover={{ scale: 1.1 }}
 									onHoverStart={e => {}}
 									onHoverEnd={e => {}}
-									className='flex items-center justify-center gap-3 py-4 px-10 rounded-b-lg bg-blue-zodiac-900 cursor-pointer text-base lg:text-lg 2xl:text-xl'
+									className='flex items-center justify-center gap-3 py-4 px-10 rounded-b-lg bg-blue-zodiac-900 cursor-pointer text-base lg:text-lg 2xl:text-xl w-full'
 								>
 									Consultar Estado Solicitud
+								</motion.button>
+							</Link>
+						</div>
+						<div className='flex flex-col justify-center'>
+							<Link to='/consulta'>
+								<motion.button
+									whileHover={{ scale: 1.1 }}
+									onHoverStart={e => {}}
+									onHoverEnd={e => {}}
+									className='flex items-center justify-center gap-3 py-4 px-10 rounded-b-lg bg-blue-zodiac-900 cursor-pointer text-base lg:text-lg 2xl:text-xl w-full'
+								>
+									Politica de Tratamiento de Datos
 								</motion.button>
 							</Link>
 						</div>

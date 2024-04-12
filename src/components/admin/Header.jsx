@@ -27,7 +27,7 @@ function Header() {
 	};
 
 	return (
-		<header className='h-[7vh] md:h-[10vh] border-b border-blue-zodiac-950 p-8 flex items-center justify-end bg-blue-zodiac-900'>
+		<header className='h-[7vh] md:h-[10vh] border-b border-blue-zodiac-950 p-8 flex items-center justify-end bg-blue-zodiac-950'>
 			<nav className='flex items-center gap-2'>
 				<Menu
 					menuButton={

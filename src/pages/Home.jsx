@@ -20,7 +20,7 @@ function Home() {
 
 	return (
 		<div className='bg-white'>
-			<div className='py-3 px-5 sm:py-4 sm:px-6 md:py-5 md:px-7 lg:py-6 lg:px-16 xl:py-7 xl:px-36 2xl:py-7 2xl:px-72'>
+			<div className='py-3 px-5 sm:py-4 sm:px-6 md:py-5 md:px-7 lg:py-6 lg:px-16 xl:py-7 xl:px-36 2xl:py-7 2xl:px-80'>
 				<Header />
 				<section id='titulo'>
 					<h1 className='text-black px-10 pt-5 text-lg md:text-xl lg:text-3xl 2xl:text-3xl'>
@@ -50,11 +50,11 @@ function Home() {
 					<CardsInfo />
 				</section>
 				<section id='formularios'>
-					<div className='grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-1 lg:gap-20 px-0 lg:px-10 py-16'>
+					<div className='grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-1 lg:gap-20 px-0 lg:px-16 py-16'>
 						<div className='flex flex-col justify-center'>
 							<motion.button
 								whileHover={{ scale: 1.1 }}
-								className='flex items-center justify-center gap-3 py-4 px-10 rounded-b-lg bg-blue-zodiac-900 cursor-pointer text-base lg:text-lg 2xl:text-xl hover:bg-blue-zodiac-950'
+								className='flex items-center justify-center gap-3 py-4 px-10 rounded-b-lg bg-blue-zodiac-950 cursor-pointer text-base lg:text-lg 2xl:text-xl hover:bg-blue-zodiac-950'
 								onClick={handleMostrarComponente}
 							>
 								<RiFileUserFill />
@@ -80,7 +80,7 @@ function Home() {
 								whileHover={{ scale: 1.1 }}
 								onHoverStart={e => {}}
 								onHoverEnd={e => {}}
-								className='flex items-center justify-center gap-3 py-4 px-10 rounded-b-lg bg-blue-zodiac-900 cursor-pointer text-base lg:text-lg 2xl:text-xl'
+								className='flex items-center justify-center gap-3 py-4 px-10 rounded-b-lg bg-blue-zodiac-950 cursor-pointer text-base lg:text-lg 2xl:text-xl'
 								onClick={handleMostrarComponente}
 							>
 								Solicitudes Normales
@@ -93,7 +93,7 @@ function Home() {
 									whileHover={{ scale: 1.1 }}
 									onHoverStart={e => {}}
 									onHoverEnd={e => {}}
-									className='flex items-center justify-center gap-3 py-4 px-10 rounded-b-lg bg-blue-zodiac-900 cursor-pointer text-base lg:text-lg 2xl:text-xl w-full'
+									className='flex items-center justify-center gap-3 py-4 px-10 rounded-b-lg bg-blue-zodiac-950 cursor-pointer text-base lg:text-lg 2xl:text-xl w-full'
 								>
 									Consultar Estado Solicitud
 								</motion.button>
@@ -105,7 +105,7 @@ function Home() {
 									whileHover={{ scale: 1.1 }}
 									onHoverStart={e => {}}
 									onHoverEnd={e => {}}
-									className='flex items-center justify-center gap-3 py-4 px-10 rounded-b-lg bg-blue-zodiac-900 cursor-pointer text-base lg:text-lg 2xl:text-xl w-full'
+									className='flex items-center justify-center gap-3 py-4 px-10 rounded-b-lg bg-blue-zodiac-950 cursor-pointer text-base lg:text-lg 2xl:text-xl w-full'
 								>
 									Politica de Tratamiento de Datos
 								</motion.button>

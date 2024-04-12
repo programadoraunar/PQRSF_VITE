@@ -2,7 +2,7 @@ import React from 'react';
 
 function Footer() {
 	return (
-		<div className='bg-blue-zodiac-900 flex flex-col justify-center items-center py-3 px-5 sm:py-4 sm:px-6 md:py-5 md:px-7 lg:py-6 lg:px-24 xl:py-7 xl:px-52 2xl:py-7 2xl:px-60'>
+		<div className='bg-blue-zodiac-950 flex flex-col justify-center items-center py-3 px-5 sm:py-4 sm:px-6 md:py-5 md:px-7 lg:py-6 lg:px-24 xl:py-7 xl:px-52 2xl:py-7 2xl:px-60'>
 			<div className='flex items-center flex-col lg:flex-row'>
 				<div className='flex justify-center'>
 					<img

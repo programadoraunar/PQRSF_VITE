@@ -6,6 +6,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { radicadoSchema } from '../validations/consultaSchema';
 import { supabase } from '../supabase/client';
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeaderCell,
+	TableRow,
+} from '@tremor/react';
+
 function Consulta() {
 	const {
 		register,
@@ -18,6 +27,7 @@ function Consulta() {
 		radicado: '',
 		/* adjunto: null, */
 	});
+	const [dataConsulta, setDataConsulta] = useState();
 
 	const handleChange = e => {
 		const { name, value } = e.target;
@@ -40,6 +50,8 @@ function Consulta() {
 			});
 
 			console.log('Respuesta de Supabase:', { data, error });
+
+			setDataConsulta(data);
 		} catch (err) {
 			console.error('Error inesperado:', err);
 		}
@@ -47,7 +59,7 @@ function Consulta() {
 
 	return (
 		<div className='flex flex-col'>
-			<div className='flex justify-center lg:justify-start py-10 bg-blue-zodiac-900 lg:px-24'>
+			<div className='flex justify-center lg:justify-start py-10 bg-blue-zodiac-950 lg:px-24'>
 				<img
 					src='/logo-autonoma-de-narino.png'
 					alt='Logo De La Auitonoma'
@@ -64,10 +76,13 @@ function Consulta() {
 				</Link>
 			</div>
 			<div>
-				<h1 className='text-black pt-16 text-center font-medium text-3xl pb-5'>
+				<h1 className='text-black pt-16 text-center font-medium text-4xl pb-5'>
 					Consultar Estado de la Solicitud PQRSF
 				</h1>
-				<div className='border-2 border-blue-zodiac-950 my-9 mx-5 lg:my-10 lg:mx-16'>
+				<div className='border-2 rounded-lg border-blue-zodiac-950 my-9 mx-5 lg:my-10 lg:mx-16'>
+					<p className='text-black'>
+						Diguite el numero de radicado de su solicitud
+					</p>
 					<form onSubmit={handleSubmit(onSubmit)}>
 						<div className='flex flex-col justify-center items-center py-5'>
 							<label htmlFor='radicado' className='text-blue-zodiac-950'>
@@ -89,6 +104,46 @@ function Consulta() {
 							</button>
 						</div>
 					</form>
+					<div className='px-10 '>
+						{dataConsulta && dataConsulta.length > 0 && (
+							<Table className='mt-5 bg-white'>
+								<TableHead className='border-2 border-blue-zodiac-900'>
+									<TableRow>
+										<TableHeaderCell className='table-header-cell'>
+											Tipo Solicitud
+										</TableHeaderCell>
+										<TableHeaderCell className='table-header-cell'>
+											Canal
+										</TableHeaderCell>
+										<TableHeaderCell className='table-header-cell'>
+											Estado
+										</TableHeaderCell>
+										<TableHeaderCell className='table-header-cell'>
+											Descripcion
+										</TableHeaderCell>
+									</TableRow>
+								</TableHead>
+								<TableBody key={1} className='border-2'>
+									{dataConsulta.map((item, index) => (
+										<TableRow key={index}>
+											<TableCell className='lg:text-lg'>
+												{item.tipo_solicitud_pqrs}
+											</TableCell>
+											<TableCell className='lg:text-lg'>
+												{item.id_canal}
+											</TableCell>
+											<TableCell className='lg:text-lg'>
+												{item.id_estado}
+											</TableCell>
+											<TableCell className='lg:text-lg'>
+												{item.descripcion}
+											</TableCell>
+										</TableRow>
+									))}
+								</TableBody>
+							</Table>
+						)}
+					</div>
 				</div>
 			</div>
 

@@ -4,14 +4,12 @@ import { z } from 'zod';
 export const radicadoSchema = z.object({
 	radicado: z
 		.number({
-			errorMap: () => ({
-				message: 'Solo Numeros',
-			}),
+			message: 'El número de radicado debe ser un número válido',
 		})
-		.int()
+		.int({
+			message: 'El número de radicado debe ser un entero',
+		})
 		.positive({
-			errorMap: () => ({
-				message: 'Solo Positivos',
-			}),
+			message: 'El número de radicado debe ser un valor positivo',
 		}),
 });

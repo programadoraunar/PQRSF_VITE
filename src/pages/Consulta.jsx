@@ -78,95 +78,93 @@ function Consulta() {
 					Inicio
 				</Link>
 			</div>
-			<h1 className='font-gothicBold text-black pt-16 text-center font-medium text-3xl pb-5'>
+			<h1 className='font-gothicBold text-black pt-16 text-center font-medium text-3xl'>
 				Consultar Estado de la Solicitud PQRSF
 			</h1>
-			<div className='flex flex-col lg:flex-row lg:justify-around mx-2 lg:items-center lg:mx-7'>
+			<div className='flex flex-col lg:flex-row lg:justify-around mx-2 lg:items-center md:mx-16 lg:mx-7 lg:gap-5 my-10 xl:mx-6'>
 				<div className='hidden xl:block'>
-					<img src='/search.svg' width={500} />
+					<img src='/search.svg' className='xl:h-56 xl:w-auto' />
 				</div>
-				<div>
-					<div>
-						<div className='px-2 bg-white shadow-[0_2.8px_2.2px_rgba(0,_0,_0,_0.034),_0_6.7px_5.3px_rgba(0,_0,_0,_0.048),_0_12.5px_10px_rgba(0,_0,_0,_0.06),_0_22.3px_17.9px_rgba(0,_0,_0,_0.072),_0_41.8px_33.4px_rgba(0,_0,_0,_0.086),_0_100px_80px_rgba(0,_0,_0,_0.12)] py-10 my-9 lg:my-10'>
-							<p className='text-black'>
-								- Diguite el numero de radicado de su solicitud
-							</p>
-							<form onSubmit={handleSubmit(onSubmit)}>
-								<div className='flex flex-col justify-center items-center py-5'>
-									<label htmlFor='radicado' className='text-blue-zodiac-950'>
-										N° de Radicado
-									</label>
-									<input
-										value={formData.radicado}
-										{...register('radicado', { valueAsNumber: true })}
-										onChange={handleChange}
-										type='text'
-										className='w-52 my-5 text-blue-zodiac-950'
-										placeholder='Numero de radicado'
-									/>
-									{errors.radicado && (
-										<p className='text-red-500'>{errors.radicado.message}</p>
-									)}
-									<motion.button
-										whileHover={{ scale: 1.1 }}
-										onHoverStart={e => {}}
-										onHoverEnd={e => {}}
-										type='submit'
-										className='flex items-center justify-center gap-3 py-4 px-10 rounded-b-lg bg-blue-zodiac-950 cursor-pointer text-base lg:text-lg 2xl:text-xl'
-									>
-										Consultar
-									</motion.button>
-								</div>
-							</form>
-							<div className='py-5'>
-								{!isLoading && dataConsulta && dataConsulta.length > 0 && (
-									<Table className='mt-5 bg-white'>
-										<TableHead className='border-b-2 border-blue-zodiac-950'>
-											<TableRow>
-												<TableHeaderCell className='table-header-cell'>
-													Tipo Solicitud
-												</TableHeaderCell>
-												<TableHeaderCell className='table-header-cell'>
-													Canal
-												</TableHeaderCell>
-												<TableHeaderCell className='table-header-cell'>
-													Estado
-												</TableHeaderCell>
-												<TableHeaderCell className='table-header-cell'>
-													Descripcion
-												</TableHeaderCell>
-											</TableRow>
-										</TableHead>
-										<TableBody key={1} className='border-2'>
-											{dataConsulta.map((item, index) => (
-												<TableRow key={index}>
-													<TableCell className='lg:text-lg'>
-														{item.tipo_solicitud_pqrs}
-													</TableCell>
-													<TableCell className='lg:text-lg'>
-														{item.id_canal}
-													</TableCell>
-													<TableCell className='lg:text-lg'>
-														{item.id_estado}
-													</TableCell>
-													<TableCell className='lg:text-lg'>
-														{item.descripcion}
-													</TableCell>
-												</TableRow>
-											))}
-										</TableBody>
-									</Table>
+				<div className='flex-grow'>
+					<div className='px-2 bg-white shadow-[0_2.8px_2.2px_rgba(0,_0,_0,_0.034),_0_6.7px_5.3px_rgba(0,_0,_0,_0.048),_0_12.5px_10px_rgba(0,_0,_0,_0.06),_0_22.3px_17.9px_rgba(0,_0,_0,_0.072),_0_41.8px_33.4px_rgba(0,_0,_0,_0.086),_0_100px_80px_rgba(0,_0,_0,_0.12)] py-10 my-9 md:px-6 lg:my-10 xl:px-20'>
+						<p className='text-black'>
+							- Diguite el numero de radicado de su solicitud
+						</p>
+						<form onSubmit={handleSubmit(onSubmit)}>
+							<div className='flex flex-col justify-center items-center py-5'>
+								<label htmlFor='radicado' className='text-blue-zodiac-950'>
+									N° de Radicado
+								</label>
+								<input
+									value={formData.radicado}
+									{...register('radicado', { valueAsNumber: true })}
+									onChange={handleChange}
+									type='text'
+									className='w-52 my-5 text-blue-zodiac-950'
+									placeholder='Numero de radicado'
+								/>
+								{errors.radicado && (
+									<p className='text-red-500'>{errors.radicado.message}</p>
 								)}
-								{!dataConsulta ||
-									(dataConsulta.length === 0 && (
-										<p className='text-center text-black'>
-											No hay datos disponibles.
-										</p>
-									))}
+								<motion.button
+									whileHover={{ scale: 1.1 }}
+									onHoverStart={e => {}}
+									onHoverEnd={e => {}}
+									type='submit'
+									className='flex items-center justify-center gap-3 py-4 px-10 rounded-b-lg bg-blue-zodiac-950 cursor-pointer text-base lg:text-lg 2xl:text-xl'
+								>
+									Consultar
+								</motion.button>
 							</div>
-							{isLoading && <Loading />}
-						</div>
+						</form>
 					</div>
+					<div className='mt-10'>
+						{!isLoading && dataConsulta && dataConsulta.length > 0 && (
+							<Table className='mt-5 bg-white'>
+								<TableHead className='border-b-2 border-blue-zodiac-950'>
+									<TableRow>
+										<TableHeaderCell className='table-header-cell'>
+											Tipo Solicitud
+										</TableHeaderCell>
+										<TableHeaderCell className='table-header-cell'>
+											Canal Respuesta
+										</TableHeaderCell>
+										<TableHeaderCell className='table-header-cell'>
+											Estado
+										</TableHeaderCell>
+										<TableHeaderCell className='table-header-cell'>
+											Descripcion
+										</TableHeaderCell>
+									</TableRow>
+								</TableHead>
+								<TableBody key={1} className='border-2'>
+									{dataConsulta.map((item, index) => (
+										<TableRow key={index}>
+											<TableCell className='lg:text-lg'>
+												{item.tipo_solicitud_pqrs}
+											</TableCell>
+											<TableCell className='lg:text-lg'>
+												{item.id_canal}
+											</TableCell>
+											<TableCell className='lg:text-lg'>
+												{item.id_estado}
+											</TableCell>
+											<TableCell className='lg:text-lg'>
+												{item.descripcion}
+											</TableCell>
+										</TableRow>
+									))}
+								</TableBody>
+							</Table>
+						)}
+						{!dataConsulta ||
+							(dataConsulta.length === 0 && (
+								<p className='text-center font-gothicBold text-red-400'>
+									No hay datos disponibles.
+								</p>
+							))}
+					</div>
+					{isLoading && <Loading />}
 				</div>
 			</div>
 

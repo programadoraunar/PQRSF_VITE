@@ -25,7 +25,7 @@ function CardsInfo() {
 	return (
 		<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 px-4'>
 			{data.map(item => (
-				<div key={item.solicitud} className='block max-w-sm p-6'>
+				<div key={item.solicitud} className='block max-w-sm p-6 bg-white'>
 					<h2 className='mb-2 text-2xl lg:text-2xl 2xl:text-4xl  font-bold tracking-tight text-gray-900'>
 						{item.solicitud}
 					</h2>

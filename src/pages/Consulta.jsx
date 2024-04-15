@@ -100,7 +100,7 @@ function Consulta() {
 									{...register('radicado', { valueAsNumber: true })}
 									onChange={handleChange}
 									type='text'
-									className='w-52 my-5 text-blue-zodiac-950'
+									className='w-52 my-5 text-blue-zodiac-950 border hover:border-blue-zodiac-950 p-1'
 									placeholder='Numero de radicado'
 								/>
 								{errors.radicado && (

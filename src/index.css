@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@font-face {
+	font-family: "GothicRegular";
+	src: url('./assets/fonts/CenturyGothicRegular.ttf') format('truetype');
+}
+@font-face {
+	font-family: "GothicBold";
+	src: url('../src//assets/fonts/CenturyGothic-Bold.ttf') format('truetype');
+}
+
 /* Estilos para ocultar las barras de desplazamiento en toda la aplicación, excepto en .tableMov */
 *:not(.tableMov)::-webkit-scrollbar {
 	display: none; /* Oculta la barra de desplazamiento */

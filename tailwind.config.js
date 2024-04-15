@@ -9,6 +9,10 @@ export default {
 	],
 	theme: {
 		extend: {
+			fontFamily: {
+				gothicRegular: ['GothicRegular'],
+				gothicBold: ['GothicBold'],
+			},
 			colors: {
 				blueBase: '#0B2851',
 				textBlank: '#d5f1ff',

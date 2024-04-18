@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react';
 import { getUserProfile } from '../supabase/actions/auth';
 
-function UseProfile() {
+/**
+ * Hook que obtiene el perfil de usuario.
+ * @hook
+ * @returns {object|null} - El perfil de usuario, o null si no se ha podido obtener.
+ */
+function useProfile() {
 	const [userProfile, setUserProfile] = useState(null);
 
 	useEffect(() => {
@@ -13,7 +18,8 @@ function UseProfile() {
 		};
 		getProfile();
 	}, []);
+
 	return userProfile;
 }
 
-export default UseProfile;
+export default useProfile;

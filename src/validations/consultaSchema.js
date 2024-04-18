@@ -1,6 +1,15 @@
 import { z } from 'zod';
 
-// Definir el esquema de validación para el número de radicado
+/**
+ * Define el esquema de validación para el campo de número de radicado.
+ * @module radicadoSchema
+ * @type {z.ZodType<{ radicado: string }>}
+ * @property {string} radicado - El número de radicado.
+ * @example
+ * const data = { radicado: 'ABC123-XYZ' };
+ * const result = radicadoSchema.parse(data);
+ * console.log(result); // { radicado: 'ABC123-XYZ' }
+ */
 export const radicadoSchema = z.object({
 	radicado: z
 		.string({

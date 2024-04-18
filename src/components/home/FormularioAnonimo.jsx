@@ -11,7 +11,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { solicitudAnonimaSchema } from '../../validations/formSchema';
 import { RiCloseCircleFill } from '@remixicon/react';
-import { registrarSolicitudAnonima } from '../../supabase/actions/registroSolicitudes';
+// import { registrarSolicitudAnonima } from '../../supabase/actions/registroSolicitudes';
+import Modal from './Modal';
 /**
  * @component FormularioAnonimo
  * @description Componente que representa un formulario para enviar solicitudes anónimas.
@@ -56,10 +57,19 @@ function FormularioAnonimo({ onClose }) {
 			[name]: cleanedValue,
 		}));
 	};
+	const [mostrarModal, setMostrarModal] = useState(false);
+
+	const handleMostrarModal = () => {
+		setMostrarModal(true);
+	};
+
+	const handleCerrarModal = () => {
+		setMostrarModal(false);
+	};
 
 	// Manejador de envío del formulario
 	const onSubmit = async dato => {
-		try {
+		/* try {
 			// Convertir las ID a números enteros
 			const idtipoSolicitud = dato.tipoSolicitud;
 			const idDependencia = parseInt(dato.dependencia, 10);
@@ -79,7 +89,7 @@ function FormularioAnonimo({ onClose }) {
 		} catch (err) {
 			// Manejo de errores
 			console.error('Error durante el envío de la solicitud:', err);
-		}
+		} */
 	};
 
 	return (
@@ -185,11 +195,17 @@ function FormularioAnonimo({ onClose }) {
 					<button
 						type='submit'
 						className='mt-4 px-4 py-2 bg-blue-zodiac-800 text-white rounded-lg'
+						onClick={handleMostrarModal}
 					>
 						Enviar
 					</button>
 				</form>
 			</motion.div>
+			{mostrarModal && (
+				<Modal onClose={handleCerrarModal}>
+					<div>este es una modal reutilizable</div>
+				</Modal>
+			)}
 		</AnimatePresence>
 	);
 }

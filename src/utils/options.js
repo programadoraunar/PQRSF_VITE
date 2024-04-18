@@ -10,53 +10,59 @@
  * @description Arreglo que contiene las opciones de dependencias para los formularios.
  */
 export const optionsDependencias = [
-	'Rectoría',
-	'Secretaría General',
-	'Contabilidad',
-	'Tesorería',
-	'Revisoría Fiscal',
-	'Virtual',
-	'Jurídica',
-	'Vicerrectoría Administrativa',
-	'Vicerrectoría Financiera',
-	'Sistemas',
-	'Bienestar',
-	'Biblioteca',
-	'Enfermería',
-	'Mercadeo',
-	'Registro y Control',
-	'Crédito y Cartera',
-	'Recepción',
-	'Internacionalización',
-	'Laboratorio Mecánica',
-	'Laboratorio Electrónica',
-	'Coordinación Administración',
-	'Coordinación Contaduría',
-	'Coordinación Diseño de Modas',
-	'Coordinación Mecánica Dental',
-	'Coordinación Ingeniería Informática',
+	{ id: '1', nombre: 'Rectoría' },
+	{ id: '2', nombre: 'Secretaría General' },
+	{ id: '3', nombre: 'Contabilidad' },
+	{ id: '4', nombre: 'Tesorería' },
+	{ id: '5', nombre: 'Revisoría Fiscal' },
+	{ id: '6', nombre: 'Virtual' },
+	{ id: '7', nombre: 'Jurídica' },
+	{ id: '8', nombre: 'Vicerrectoría Administrativa' },
+	{ id: '9', nombre: 'Vicerrectoría Financiera' },
+	{ id: '10', nombre: 'Sistemas' },
+	{ id: '11', nombre: 'Bienestar' },
+	{ id: '12', nombre: 'Biblioteca' },
+	{ id: '13', nombre: 'Enfermería' },
+	{ id: '14', nombre: 'Mercadeo' },
+	{ id: '15', nombre: 'Registro y Control' },
+	{ id: '16', nombre: 'Crédito y Cartera' },
+	{ id: '17', nombre: 'Recepción' },
+	{ id: '18', nombre: 'Internacionalización' },
+	{ id: '19', nombre: 'Laboratorio Mecánica' },
+	{ id: '20', nombre: 'Laboratorio Electrónica' },
+	{ id: '21', nombre: 'Coordinación Administración' },
+	{ id: '22', nombre: 'Coordinación Contaduría' },
+	{ id: '23', nombre: 'Coordinación Diseño de Modas' },
+	{ id: '24', nombre: 'Coordinación Mecánica Dental' },
+	{ id: '25', nombre: 'Coordinación Ingeniería Informática' },
 ];
 
 /**
  * @constant {Array<string>} canal
  * @description Arreglo que contiene los canales de respuesta para los formularios.
  */
-export const optionscanal = ['email', 'fisico'];
+export const optionscanal = [
+	{ id: '1', nombre: 'email' },
+	{ id: '2', nombre: 'fisico' },
+];
 
 /**
- * @constant {Array<string>} tiposIdentificacion
+ * @constant {Array<string>} optionsIdentificacion
  * @description Arreglo que contiene los canales de respuesta para los formularios.
  */
-export const tiposIdentificacion = ['CC', 'Targeta identidad'];
+export const optionsIdentificacion = [
+	{ id: '1', nombre: 'CC' },
+	{ id: '2', nombre: 'Targeta de Identidad' },
+];
 
 /**
  * @constant {Array<string>} optionsSolicitud
  * @description Arreglo que contiene los tipos de solicitud para los formularios.
  */
 export const optionsSolicitud = [
-	'Peticion',
-	'Queja',
-	'Reclamo',
-	'Suguerencia',
-	'Felicitacion',
+	{ id: '1', nombre: 'Peticion' },
+	{ id: '2', nombre: 'Queja' },
+	{ id: '3', nombre: 'Reclamo' },
+	{ id: '4', nombre: 'Suguerencia' },
+	{ id: '5', nombre: 'Felicitacion' },
 ];

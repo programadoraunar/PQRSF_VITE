@@ -26,10 +26,10 @@ function CardsInfo() {
 		<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 px-4'>
 			{data.map(item => (
 				<div key={item.solicitud} className='block max-w-sm p-6 bg-white'>
-					<h2 className='mb-2 text-2xl lg:text-2xl 2xl:text-4xl  font-bold tracking-tight text-gray-900'>
+					<h2 className='mb-2 text-base lg:text-lg 2xl:text-xl  font-gothicBold tracking-tight text-gray-900'>
 						{item.solicitud}
 					</h2>
-					<p className='font-normal text-gray-700 dark:text-gray-500 text-base lg:text-xl 2xl:text-2xl'>
+					<p className='font-normal text-gray-700 dark:text-gray-500 text-sm lg:text-base 2xl:text-lg'>
 						{item.text}
 					</p>
 				</div>

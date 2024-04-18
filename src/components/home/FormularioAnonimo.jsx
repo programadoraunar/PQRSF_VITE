@@ -1,52 +1,87 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Buttons from '../ui/Buttons';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { solicitudAnonimaSchema } from '../../validations/formSchema';
-import { gsap } from 'gsap';
-import { motion, AnimatePresence } from 'framer-motion';
-import PropTypes from 'prop-types';
-import { RiCloseCircleFill } from '@remixicon/react';
 import {
 	optionscanal,
 	optionsDependencias,
 	optionsSolicitud,
 } from '../../utils/options';
-
+import { gsap } from 'gsap';
+import { motion, AnimatePresence } from 'framer-motion';
+import PropTypes from 'prop-types';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { solicitudAnonimaSchema } from '../../validations/formSchema';
+import { RiCloseCircleFill } from '@remixicon/react';
+import { registrarSolicitudAnonima } from '../../supabase/actions/registroSolicitudes';
+/**
+ * @component FormularioAnonimo
+ * @description Componente que representa un formulario para enviar solicitudes anónimas.
+ * @param {Function} onClose - Función para cerrar el formulario.
+ */
 function FormularioAnonimo({ onClose }) {
-	const ref = useRef(null);
-	const [formData, setFormData] = useState({
-		tipoSolicitud: '',
-		dependencia: '',
-		description: '',
-		canal: '',
-		/* adjunto: null, */
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+		setValue,
+	} = useForm({
+		resolver: zodResolver(solicitudAnonimaSchema),
 	});
 
+	// Referencia para la animación de GSAP
+	const ref = useRef(null);
+
+	// Efecto para animar la entrada del formulario
 	useEffect(() => {
 		if (ref.current) {
 			gsap.fromTo(ref.current, { opacity: 0 }, { opacity: 1, duration: 0.6 });
 		}
 	}, []);
 
-	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-	} = useForm({
-		resolver: zodResolver(solicitudAnonimaSchema),
+	// Estado local para manejar los datos de la descripcion
+	const [formData, setFormData] = useState({
+		description: '',
+		// adjunto: null,
 	});
+
+	// Manejador de cambio para los campos del formulario, se manejan los caracteres
+	// del campo descipcion
 	const handleChange = e => {
 		const { name, value } = e.target;
-		const cleanedValue = value.replace(/[^\w\s]/gi, ''); // Elimina caracteres especiales
+
+		// Limpiar el valor eliminando caracteres especiales
+		const cleanedValue = value.replace(/[^\w\s]/gi, '');
+
 		setFormData(prevData => ({
 			...prevData,
 			[name]: cleanedValue,
 		}));
 	};
-	const onSubmit = data => {
-		console.log(data);
+
+	// Manejador de envío del formulario
+	const onSubmit = async dato => {
+		try {
+			// Convertir las ID a números enteros
+			const idtipoSolicitud = dato.tipoSolicitud;
+			const idDependencia = parseInt(dato.dependencia, 10);
+			const idCanal = parseInt(dato.canal, 10);
+			const descripcionData = dato.description;
+
+			// Llamar a la función registrarSolicitudAnonima con los datos del formulario
+			const data = await registrarSolicitudAnonima(
+				idtipoSolicitud,
+				idDependencia,
+				idCanal,
+				descripcionData,
+			);
+
+			// Registro exitoso
+			console.log('Solicitud anónima registrada con éxito:', data);
+		} catch (err) {
+			// Manejo de errores
+			console.error('Error durante el envío de la solicitud:', err);
+		}
 	};
+
 	return (
 		<AnimatePresence>
 			<motion.div
@@ -54,88 +89,90 @@ function FormularioAnonimo({ onClose }) {
 				animate={{ opacity: 1 }}
 				exit={{ opacity: 0 }}
 				ref={ref}
-				className='relative border-2 border-blue-zodiac-800 rounded-lg py-5 my-5 px-4 shadow-xl flex flex-col  bg-white'
+				className='relative border-2 border-blue-zodiac-800 rounded-lg py-5 my-5 px-4 shadow-xl flex flex-col bg-white'
 			>
-				<h1 className='text-blue-zodiac-900 text-center text-2xl lg:text-3xl font-semibold '>
-					Solicitudes Anonimas
+				<h1 className='text-blue-zodiac-900 text-center text-2xl font-gothicBold'>
+					Solicitudes Anónimas
 				</h1>
 				<button
 					type='button'
-					className='text-black cursor-pointer absolute top-0 right-0 mt-2 mr-2' // Posicionamiento absoluto en la esquina superior derecha
+					className='text-black cursor-pointer absolute top-0 right-0 mt-2 mr-2'
 					onClick={onClose}
 				>
 					<RiCloseCircleFill size={32} />
 				</button>
-
 				<form onSubmit={handleSubmit(onSubmit)}>
-					<div className='mb-4 mt-8 text-base lg:text-lg 2xl:text-xl text-blue-zodiac-950 text-start font-medium'>
+					<div className='mb-4 mt-8 text-base lg:text-base text-blue-zodiac-950 text-start'>
 						Tipo de Solicitud
 					</div>
 					<select
-						className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer text-base lg:text-lg 2xl:text-xl'
-						onChange={handleChange}
+						className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer'
 						{...register('tipoSolicitud')}
+						onChange={e => {
+							console.log('Valor seleccionado:', e.target.value);
+							setValue('tipoSolicitud', e.target.value);
+						}}
 					>
 						{optionsSolicitud.map((option, index) => (
-							<option key={index} value={option}>
-								{option}
+							<option key={index} value={option.nombre}>
+								{option.nombre}
 							</option>
 						))}
 					</select>
 					{errors.tipoSolicitud && (
 						<p className='text-red-500'>{errors.tipoSolicitud.message}</p>
 					)}
-
-					<div className='mb-4 mt-8 text-base text-blue-zodiac-950 text-start font-medium lg:text-lg 2xl:text-xl'>
+					<div className='mb-4 mt-8 text-base text-blue-zodiac-950 text-start'>
 						Dependencia
 					</div>
 					<select
-						className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer text-base lg:text-lg 2xl:text-xl'
-						onChange={handleChange}
+						className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer'
 						{...register('dependencia')}
+						onChange={e => {
+							console.log('Valor seleccionado:', e.target.value);
+							setValue('dependencia', e.target.value);
+						}}
 					>
-						{/* Mapea sobre las opciones y crea un SearchSelectItem para cada una */}
-						{optionsDependencias.map((option, index) => (
-							<option key={index} value={option}>
-								{option}
+						{optionsDependencias.map((dependencia, index) => (
+							<option key={index} value={dependencia.id}>
+								{dependencia.nombre}
 							</option>
 						))}
 					</select>
 					{errors.dependencia && (
 						<p className='text-red-500'>{errors.dependencia.message}</p>
 					)}
-
-					<div className='mb-4 mt-8 text-base text-blue-zodiac-950 text-start font-medium lg:text-lg 2xl:text-xl'>
+					<div className='mb-4 mt-8 text-base text-blue-zodiac-950 text-start'>
 						Canal de Respuesta
 					</div>
 					<select
-						className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer text-base lg:text-lg 2xl:text-xl'
-						value={formData.canal}
-						onChange={handleChange}
+						className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer'
 						{...register('canal')}
+						onChange={e => {
+							console.log('Valor seleccionado:', e.target.value);
+							setValue('canal', e.target.value);
+						}}
 					>
-						{/* Mapea sobre las opciones y crea un SearchSelectItem para cada una */}
 						{optionscanal.map((option, index) => (
-							<option key={index} value={option}>
-								{option}
+							<option key={index} value={option.id}>
+								{option.nombre}
 							</option>
 						))}
 					</select>
 					{errors.canal && (
 						<p className='text-red-500'>{errors.canal.message}</p>
 					)}
-
 					<div className='flex flex-col'>
 						<label
 							htmlFor='description'
-							className='text-base py-2 text-blue-zodiac-950 text-start font-medium lg:text-lg 2xl:text-xl'
+							className='text-base py-2 text-blue-zodiac-950 text-start'
 						>
-							Description
+							Descripción
 						</label>
 						<textarea
-							className='text-blue-zodiac-950 hover:border-blue-zodiac-950 text-base lg:text-lg 2xl:text-xl'
+							className='text-blue-zodiac-950 hover:border-blue-zodiac-950'
 							id='description'
-							placeholder='Start typing here...'
+							placeholder='Comienza a escribir aquí...'
 							rows={6}
 							{...register('description')}
 							value={formData.description}
@@ -145,24 +182,20 @@ function FormularioAnonimo({ onClose }) {
 							<p className='text-red-500'>{errors.description.message}</p>
 						)}
 					</div>
-
-					{/* <input
-						type='file'
-						className='border text-black border-gray-300 p-2 rounded-md text-sm lg:text-xl'
-						{...register('adjunto')}
-					/>
-					{errors.adjunto && (
-						<p className='text-red-500'>{errors.adjunto.message}</p>
-					)} */}
-
-					<Buttons type='submit'>Enviar</Buttons>
+					<button
+						type='submit'
+						className='mt-4 px-4 py-2 bg-blue-zodiac-800 text-white rounded-lg'
+					>
+						Enviar
+					</button>
 				</form>
 			</motion.div>
 		</AnimatePresence>
 	);
 }
+
 FormularioAnonimo.propTypes = {
-	onClose: PropTypes.func,
+	onClose: PropTypes.func.isRequired,
 };
 
 export default FormularioAnonimo;

@@ -29,15 +29,15 @@ function Home() {
 
 	return (
 		<div>
-			<div className='py-3 px-5 sm:py-4 sm:px-6 md:py-5 md:px-7 lg:py-6 lg:px-16 xl:py-7 xl:px-36 2xl:py-7 2xl:px-80'>
+			<div className='py-3 px-5 sm:py-4 sm:px-6 md:py-5 md:px-7 lg:py-6 lg:px-16 xl:py-7 xl:px-36 2xl:py-7 2xl:px-60'>
 				<Header />
 				<section id='titulo'>
-					<h1 className='text-black px-10 pt-5 text-lg md:text-xl lg:text-3xl 2xl:text-3xl'>
+					<h1 className='text-black font-bold px-10 pt-5 text-xl md:text-xl lg:text-xl 2xl:text-2xl'>
 						Peticiones Quejas, Reclamos, Sugerencias, Felicitaciones{' '}
 					</h1>
 				</section>
 				<section id='informacion'>
-					<p className='text-black text-base md:text-lg lg:text-xl 2xl:text-2xl px-10 py-10'>
+					<p className='text-black text-md md:text-sm lg:text-base 2xl:text-lg px-10 py-10'>
 						La Universidad Autónoma de Nariño ha establecido una alternativa
 						para facilitar la radicación de Peticiones, Quejas, Reclamos,
 						Sugerencias y Felicitaciones (PQRSF), a través de su sitio web
@@ -63,11 +63,11 @@ function Home() {
 						<div className='flex flex-col justify-center'>
 							<motion.button
 								whileHover={{ scale: 1.05 }}
-								className='flex items-center justify-center gap-3 py-4 px-10 rounded-b-lg bg-blue-zodiac-950 cursor-pointer text-base lg:text-lg 2xl:text-xl hover:bg-blue-zodiac-950'
+								className='flex items-center justify-center gap-3 py-4 px-10 rounded-b-lg bg-blue-zodiac-950 cursor-pointer text-base hover:bg-blue-zodiac-950'
 								onClick={handleMostrarComponenteAnonimo}
 							>
 								<RiFileUserFill />
-								Formulario Aninimo
+								Formulario Anonimo
 							</motion.button>
 
 							<AnimatePresence>
@@ -91,7 +91,7 @@ function Home() {
 								whileHover={{ scale: 1.05 }}
 								onHoverStart={e => {}}
 								onHoverEnd={e => {}}
-								className='flex items-center justify-center gap-3 py-4 px-10 rounded-b-lg bg-blue-zodiac-950 cursor-pointer text-base lg:text-lg 2xl:text-xl'
+								className='flex items-center justify-center gap-3 py-4 px-10 rounded-b-lg bg-blue-zodiac-950 cursor-pointer'
 								onClick={handleMostrarComponenteNormal}
 							>
 								<RiUserAddFill />
@@ -138,6 +138,7 @@ function Home() {
 					</div>
 				</section>
 			</div>
+
 			<Footer />
 		</div>
 	);

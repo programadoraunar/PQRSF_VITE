@@ -1,109 +1,152 @@
 import {
 	optionsDependencias,
+	optionsIdentificacion,
+	optionsSolicitud,
 	optionscanal,
-	tiposIdentificacion,
 } from '../utils/options';
 import { z } from 'zod';
+
 /**
- * @file solicitudAnonimaSchema.js
- * @description Este archivo contiene el esquema de validación para el formulario de solicitud anónima utilizando la librería Zod.
- * @author [Tu Nombre]
+ * @file formSchema.js
+ * @description Este archivo contiene el esquema de validación para el formulario de solicitud anónima y normales utilizando la librería Zod.
+ * @author [Aunar]
  */
 
 /**
- * @constant {Array<string>} tiposSolicitud
- * @description Arreglo que contiene los tipos de solicitud válidos para el formulario de solicitud anónima.
+ * @constant {Array<string>} canalIds
+ * @description Arreglo que contiene los valores permitidos para el campo "canal".
  */
-const tiposSolicitud = [
-	'Peticion',
-	'Queja',
-	'Reclamo',
-	'Suguerencia',
-	'Felicitacion',
-];
+const canalIds = optionscanal.map(option => option.id);
+
 /**
- * @constant {Array<string>} allowedExtensions
- * @description Arreglo que contiene las extensiones de archivo permitidas para el adjunto en el formulario de solicitud anónima.
+ * @constant {Array<string>} tipoSolicitudIds
+ * @description Arreglo que contiene los valores permitidos para el campo "tipoSolicitud".
  */
-const allowedExtensions = ['jpg', 'jpeg', 'png', 'pdf'];
+const tipoSolicitudNombres = optionsSolicitud.map(option => option.nombre);
+
+/**
+ * @constant {Array<string>} dependenciasIds
+ * @description Arreglo que contiene los valores permitidos para el campo "dependencia".
+ */
+const dependenciasIds = optionsDependencias.map(option => option.id);
 
 /**
  * @constant {z.ZodObject<any>} solicitudAnonimaSchema
  * @description Esquema de validación para el formulario de solicitud anónima utilizando la librería Zod.
  */
 export const solicitudAnonimaSchema = z.object({
-	tipoSolicitud: z.enum(tiposSolicitud, {
-		errorMap: () => ({
-			message: 'Por favor seleccione un tipo de solicitud',
-		}),
+	tipoSolicitud: z.enum(tipoSolicitudNombres, {
+		errorMap: (issue, context) => {
+			if (issue.code === z.ZodIssueCode.invalid_enum_value) {
+				return {
+					message:
+						'El valor de tipo de solicitud debe ser "Peticion", "Queja", "Reclamo", "Sugerencia" o "Felicitacion".',
+				};
+			}
+			return { message: context.defaultError };
+		},
 	}),
-	dependencia: z.enum(optionsDependencias, {
-		errorMap: () => ({
-			message: 'Por favor seleccione una dependencia válida',
-		}),
+	dependencia: z.enum(dependenciasIds, {
+		errorMap: (issue, context) => {
+			if (issue.code === z.ZodIssueCode.invalid_enum_value) {
+				return {
+					message:
+						'El valor de dependencia debe ser uno de los valores permitidos.',
+				};
+			}
+			return { message: context.defaultError };
+		},
+	}),
+	canal: z.enum(canalIds, {
+		errorMap: (issue, context) => {
+			if (issue.code === z.ZodIssueCode.invalid_enum_value) {
+				return {
+					message: 'El valor de canal debe ser "email" o "fisico".',
+				};
+			}
+			return { message: context.defaultError };
+		},
 	}),
 	description: z
 		.string()
-		.min(10, 'La descripción debe tener al menos 10 caracteres')
-		.max(500, 'La descripción no puede exceder los 500 caracteres')
+		.min(10, 'La descripción debe tener al menos 10 caracteres.')
+		.max(500, 'La descripción no puede exceder los 500 caracteres.')
 		.refine(val => val.trim().length > 0, {
-			message: 'La descripción no puede contener solo espacios en blanco',
+			message: 'La descripción no puede contener solo espacios en blanco.',
 		}),
-	canal: z.enum(optionscanal, {
-		errorMap: () => ({
-			message: 'Por favor seleccione una dependencia válida',
-		}),
-	}),
-
 	/* adjunto: z
-		.instanceof(FileList)
-		.refine(file => file?.length === 1, 'File is required.')
-		.refine(
-			file => {
-				const selectedFile = file[0];
-				if (!selectedFile) return false;
-				const fileNameParts = selectedFile.name.split('.');
-				const fileExtension =
-					fileNameParts[fileNameParts.length - 1].toLowerCase();
-				return allowedExtensions.includes(fileExtension);
-			},
-			'Archivo no válido. Las extensiones permitidas son: ' +
-				allowedExtensions.join(', '),
-		), */
+        .instanceof(FileList)
+        .refine(file => file?.length === 1, 'Debe adjuntarse un archivo.')
+        .refine(
+            file => {
+                const selectedFile = file[0];
+                if (!selectedFile) return false;
+                const fileNameParts = selectedFile.name.split('.');
+                const fileExtension =
+                    fileNameParts[fileNameParts.length - 1].toLowerCase();
+                return allowedExtensions.includes(fileExtension);
+            },
+            `Extensión de archivo no permitida. Las extensiones permitidas son: ${allowedExtensions.join(', ')}`,
+        ), */
 });
+const tiposIdentificacionIds = optionsIdentificacion.map(option => option.id);
 
 /**
  * @constant {z.ZodObject<any>} solicitudNormalesSchema
  * @description Esquema de validación para el formulario de solicitud Normales utilizando la librería Zod.
  */
 export const solicitudNormalesSchema = z.object({
-	tipoIdentificacion: z.enum(tiposIdentificacion, {
-		errorMap: () => ({
-			message: 'Por favor seleccione un tipo de identificacion',
-		}),
+	tipoIdentificacion: z.enum(tiposIdentificacionIds, {
+		errorMap: (issue, context) => {
+			if (issue.code === z.ZodIssueCode.invalid_enum_value) {
+				return {
+					message:
+						'El valor de tipo de solicitud debe ser "CC", "Targeta de Indentidad".',
+				};
+			}
+			return { message: context.defaultError };
+		},
 	}),
-	tipoSolicitud: z.enum(tiposSolicitud, {
-		errorMap: () => ({
-			message: 'Por favor seleccione un tipo de solicitud',
-		}),
+	tipoSolicitud: z.enum(tipoSolicitudNombres, {
+		errorMap: (issue, context) => {
+			if (issue.code === z.ZodIssueCode.invalid_enum_value) {
+				return {
+					message:
+						'El valor de tipo de solicitud debe ser "Peticion", "Queja", "Reclamo", "Sugerencia" o "Felicitacion".',
+				};
+			}
+			return { message: context.defaultError };
+		},
 	}),
-	dependencia: z.enum(optionsDependencias, {
-		errorMap: () => ({
-			message: 'Por favor seleccione una dependencia válida',
-		}),
+	dependencia: z.enum(dependenciasIds, {
+		errorMap: (issue, context) => {
+			if (issue.code === z.ZodIssueCode.invalid_enum_value) {
+				return {
+					message:
+						'El valor de dependencia debe ser uno de los valores permitidos.',
+				};
+			}
+			return { message: context.defaultError };
+		},
+	}),
+	canal: z.enum(canalIds, {
+		errorMap: (issue, context) => {
+			if (issue.code === z.ZodIssueCode.invalid_enum_value) {
+				return {
+					message: 'El valor de canal debe ser "email" o "fisico".',
+				};
+			}
+			return { message: context.defaultError };
+		},
 	}),
 	description: z
 		.string()
-		.min(10, 'La descripción debe tener al menos 10 caracteres')
-		.max(500, 'La descripción no puede exceder los 500 caracteres')
+		.min(10, 'La descripción debe tener al menos 10 caracteres.')
+		.max(500, 'La descripción no puede exceder los 500 caracteres.')
 		.refine(val => val.trim().length > 0, {
-			message: 'La descripción no puede contener solo espacios en blanco',
+			message: 'La descripción no puede contener solo espacios en blanco.',
 		}),
-	canal: z.enum(optionscanal, {
-		errorMap: () => ({
-			message: 'Por favor seleccione una dependencia válida',
-		}),
-	}),
+
 	nombre: z
 		.string()
 		.max(100, 'el nombre no puede exceder los 100 caracteres')
@@ -122,15 +165,13 @@ export const solicitudNormalesSchema = z.object({
 		.refine(val => val.trim().length > 0, {
 			message: 'La direccion no puede contener solo espacios en blanco',
 		}),
-	celular: z.number({
-		errorMap: () => ({
-			message: 'Por favor solo numeros',
-		}),
-	}),
+	celular: z
+		.string()
+		.max(11, 'El telefono celular no puede exceder los 11 numeros')
+		.min(10, 'El telefono no puede tener menos de 10 numeros'),
 	email: z.string().email({
 		message: 'Por favor ingrese un correo válido',
 	}),
-
 	/* adjunto: z
 		.instanceof(FileList)
 		.refine(file => file?.length === 1, 'File is required.')

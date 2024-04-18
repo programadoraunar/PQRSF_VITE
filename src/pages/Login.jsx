@@ -20,14 +20,27 @@ function Login() {
 
 	const onSubmit = async () => {
 		const result = await signIn(email, password);
+		console.log(result.error);
 		if (result.error) {
+			// Manejar el error
 			setError(result.error);
-			console.log(error);
-			toast('Error', {
-				description: String(result.error),
-				duration: 5000,
-				position: 'bottom-center',
-			});
+			console.log('Error:', result.error);
+
+			// Mostrar un mensaje específico para credenciales inválidas
+			if (result.error === 'Invalid login credentials') {
+				toast('Error', {
+					description:
+						'Credenciales inválidas. Por favor, verifica tu correo electrónico y contraseña.',
+					duration: 5000,
+					position: 'bottom-center',
+				});
+			} else {
+				toast('Error', {
+					description: String(result.error),
+					duration: 5000,
+					position: 'bottom-center',
+				});
+			}
 		} else {
 			// Manejar el inicio de sesión exitoso
 			navigate('/AdminProfile');
@@ -40,10 +53,10 @@ function Login() {
 				<div className='min-h-screen flex flex-col items-center justify-center py-6'>
 					<div className='grid md:grid-cols-2 items-center gap-10 max-w-6xl w-full'>
 						<div className='max-md:text-center'>
-							<h2 className='text-textBlank  lg:text-6xl xl:text-7xl text-3xl font-extrabold lg:leading-[55px]'>
+							<h2 className='text-textBlank lg:text-3xl xl:text-4xl text-2xl font-extrabold lg:leading-[55px]'>
 								Bienvenido al Sistema PQRSF
 							</h2>
-							<p className='text-textGrey text-sm xl:text-xl mt-6'>
+							<p className='text-textGrey text-sm xl:text-lg mt-6'>
 								Ingrese sesión con su correo y contraseña
 							</p>
 							<div className='flex justify-center py-7'>
@@ -60,7 +73,7 @@ function Login() {
 							className='space-y-6 max-w-md md:max-w-full md:ml-auto max-md:mx-auto w-full border border-y-4 border-bottomBlue rounded-lg px-5 py-10 bg-white'
 							onSubmit={handleSubmit(onSubmit)}
 						>
-							<h3 className='text-center text-gray-600 text-2xl xl:text-4xl font-extrabold mb-8 max-md:text-center'>
+							<h3 className='text-center text-gray-600 text-2xl xl:text-3xl font-extrabold mb-8 max-md:text-center'>
 								Iniciar Sesión
 							</h3>
 							<div className='pb-7 pt-2'>
@@ -69,7 +82,7 @@ function Login() {
 										type='email'
 										autoComplete='email'
 										required
-										className='bg-gray-100 placeholder:text-gray-600 w-full text-sm px-4 py-3.5 rounded-md outline-blue-600 lg:text-xl text-black'
+										className='bg-gray-100 placeholder:text-gray-600 w-full text-sm px-4 py-3.5 rounded-md outline-blue-600  text-black'
 										placeholder='Email'
 										{...register('email')}
 										value={email}

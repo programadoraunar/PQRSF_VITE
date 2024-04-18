@@ -8,14 +8,14 @@ export const signIn = async (email, password) => {
 		});
 
 		if (error) {
-			console.log(error.message);
+			return { error: error.message }; // Asegúrate de devolver un objeto con la clave 'error'
 		}
 
 		return data;
 	} catch (error) {
 		// console.error('Error signing in:', error.message);
 		return {
-			error: 'Error al iniciar sesión. Por favor, verifica tus credenciales.',
+			// error: 'Error al iniciar sesión. Por favor, verifica tus credenciales.',
 		};
 	}
 };

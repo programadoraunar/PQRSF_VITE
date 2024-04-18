@@ -10,20 +10,23 @@ import {
 	optionscanal,
 	optionsDependencias,
 	optionsSolicitud,
-	tiposIdentificacion,
+	optionsIdentificacion,
 } from '../../utils/options';
+
+/**
+ * @component FormularioNormal
+ * @description Componente que representa un formulario para enviar solicitudes normales.
+ * @param {Function} onClose - Función para cerrar el formulario.
+ */
+
 function FormularioNormal({ onClose }) {
 	const ref = useRef(null);
 	const [formData, setFormData] = useState({
-		tipoIdentificacion: '',
-		tipoSolicitud: '',
-		dependencia: '',
 		description: '',
 		nombre: '',
 		apellido: '',
 		direccion: '',
 		celular: '',
-		email: '',
 		/* adjunto: null, */
 	});
 	useEffect(() => {
@@ -35,6 +38,7 @@ function FormularioNormal({ onClose }) {
 	const {
 		register,
 		handleSubmit,
+		setValue,
 		formState: { errors },
 	} = useForm({
 		resolver: zodResolver(solicitudNormalesSchema),
@@ -61,7 +65,7 @@ function FormularioNormal({ onClose }) {
 				ref={ref}
 				className='relative border-2 border-blue-zodiac-800 rounded-lg py-5 my-5 px-4 shadow-xl flex flex-col  bg-white'
 			>
-				<h1 className='text-blue-zodiac-900 text-center text-2xl lg:text-3xl font-semibold '>
+				<h1 className='text-blue-zodiac-900 text-center font-gothicBold text-2xl'>
 					Solicitudes Normales
 				</h1>
 				<button
@@ -73,17 +77,20 @@ function FormularioNormal({ onClose }) {
 				</button>
 
 				<form onSubmit={handleSubmit(onSubmit)}>
-					<div className='mb-4 mt-8 text-base lg:text-lg 2xl:text-xl text-blue-zodiac-950 text-start font-medium'>
+					<div className='mb-4 mt-8 text-blue-zodiac-950 text-start'>
 						Tipo de Identificacion
 					</div>
 					<select
-						className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer text-base lg:text-lg 2xl:text-xl'
-						onChange={handleChange}
+						className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer'
 						{...register('tipoIdentificacion')}
+						onChange={e => {
+							console.log('Valor seleccionado:', e.target.value);
+							setValue('tipoIdentificacion', e.target.value);
+						}}
 					>
-						{tiposIdentificacion.map((option, index) => (
-							<option key={index} value={option}>
-								{option}
+						{optionsIdentificacion.map((option, index) => (
+							<option key={index} value={option.id}>
+								{option.nombre}
 							</option>
 						))}
 					</select>
@@ -91,13 +98,13 @@ function FormularioNormal({ onClose }) {
 						<p className='text-red-500'>{errors.tipoIdentificacion.message}</p>
 					)}
 
-					<div className='grid grid-rows-2 grid-cols-2'>
-						<div className='flex flex-col w-[50%]'>
-							<label className='text-base py-2 text-blue-zodiac-950 text-start font-medium lg:text-lg 2xl:text-xl'>
+					<div className='grid grid-rows-5 grid-cols-1 lg:grid-rows-2 lg:grid-cols-2 '>
+						<div className='flex flex-col w-full lg:w-[85%]'>
+							<label className='py-2 text-blue-zodiac-950 text-start'>
 								Nombre
 							</label>
 							<input
-								className='text-blue-zodiac-950 hover:border-blue-zodiac-950 text-base lg:text-lg 2xl:text-xl'
+								className='text-blue-zodiac-950 hover:border-blue-zodiac-950'
 								placeholder='Ingrese su nombre'
 								type='text'
 								{...register('nombre')}
@@ -109,12 +116,12 @@ function FormularioNormal({ onClose }) {
 							)}
 						</div>
 
-						<div className='flex flex-col w-[50%]'>
-							<label className='text-base py-2 text-blue-zodiac-950 text-start font-medium lg:text-lg 2xl:text-xl'>
+						<div className='flex flex-col w-full lg:w-[85%]'>
+							<label className='py-2 text-blue-zodiac-950 text-start'>
 								Apellido
 							</label>
 							<input
-								className='text-blue-zodiac-950 hover:border-blue-zodiac-950 text-base lg:text-lg 2xl:text-xl'
+								className='text-blue-zodiac-950 hover:border-blue-zodiac-950'
 								placeholder='Ingrese su Apellido'
 								type='text'
 								{...register('apellido')}
@@ -126,12 +133,12 @@ function FormularioNormal({ onClose }) {
 							)}
 						</div>
 
-						<div className='flex flex-col w-[50%]'>
-							<label className='text-base py-2 text-blue-zodiac-950 text-start font-medium lg:text-lg 2xl:text-xl'>
+						<div className='flex flex-col w-full lg:w-[85%]'>
+							<label className='py-2 text-blue-zodiac-950 text-start'>
 								Direccion
 							</label>
 							<input
-								className='text-blue-zodiac-950 hover:border-blue-zodiac-950 text-base lg:text-lg 2xl:text-xl'
+								className='text-blue-zodiac-950 hover:border-blue-zodiac-950'
 								placeholder='Ingrese su direccion'
 								type='text'
 								{...register('direccion')}
@@ -141,12 +148,12 @@ function FormularioNormal({ onClose }) {
 								<p className='text-red-500'>{errors.direccion.message}</p>
 							)}
 						</div>
-						<div className='flex flex-col w-[50%]'>
-							<label className='text-base py-2 text-blue-zodiac-950 text-start font-medium lg:text-lg 2xl:text-xl'>
+						<div className='flex flex-col w-full lg:w-[85%]'>
+							<label className='py-2 text-blue-zodiac-950 text-start'>
 								Celular
 							</label>
 							<input
-								className='text-blue-zodiac-950 hover:border-blue-zodiac-950 text-base lg:text-lg 2xl:text-xl'
+								className='text-blue-zodiac-950 hover:border-blue-zodiac-950'
 								placeholder='Ingrese su Celular'
 								type='number'
 								{...register('celular')}
@@ -157,34 +164,37 @@ function FormularioNormal({ onClose }) {
 								<p className='text-red-500'>{errors.celular.message}</p>
 							)}
 						</div>
-					</div>
-					<div className='flex flex-col'>
-						<label className='text-base py-2 text-blue-zodiac-950 text-start font-medium lg:text-lg 2xl:text-xl'>
-							Correo
-						</label>
-						<input
-							className='text-blue-zodiac-950 hover:border-blue-zodiac-950 text-base lg:text-lg 2xl:text-xl'
-							placeholder='Ingrese su Correo Electronico'
-							type='text'
-							{...register('email')}
-							onChange={handleChange}
-						/>
-						{errors.email && (
-							<p className='text-red-500'>{errors.email.message}</p>
-						)}
+						<div className='flex flex-col'>
+							<label className='py-2 text-blue-zodiac-950 text-start'>
+								Correo
+							</label>
+							<input
+								className='text-blue-zodiac-950 hover:border-blue-zodiac-950'
+								placeholder='Ingrese su Correo Electronico'
+								type='text'
+								{...register('email')}
+								onChange={handleChange}
+							/>
+							{errors.email && (
+								<p className='text-red-500'>{errors.email.message}</p>
+							)}
+						</div>
 					</div>
 
-					<div className='mb-4 mt-8 text-base lg:text-lg 2xl:text-xl text-blue-zodiac-950 text-start font-medium'>
+					<div className='mb-4 mt-8 text-blue-zodiac-950 text-start'>
 						Tipo de Solicitud
 					</div>
 					<select
-						className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer text-base lg:text-lg 2xl:text-xl'
-						onChange={handleChange}
+						className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer'
 						{...register('tipoSolicitud')}
+						onChange={e => {
+							console.log('Valor seleccionado tipoSolicitud:', e.target.value);
+							setValue('tipoSolicitud', e.target.value);
+						}}
 					>
 						{optionsSolicitud.map((option, index) => (
-							<option key={index} value={option}>
-								{option}
+							<option key={index} value={option.id}>
+								{option.nombre}
 							</option>
 						))}
 					</select>
@@ -192,18 +202,21 @@ function FormularioNormal({ onClose }) {
 						<p className='text-red-500'>{errors.tipoSolicitud.message}</p>
 					)}
 
-					<div className='mb-4 mt-8 text-base text-blue-zodiac-950 text-start font-medium lg:text-lg 2xl:text-xl'>
+					<div className='mb-4 mt-8 text-blue-zodiac-950 text-start'>
 						Dependencia
 					</div>
 					<select
-						className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer text-base lg:text-lg 2xl:text-xl'
-						onChange={handleChange}
+						className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer'
 						{...register('dependencia')}
+						onChange={e => {
+							console.log('Valor seleccionado dependencia:', e.target.value);
+							setValue('dependencia', e.target.value);
+						}}
 					>
 						{/* Mapea sobre las opciones y crea un SearchSelectItem para cada una */}
 						{optionsDependencias.map((option, index) => (
-							<option key={index} value={option}>
-								{option}
+							<option key={index} value={option.id}>
+								{option.nombre}
 							</option>
 						))}
 					</select>
@@ -211,35 +224,37 @@ function FormularioNormal({ onClose }) {
 						<p className='text-red-500'>{errors.dependencia.message}</p>
 					)}
 
-					<div className='mb-4 mt-8 text-base text-blue-zodiac-950 text-start font-medium lg:text-lg 2xl:text-xl'>
+					<div className='mb-4 mt-8 text-blue-zodiac-950 text-start'>
 						Canal de Respuesta
 					</div>
 					<select
-						className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer text-base lg:text-lg 2xl:text-xl'
-						value={formData.canal}
-						onChange={handleChange}
+						className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer'
 						{...register('canal')}
+						onChange={e => {
+							console.log('Valor seleccionado:', e.target.value);
+							setValue('canal', e.target.value);
+						}}
 					>
 						{/* Mapea sobre las opciones y crea un SearchSelectItem para cada una */}
 						{optionscanal.map((option, index) => (
-							<option key={index} value={option}>
-								{option}
+							<option key={index} value={option.id}>
+								{option.nombre}
 							</option>
 						))}
 					</select>
-					{errors.dependencia && (
-						<p className='text-red-500'>{errors.dependencia.message}</p>
+					{errors.canal && (
+						<p className='text-red-500'>{errors.canal.message}</p>
 					)}
 
 					<div className='flex flex-col'>
 						<label
 							htmlFor='description'
-							className='text-base py-2 text-blue-zodiac-950 text-start font-medium lg:text-lg 2xl:text-xl'
+							className='text-base py-2 text-blue-zodiac-950 text-start'
 						>
 							Description
 						</label>
 						<textarea
-							className='text-blue-zodiac-950 hover:border-blue-zodiac-950 text-base lg:text-lg 2xl:text-xl'
+							className='text-blue-zodiac-950 hover:border-blue-zodiac-950'
 							id='description'
 							placeholder='Start typing here...'
 							rows={6}

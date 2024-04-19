@@ -200,12 +200,21 @@ function FormularioAnonimo({ onClose }) {
 						Enviar
 					</button>
 				</form>
+				<AnimatePresence>
+					{mostrarModal && (
+						<motion.div
+							initial={{ opacity: 0, scale: 0.75 }}
+							animate={{ opacity: 1, scale: 1 }}
+							exit={{ opacity: 0, scale: 0 }}
+							className='w-full  h-full fixed top-0 left-0 bg-slate-500 bg-opacity-50 flex justify-center items-center '
+						>
+							<Modal onClose={handleCerrarModal}>
+								<div>este es una modal reutilizable</div>
+							</Modal>
+						</motion.div>
+					)}
+				</AnimatePresence>
 			</motion.div>
-			{mostrarModal && (
-				<Modal onClose={handleCerrarModal}>
-					<div>este es una modal reutilizable</div>
-				</Modal>
-			)}
 		</AnimatePresence>
 	);
 }

@@ -36,3 +36,33 @@ export async function registrarSolicitudAnonima(
 		console.error('Error al llamar a la función RPC:', err);
 	}
 }
+
+/**
+ * Obtiene el último radicado de la base de datos.
+ * @async
+ * @function obtenerUltimoRadicado
+ * @returns {Promise<Object>} El último radicado.
+ * @throws {Error} Error al llamar a la función RPC o al obtener el radicado.
+ * @example
+ * const ultimoRadicado = await obtenerUltimoRadicado();
+ * console.log(ultimoRadicado); // { id_radicado: '...', fecha_hora_radicacion: '...' }
+ */
+export async function obtnerUltimoRadicado() {
+	try {
+		// Llamar a la función RPC 'obtener_ultimo_radicado' en la base de datos
+		const { data, error } = await supabase.rpc('obtener_ultimo_radicado');
+
+		if (error) {
+			// Manejar error si ocurre durante la llamada a la función RPC
+			console.error('Error al obtener Radicado:', error);
+			throw new Error('Error al obtener el radicado.');
+		} else {
+			// Registro exitoso
+			return data[0];
+		}
+	} catch (err) {
+		// Manejar error en la llamada a la función RPC
+		console.error('Error al llamar a la función RPC:', err);
+		throw new Error('Error al llamar a la función RPC.');
+	}
+}

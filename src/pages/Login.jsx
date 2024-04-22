@@ -97,7 +97,7 @@ function Login() {
 										type='password'
 										autoComplete='current-password'
 										required
-										className='bg-gray-100 placeholder:text-gray-600 w-full text-sm px-4 py-3.5 rounded-md outline-blue-600 lg:text-xl text-black'
+										className='bg-gray-100 placeholder:text-gray-600 w-full text-sm px-4 py-3.5 rounded-md outline-blue-600 text-black'
 										placeholder='Contraseña'
 										{...register('password')}
 										value={password}

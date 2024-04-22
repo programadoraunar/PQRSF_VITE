@@ -46,8 +46,6 @@ function Consulta() {
 			setDataConsulta(data);
 		} catch (err) {
 			console.error('Error inesperado:', err);
-		} finally {
-			setIsLoading(false); // Establecer isLoading en false después de obtener la respuesta
 		}
 	};
 

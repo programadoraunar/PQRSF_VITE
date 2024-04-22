@@ -11,8 +11,11 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { solicitudAnonimaSchema } from '../../validations/formSchema';
 import { RiCloseCircleFill } from '@remixicon/react';
-// import { registrarSolicitudAnonima } from '../../supabase/actions/registroSolicitudes';
+// import { registrarSolicitudAnonima } from '../../supabase/actions/solicitudesFuntions';
+import { obtnerUltimoRadicado } from '../../supabase/actions/pqrsfFunctions';
 import Modal from './Modal';
+import Loading from '../ui/Loading';
+
 /**
  * @component FormularioAnonimo
  * @description Componente que representa un formulario para enviar solicitudes anónimas.
@@ -24,6 +27,7 @@ function FormularioAnonimo({ onClose }) {
 		handleSubmit,
 		formState: { errors },
 		setValue,
+		getValues,
 	} = useForm({
 		resolver: zodResolver(solicitudAnonimaSchema),
 	});
@@ -42,6 +46,16 @@ function FormularioAnonimo({ onClose }) {
 	const [formData, setFormData] = useState({
 		description: '',
 		// adjunto: null,
+	});
+
+	const [numeroRadicado, setNumeroRadicado] = useState();
+	const [fechaRadicado, setFechaRadicado] = useState();
+	const [isLoading, setIsLoading] = useState(false);
+	const [valores, setValores] = useState({
+		tipoSolicitud: 'Peticion',
+		dependencia: '1',
+		canal: '1',
+		description: 'sadsadasdasdasdsa',
 	});
 
 	// Manejador de cambio para los campos del formulario, se manejan los caracteres
@@ -90,6 +104,39 @@ function FormularioAnonimo({ onClose }) {
 			// Manejo de errores
 			console.error('Error durante el envío de la solicitud:', err);
 		} */
+		setIsLoading(true); // Establecer isLoading en true antes de realizar la consulta
+		try {
+			const data = await obtnerUltimoRadicado();
+			setNumeroRadicado(data.id_radicado);
+
+			const fechaFormateada = new Date(
+				data.fecha_hora_radicacion,
+			).toLocaleString();
+			setFechaRadicado(fechaFormateada);
+			// Obtener los valores del formulario
+			const valoresFormulario = getValues();
+			console.log(valoresFormulario);
+			setValores({
+				tipoSolicitud: valoresFormulario.tipoSolicitud,
+				dependencia: valoresFormulario.dependencia,
+				canal: valoresFormulario.canal,
+				description: valoresFormulario.description,
+			});
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
+	// Función para obtener el nombre de la dependencia basado en su ID
+	const obtenerNombreDependencia = idDependencia => {
+		const dependenciaEncontrada = optionsDependencias.find(
+			dep => dep.id === idDependencia,
+		);
+		return dependenciaEncontrada
+			? dependenciaEncontrada.nombre
+			: 'Dependencia Desconocida';
 	};
 
 	return (
@@ -119,9 +166,9 @@ function FormularioAnonimo({ onClose }) {
 						className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer'
 						{...register('tipoSolicitud')}
 						onChange={e => {
-							console.log('Valor seleccionado:', e.target.value);
 							setValue('tipoSolicitud', e.target.value);
 						}}
+						value={formData.dependencia}
 					>
 						{optionsSolicitud.map((option, index) => (
 							<option key={index} value={option.nombre}>
@@ -209,7 +256,30 @@ function FormularioAnonimo({ onClose }) {
 							className='w-full  h-full fixed top-0 left-0 bg-slate-500 bg-opacity-50 flex justify-center items-center '
 						>
 							<Modal onClose={handleCerrarModal}>
-								<div>este es una modal reutilizable</div>
+								{isLoading ? (
+									<Loading />
+								) : (
+									<>
+										<div>
+											<h2>Numero de Radicado:</h2>
+											{numeroRadicado}
+										</div>
+										<div>
+											<h2>Fecha de Radicacion:</h2>
+											{fechaRadicado}
+										</div>
+										<div>
+											<h2>Información enviada:</h2>
+											<p>Tipo Solicitud {valores.tipoSolicitud}</p>
+											<p>
+												Dependencia:{' '}
+												{obtenerNombreDependencia(valores.dependencia)}
+											</p>
+
+											<p>Descripcion: {valores.description}</p>
+										</div>
+									</>
+								)}
 							</Modal>
 						</motion.div>
 					)}

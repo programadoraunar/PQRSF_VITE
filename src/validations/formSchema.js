@@ -57,16 +57,6 @@ export const solicitudAnonimaSchema = z.object({
 			return { message: context.defaultError };
 		},
 	}),
-	canal: z.enum(canalIds, {
-		errorMap: (issue, context) => {
-			if (issue.code === z.ZodIssueCode.invalid_enum_value) {
-				return {
-					message: 'El valor de canal debe ser "email" o "fisico".',
-				};
-			}
-			return { message: context.defaultError };
-		},
-	}),
 	description: z
 		.string()
 		.min(10, 'La descripción debe tener al menos 10 caracteres.')

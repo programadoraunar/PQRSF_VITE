@@ -59,7 +59,7 @@ function Home() {
 					<CardsInfo />
 				</section>
 				<section id='formularios'>
-					<div className='grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-1 lg:gap-20 px-0 lg:px-16 py-16 gap-5'>
+					<div className='grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-1 lg:gap-20 px-0 md:px-32 lg:px-16 py-16 gap-5'>
 						<div className='flex flex-col justify-center'>
 							<motion.button
 								whileHover={{ scale: 1.05 }}

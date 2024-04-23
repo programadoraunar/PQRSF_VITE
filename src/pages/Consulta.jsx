@@ -46,6 +46,8 @@ function Consulta() {
 			setDataConsulta(data);
 		} catch (err) {
 			console.error('Error inesperado:', err);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -113,9 +115,7 @@ function Consulta() {
 									<th className='p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell'>
 										tipo
 									</th>
-									<th className='p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell'>
-										Canal de Respuesta
-									</th>
+
 									<th className='p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell'>
 										Estado
 									</th>
@@ -136,12 +136,7 @@ function Consulta() {
 											</span>
 											<p className='text-black'>{item.tipo_solicitud_pqrs}</p>
 										</td>
-										<td className='w-full lg:w-auto p-3 text-white border border-b text-center block lg:table-cell relative lg:static'>
-											<span className='lg:hidden absolute top-0 left-0 bg-blue-zodiac-900 px-2 py-1 text-xs font-bold uppercase'>
-												Canal de Respuesta
-											</span>
-											<p className='text-black'>{item.id_canal}</p>
-										</td>
+
 										<td className='w-full lg:w-auto p-3 text-white border border-b text-center block lg:table-cell relative lg:static'>
 											<span className='lg:hidden absolute top-0 left-0 bg-blue-zodiac-900 px-2 py-1 text-xs font-bold uppercase'>
 												Estado

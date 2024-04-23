@@ -1,9 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-	optionscanal,
-	optionsDependencias,
-	optionsSolicitud,
-} from '../../utils/options';
+import { optionsDependencias, optionsSolicitud } from '../../utils/options';
 import { gsap } from 'gsap';
 import { motion, AnimatePresence } from 'framer-motion';
 import PropTypes from 'prop-types';
@@ -12,9 +8,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { solicitudAnonimaSchema } from '../../validations/formSchema';
 import { RiCloseCircleFill } from '@remixicon/react';
 // import { registrarSolicitudAnonima } from '../../supabase/actions/solicitudesFuntions';
-import { obtnerUltimoRadicado } from '../../supabase/actions/pqrsfFunctions';
+import {
+	obtnerUltimoRadicado,
+	registrarSolicitudAnonima,
+} from '../../supabase/actions/pqrsfFunctions';
 import Modal from './Modal';
 import Loading from '../ui/Loading';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import PDF from '../pdf/PDF';
 
 /**
  * @component FormularioAnonimo
@@ -52,10 +53,9 @@ function FormularioAnonimo({ onClose }) {
 	const [fechaRadicado, setFechaRadicado] = useState();
 	const [isLoading, setIsLoading] = useState(false);
 	const [valores, setValores] = useState({
-		tipoSolicitud: 'Peticion',
-		dependencia: '1',
-		canal: '1',
-		description: 'sadsadasdasdasdsa',
+		tipoSolicitud: '',
+		dependencia: '',
+		description: '',
 	});
 
 	// Manejador de cambio para los campos del formulario, se manejan los caracteres
@@ -83,60 +83,50 @@ function FormularioAnonimo({ onClose }) {
 
 	// Manejador de envío del formulario
 	const onSubmit = async dato => {
-		/* try {
+		try {
+			/* setIsLoading(true); // Establecer isLoading en true antes de realizar la consulta
 			// Convertir las ID a números enteros
 			const idtipoSolicitud = dato.tipoSolicitud;
 			const idDependencia = parseInt(dato.dependencia, 10);
-			const idCanal = parseInt(dato.canal, 10);
 			const descripcionData = dato.description;
 
 			// Llamar a la función registrarSolicitudAnonima con los datos del formulario
 			const data = await registrarSolicitudAnonima(
 				idtipoSolicitud,
 				idDependencia,
-				idCanal,
 				descripcionData,
-			);
+			); */
 
 			// Registro exitoso
-			console.log('Solicitud anónima registrada con éxito:', data);
+			// console.log('Solicitud anónima registrada con éxito:', data);
+			console.log('solicitud registrada');
+			try {
+				const dataRadicado = await obtnerUltimoRadicado();
+				setNumeroRadicado(dataRadicado.id_radicado);
+
+				const fechaFormateada = new Date(
+					dataRadicado.fecha_hora_radicacion,
+				).toLocaleString();
+				setFechaRadicado(fechaFormateada);
+
+				// Obtener los valores del formulario
+				const valoresFormulario = getValues();
+				console.log(valoresFormulario);
+				setValores({
+					tipoSolicitud: valoresFormulario.tipoSolicitud,
+					dependencia: valoresFormulario.dependencia,
+					description: valoresFormulario.description,
+				});
+			} catch (error) {
+				console.log(error);
+			} finally {
+				setIsLoading(false);
+				handleMostrarModal();
+			}
 		} catch (err) {
 			// Manejo de errores
 			console.error('Error durante el envío de la solicitud:', err);
-		} */
-		setIsLoading(true); // Establecer isLoading en true antes de realizar la consulta
-		try {
-			const data = await obtnerUltimoRadicado();
-			setNumeroRadicado(data.id_radicado);
-
-			const fechaFormateada = new Date(
-				data.fecha_hora_radicacion,
-			).toLocaleString();
-			setFechaRadicado(fechaFormateada);
-			// Obtener los valores del formulario
-			const valoresFormulario = getValues();
-			console.log(valoresFormulario);
-			setValores({
-				tipoSolicitud: valoresFormulario.tipoSolicitud,
-				dependencia: valoresFormulario.dependencia,
-				canal: valoresFormulario.canal,
-				description: valoresFormulario.description,
-			});
-		} catch (error) {
-			console.log(error);
-		} finally {
-			setIsLoading(false);
 		}
-	};
-
-	// Función para obtener el nombre de la dependencia basado en su ID
-	const obtenerNombreDependencia = idDependencia => {
-		const dependenciaEncontrada = optionsDependencias.find(
-			dep => dep.id === idDependencia,
-		);
-		return dependenciaEncontrada
-			? dependenciaEncontrada.nombre
-			: 'Dependencia Desconocida';
 	};
 
 	return (
@@ -146,7 +136,7 @@ function FormularioAnonimo({ onClose }) {
 				animate={{ opacity: 1 }}
 				exit={{ opacity: 0 }}
 				ref={ref}
-				className='relative border-2 border-blue-zodiac-800 rounded-lg py-5 my-5 px-4 shadow-xl flex flex-col bg-white'
+				className='relative border-2 border-blue-zodiac-900 rounded-lg py-5 my-5 px-4 shadow-xl flex flex-col bg-white'
 			>
 				<h1 className='text-blue-zodiac-900 text-center text-2xl font-gothicBold'>
 					Solicitudes Anónimas
@@ -199,26 +189,7 @@ function FormularioAnonimo({ onClose }) {
 					{errors.dependencia && (
 						<p className='text-red-500'>{errors.dependencia.message}</p>
 					)}
-					<div className='mb-4 mt-8 text-base text-blue-zodiac-950 text-start'>
-						Canal de Respuesta
-					</div>
-					<select
-						className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer'
-						{...register('canal')}
-						onChange={e => {
-							console.log('Valor seleccionado:', e.target.value);
-							setValue('canal', e.target.value);
-						}}
-					>
-						{optionscanal.map((option, index) => (
-							<option key={index} value={option.id}>
-								{option.nombre}
-							</option>
-						))}
-					</select>
-					{errors.canal && (
-						<p className='text-red-500'>{errors.canal.message}</p>
-					)}
+
 					<div className='flex flex-col'>
 						<label
 							htmlFor='description'
@@ -241,47 +212,58 @@ function FormularioAnonimo({ onClose }) {
 					</div>
 					<button
 						type='submit'
-						className='mt-4 px-4 py-2 bg-blue-zodiac-800 text-white rounded-lg'
-						onClick={handleMostrarModal}
+						className='mt-4 px-4 py-2 bg-blue-zodiac-900 text-white rounded-lg'
 					>
 						Enviar
 					</button>
 				</form>
 				<AnimatePresence>
-					{mostrarModal && (
-						<motion.div
-							initial={{ opacity: 0, scale: 0.75 }}
-							animate={{ opacity: 1, scale: 1 }}
-							exit={{ opacity: 0, scale: 0 }}
-							className='w-full  h-full fixed top-0 left-0 bg-slate-500 bg-opacity-50 flex justify-center items-center '
-						>
-							<Modal onClose={handleCerrarModal}>
-								{isLoading ? (
-									<Loading />
-								) : (
-									<>
-										<div>
-											<h2>Numero de Radicado:</h2>
-											{numeroRadicado}
-										</div>
-										<div>
-											<h2>Fecha de Radicacion:</h2>
-											{fechaRadicado}
-										</div>
-										<div>
-											<h2>Información enviada:</h2>
-											<p>Tipo Solicitud {valores.tipoSolicitud}</p>
-											<p>
-												Dependencia:{' '}
-												{obtenerNombreDependencia(valores.dependencia)}
-											</p>
+					{isLoading ? (
+						<Loading loadingClassName='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2' />
+					) : (
+						mostrarModal && (
+							<motion.div
+								initial={{ opacity: 0, scale: 0.75 }}
+								animate={{ opacity: 1, scale: 1 }}
+								exit={{ opacity: 0, scale: 0 }}
+								className='w-full  h-full fixed top-0 left-0 bg-slate-500 bg-opacity-50 flex justify-center items-center '
+							>
+								<Modal
+									onClose={handleCerrarModal}
+									dependencia={valores.dependencia}
+									tipoSolicitud={valores.tipoSolicitud}
+									descripcion={valores.description}
+									isLoading={isLoading}
+								>
+									<div>
+										<h2 className='font-gothicBold'>Numero de Radicado:</h2>
+										{numeroRadicado}
+									</div>
+									<div className='pb-3'>
+										<h2 className='font-gothicBold'>Fecha de Radicacion:</h2>
+										{fechaRadicado}
+									</div>
 
-											<p>Descripcion: {valores.description}</p>
-										</div>
-									</>
-								)}
-							</Modal>
-						</motion.div>
+									<PDFDownloadLink
+										className='bg-blue-zodiac-900 text-white p-2 border rounded-sm'
+										document={
+											<PDF
+												tipoSolicitud={valores.tipoSolicitud}
+												dependencia={valores.dependencia}
+												descripcion={valores.description}
+												numeroRadicado={numeroRadicado}
+												fechaRadicado={fechaRadicado}
+											/>
+										}
+										fileName='documento.pdf'
+									>
+										{({ blob, url, loading, error }) =>
+											loading ? 'Cargando documento...' : 'Descargar PDF'
+										}
+									</PDFDownloadLink>
+								</Modal>
+							</motion.div>
+						)
 					)}
 				</AnimatePresence>
 			</motion.div>

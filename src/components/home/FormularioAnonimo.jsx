@@ -15,7 +15,7 @@ import {
 import Modal from './Modal';
 import Loading from '../ui/Loading';
 import { PDFDownloadLink } from '@react-pdf/renderer';
-import PDF from '../pdf/PDF';
+import Pdf from '../pdf/Pdf';
 
 /**
  * @component FormularioAnonimo
@@ -84,7 +84,7 @@ function FormularioAnonimo({ onClose }) {
 	// Manejador de envío del formulario
 	const onSubmit = async dato => {
 		try {
-			/* setIsLoading(true); // Establecer isLoading en true antes de realizar la consulta
+			setIsLoading(true); // Establecer isLoading en true antes de realizar la consulta
 			// Convertir las ID a números enteros
 			const idtipoSolicitud = dato.tipoSolicitud;
 			const idDependencia = parseInt(dato.dependencia, 10);
@@ -95,19 +95,23 @@ function FormularioAnonimo({ onClose }) {
 				idtipoSolicitud,
 				idDependencia,
 				descripcionData,
-			); */
+			);
 
 			// Registro exitoso
-			// console.log('Solicitud anónima registrada con éxito:', data);
-			console.log('solicitud registrada');
+			console.log('Solicitud anónima registrada con éxito:', data);
 			try {
 				const dataRadicado = await obtnerUltimoRadicado();
 				setNumeroRadicado(dataRadicado.id_radicado);
-
+				console.log(
+					'fecha de radicado que llega de base de datos' +
+						dataRadicado.fecha_hora_radicacion,
+				);
 				const fechaFormateada = new Date(
 					dataRadicado.fecha_hora_radicacion,
-				).toLocaleString();
+				).toLocaleString('es-CO', { timeZone: 'America/Bogota' });
 				setFechaRadicado(fechaFormateada);
+				console.log('fecha formateada ' + fechaFormateada);
+				// console.log(fechaFormateada);
 
 				// Obtener los valores del formulario
 				const valoresFormulario = getValues();
@@ -212,7 +216,7 @@ function FormularioAnonimo({ onClose }) {
 					</div>
 					<button
 						type='submit'
-						className='mt-4 px-4 py-2 bg-blue-zodiac-900 text-white rounded-lg'
+						className='mt-4 px-4 py-2 bg-blue-zodiac-900 hover:bg-blue-zodiac-950 text-white rounded-lg'
 					>
 						Enviar
 					</button>
@@ -235,19 +239,18 @@ function FormularioAnonimo({ onClose }) {
 									descripcion={valores.description}
 									isLoading={isLoading}
 								>
-									<div>
+									<div className='flex flex-col gap-3 mb-5'>
 										<h2 className='font-gothicBold'>Numero de Radicado:</h2>
 										{numeroRadicado}
-									</div>
-									<div className='pb-3'>
+
 										<h2 className='font-gothicBold'>Fecha de Radicacion:</h2>
 										{fechaRadicado}
 									</div>
 
 									<PDFDownloadLink
-										className='bg-blue-zodiac-900 text-white p-2 border rounded-sm'
+										className='bg-blue-zodiac-900 text-white p-2 border rounded-lg hover:bg-blue-zodiac-950 cursor-pointer'
 										document={
-											<PDF
+											<Pdf
 												tipoSolicitud={valores.tipoSolicitud}
 												dependencia={valores.dependencia}
 												descripcion={valores.description}

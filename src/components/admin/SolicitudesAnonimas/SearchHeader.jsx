@@ -5,7 +5,7 @@ import Inputs from '../../ui/Inputs';
 
 function SearchHeader() {
 	return (
-		<div className='flex flex-col md:flex-row w-auto bg-blue-zodiac-900 py-3 px-4 mt-7 justify-between'>
+		<div className='flex flex-col md:flex-row w-auto bg-blue-zodiac-950 py-3 px-4 mt-7 justify-between'>
 			<SelectComponent />
 			<DateRange />
 			<Inputs />

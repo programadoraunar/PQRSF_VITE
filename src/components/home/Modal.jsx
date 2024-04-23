@@ -32,7 +32,7 @@ function Modal({
 				{isLoading ? (
 					<div>nada</div>
 				) : (
-					<div className='text-black  p-4'>
+					<div className='text-black p-5'>
 						<h2
 							className='text-lg font-gothicBold
 						'
@@ -40,8 +40,8 @@ function Modal({
 							Información enviada:
 						</h2>
 
-						<div className='flex flex-col'>
-							<h4 className='font-gothicBold'>Tipo Solicitud </h4>
+						<div className='flex flex-col gap-3'>
+							<h4 className='font-gothicBold'>Tipo Solicitud: </h4>
 							<span>{tipoSolicitud}</span>
 							<p className='font-gothicBold'>Dependencia:</p>
 							<span>{obtenerNombreDependencia(dependencia)}</span>
@@ -61,6 +61,7 @@ Modal.propTypes = {
 	dependencia: PropTypes.string.isRequired, // ID de la dependencia
 	tipoSolicitud: PropTypes.string.isRequired, // Tipo de solicitud
 	descripcion: PropTypes.string.isRequired, // Descripción de la solicitud
+	isLoading: PropTypes.node,
 };
 
 export default Modal;

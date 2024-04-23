@@ -22,7 +22,7 @@ function SliderBar() {
 						<img
 							src='/logo-autonoma-de-narino.png'
 							alt='Logo autónoma'
-							className='max-w-full h-auto w-1/2'
+							className='max-w-full h-auto w-[150px]'
 						/>
 					</div>
 					<ul>

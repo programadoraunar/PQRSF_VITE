@@ -92,7 +92,7 @@ function Header() {
 					}
 					align='end'
 					transition
-					menuClassName='bg-blue-zodiac-900 p-4'
+					menuClassName='bg-blue-zodiac-950 p-4'
 				>
 					<MenuItem className='p-0 hover:bg-transparent'>
 						<Link

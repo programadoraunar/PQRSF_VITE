@@ -37,7 +37,7 @@ function Home() {
 					</h1>
 				</section>
 				<section id='informacion'>
-					<p className='text-black text-md md:text-sm lg:text-base 2xl:text-lg px-10 py-10'>
+					<p className='text-black text-sm 2xl:text-lg px-10 py-10'>
 						La Universidad Autónoma de Nariño ha establecido una alternativa
 						para facilitar la radicación de Peticiones, Quejas, Reclamos,
 						Sugerencias y Felicitaciones (PQRSF), a través de su sitio web
@@ -59,7 +59,7 @@ function Home() {
 					<CardsInfo />
 				</section>
 				<section id='formularios'>
-					<div className='grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-1 lg:gap-20 px-0 md:px-32 lg:px-16 py-16 gap-5'>
+					<div className='grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-1 lg:gap-20 px-0 md:px-16 lg:px-16 py-16 gap-5'>
 						<div className='flex flex-col justify-center'>
 							<motion.button
 								whileHover={{ scale: 1.05 }}

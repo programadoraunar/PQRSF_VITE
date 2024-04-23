@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
 	Document,
 	Page,
@@ -10,61 +11,29 @@ import {
 import HeaderImage from '../../assets/img/header.png';
 import FooterImage from '../../assets/img/footer.png';
 import { optionsDependencias } from '../../utils/options';
-// Definir estilos para el PDF
-const styles = StyleSheet.create({
-	page: {
-		flexDirection: 'column',
-		backgroundColor: '#FFFFFF',
-		padding: 20,
-	},
-	section: {
-		margin: 10,
-		paddingLeft: 25,
-		paddingRight: 25,
-		flexGrow: 1,
-	},
-	title: {
-		fontSize: 18,
-		textAlign: 'center',
-		marginBottom: 20,
-		fontWeight: 'bold',
-		fontFamily: 'Helvetica-Bold',
-	},
-	subtitle: {
-		fontSize: 14,
-		textAlign: 'left',
-		marginBottom: 10,
-		fontWeight: 'bold',
-		fontFamily: 'Helvetica-Bold',
-	},
-	text: {
-		fontSize: 12,
-		textAlign: 'justify',
-		marginBottom: 10,
-		fontFamily: 'Helvetica',
-	},
-	infoContainer: {
-		marginBottom: 20,
-	},
-	infoItem: {
-		fontSize: 13,
-		marginBottom: 5,
-	},
-	image: {
-		width: '100%',
-		height: '100%',
-		objectFit: 'cover', // Ajusta la imagen al contenedor
-	},
-});
 
-// Componente para generar el PDF
-function PDF({
+/**
+ * Componente para generar un PDF con el resumen de una solicitud.
+ * @param {object} props - Propiedades del componente.
+ * @param {string} props.tipoSolicitud - Tipo de solicitud.
+ * @param {number} props.dependencia - ID de la dependencia.
+ * @param {string} props.descripcion - Descripción de la solicitud.
+ * @param {string} props.numeroRadicado - Número de radicado de la solicitud.
+ * @param {string} props.fechaRadicado - Fecha de radicado de la solicitud.
+ * @returns {React.Element} Elemento de React que representa el PDF generado.
+ */
+function Pdf({
 	tipoSolicitud,
 	dependencia,
 	descripcion,
 	numeroRadicado,
 	fechaRadicado,
 }) {
+	/**
+	 * Obtiene el nombre de la dependencia a partir de su ID.
+	 * @param {number} idDependencia - ID de la dependencia.
+	 * @returns {string} Nombre de la dependencia.
+	 */
 	const obtenerNombreDependencia = idDependencia => {
 		const dependenciaEncontrada = optionsDependencias.find(
 			dep => dep.id === idDependencia,
@@ -73,6 +42,51 @@ function PDF({
 			? dependenciaEncontrada.nombre
 			: 'Dependencia Desconocida';
 	};
+
+	// Definir estilos para el PDF
+	const styles = StyleSheet.create({
+		page: {
+			flexDirection: 'column',
+			backgroundColor: '#FFFFFF',
+			padding: 20,
+		},
+		section: {
+			margin: 10,
+			paddingLeft: 25,
+			paddingRight: 25,
+			flexGrow: 1,
+		},
+		title: {
+			fontSize: 18,
+			textAlign: 'center',
+			marginBottom: 20,
+			fontWeight: 'bold',
+		},
+		subtitle: {
+			fontSize: 14,
+			textAlign: 'left',
+			marginBottom: 10,
+			fontWeight: 'bold',
+		},
+		text: {
+			fontSize: 12,
+			textAlign: 'justify',
+			marginBottom: 10,
+		},
+		infoContainer: {
+			marginBottom: 20,
+		},
+		infoItem: {
+			fontSize: 13,
+			marginBottom: 5,
+		},
+		image: {
+			width: '100%',
+			height: '100%',
+			objectFit: 'cover', // Ajusta la imagen al contenedor
+		},
+	});
+
 	return (
 		<Document>
 			<Page size='A4' style={styles.page}>
@@ -121,4 +135,13 @@ function PDF({
 	);
 }
 
-export default PDF;
+// Definir PropTypes para las propiedades del componente
+Pdf.propTypes = {
+	tipoSolicitud: PropTypes.string.isRequired,
+	dependencia: PropTypes.string.isRequired,
+	descripcion: PropTypes.string.isRequired,
+	numeroRadicado: PropTypes.string.isRequired,
+	fechaRadicado: PropTypes.string.isRequired,
+};
+
+export default Pdf;

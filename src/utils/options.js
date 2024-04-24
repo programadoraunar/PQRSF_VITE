@@ -53,6 +53,8 @@ export const optionscanal = [
 export const optionsIdentificacion = [
 	{ id: '1', nombre: 'CC' },
 	{ id: '2', nombre: 'Targeta de Identidad' },
+	{ id: '3', nombre: 'Cedula de Extranjeria' },
+	{ id: '4', nombre: 'NUIP - Numero Unico de Identificacion Personal' },
 ];
 
 /**

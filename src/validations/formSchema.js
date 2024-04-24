@@ -91,12 +91,13 @@ export const solicitudNormalesSchema = z.object({
 			if (issue.code === z.ZodIssueCode.invalid_enum_value) {
 				return {
 					message:
-						'El valor de tipo de solicitud debe ser "CC", "Targeta de Indentidad".',
+						'El valor de tipo de solicitud debe ser "CC", "Targeta de Indentidad", Cedula de Extranjeria.',
 				};
 			}
 			return { message: context.defaultError };
 		},
 	}),
+
 	tipoSolicitud: z.enum(tipoSolicitudNombres, {
 		errorMap: (issue, context) => {
 			if (issue.code === z.ZodIssueCode.invalid_enum_value) {
@@ -146,6 +147,12 @@ export const solicitudNormalesSchema = z.object({
 	apellido: z
 		.string()
 		.max(100, 'El apellido no puede exceder los 100 caracteres')
+		.refine(val => val.trim().length > 0, {
+			message: 'Apellido no puede contener solo espacios en blanco',
+		}),
+	segundoApellido: z
+		.string()
+		.max(100, 'El segundo apellido no puede exceder los 100 caracteres')
 		.refine(val => val.trim().length > 0, {
 			message: 'Apellido no puede contener solo espacios en blanco',
 		}),

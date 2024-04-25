@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion'; // Asegúrate de importar motion desde framer-motion
-
+import PropTypes from 'prop-types';
 import { fadeIn } from '../../utils/variants';
 const ExpandingButton = ({ buttonText, expandedContent }) => {
 	const [expanded, setExpanded] = useState(false);
@@ -34,5 +34,8 @@ const ExpandingButton = ({ buttonText, expandedContent }) => {
 		</div>
 	);
 };
-
+ExpandingButton.propTypes = {
+	buttonText: PropTypes.string.isRequired, // El texto del botón es obligatorio y debe ser una cadena
+	expandedContent: PropTypes.node.isRequired, // El contenido expandido puede ser cualquier nodo React y es obligatorio
+};
 export default ExpandingButton;

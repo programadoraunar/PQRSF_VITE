@@ -10,8 +10,8 @@ import ExpandingButton from '../components/home/ExpandingButton';
 function Home() {
 	return (
 		<div className='bg-white'>
-			<div className='py-3 px-5 sm:py-4 sm:px-6 md:py-5 md:px-7 lg:py-6 lg:px-16 xl:py-7 xl:px-36 2xl:py-7 2xl:px-60'>
-				<Header />
+			<Header />
+			<div className='py-8 px-5 sm:py-4 sm:px-6 md:py-5 md:px-7 lg:py-6 lg:px-16 xl:py-8 xl:px-40 2xl:py-7 2xl:px-60 mt-[150px]'>
 				<section id='titulo'>
 					<h1 className='text-black font-gothicBold pt-5 text-xl md:text-xl lg:text-xl 2xl:text-2xl'>
 						Peticiones Quejas, Reclamos, Sugerencias, Felicitaciones{' '}
@@ -80,7 +80,7 @@ function Home() {
 							</Link>
 						</div>
 						<div className='flex flex-col justify-center'>
-							<Link to='/consulta'>
+							<Link to='https://www.aunar.edu.co/politicas-de-proteccion-de-datos/'>
 								<motion.button
 									whileHover={{ scale: 1.05 }}
 									onHoverStart={e => {}}

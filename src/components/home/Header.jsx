@@ -1,19 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 function Header() {
 	return (
-		<div className='flex flex-col lg:flex-row items-center justify-between'>
-			<div className='flex justify-center lg:justify-start'>
-				<img
-					src='/logo-autonoma-de-narino.png'
-					alt='Logo De La Auitonoma'
-					className='w-full max-w-[8rem] sm:max-w-[7rem] md:max-w-[8rem]  lg:max-w-[9rem] xl:max-w-[10rem]'
-				/>
+		<div className='bg-blue-zodiac-950 flex flex-col lg:flex-row justify-around items-center fixed w-full top-0 z-30'>
+			<div className='flex items-center justify-center '>
+				<img src='/SistemaP.png' alt='logoSistemas' width={200} />
 			</div>
-
-			<Link to='/login' className='text-blueBase text-sm lg:text-xl'>
-				ir a login
-			</Link>
+			<div className='absolute bottom-[-50px] left-1/2 transform -translate-x-1/2'>
+				<img src='/logo-autonoma-de-narino.svg ' width={70} />
+			</div>
+			<div className='hidden lg:visible'>
+				<img src='/logo_aunar2.svg' width={500} />
+			</div>
 		</div>
 	);
 }

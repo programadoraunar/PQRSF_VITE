@@ -11,6 +11,11 @@
 	font-family: "GothicBold";
 	src: url('../src//assets/fonts/CenturyGothic-Bold.ttf') format('truetype');
 }
+.hidden {
+	transform: translateY(-100%);
+	transition: transform 1s ease;
+  }
+  
 
 /* Estilos para ocultar las barras de desplazamiento en toda la aplicación, excepto en .tableMov */
 *:not(.tableMov)::-webkit-scrollbar {

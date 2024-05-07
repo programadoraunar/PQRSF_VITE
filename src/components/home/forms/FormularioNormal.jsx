@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { solicitudNormalesSchema } from '../../validations/formSchema';
+import { solicitudNormalesSchema } from '../../../validations/formSchema';
 import {
 	optionscanal,
 	optionsDependencias,
 	optionsSolicitud,
 	optionsIdentificacion,
-} from '../../utils/options';
+} from '../../../utils/options';
 
 /**
  * @component FormularioNormal

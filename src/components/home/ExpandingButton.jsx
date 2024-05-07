@@ -13,7 +13,7 @@ const ExpandingButton = ({ buttonText, expandedContent }) => {
 		<div>
 			<motion.button
 				whileHover={{ scale: 1.05 }}
-				className={` py-4 px-10 rounded-b-lg bg-blue-zodiac-950 cursor-pointer transition-all duration-300 ${
+				className={` py-4 px-10 rounded-b-lg bg-blue-zodiac-950 cursor-pointer transition-all duration-300 text-white ${
 					expanded ? 'w-full' : 'w-full lg:w-80 '
 				}`}
 				onClick={handleClick}

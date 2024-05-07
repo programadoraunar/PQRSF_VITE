@@ -11,7 +11,7 @@
 	font-family: "GothicBold";
 	src: url('../src//assets/fonts/CenturyGothic-Bold.ttf') format('truetype');
 }
-.hidden {
+.hidden1 {
 	transform: translateY(-100%);
 	transition: transform 1s ease;
   }
@@ -49,6 +49,9 @@
 	border-radius: 5px;
 	cursor: pointer;
 }
+.gradient {
+	background: linear-gradient(90deg, #337fd5 0%, #01e1ff 100%);
+  }
 
 /* En tu archivo CSS */
 @media (max-width: 600px) {

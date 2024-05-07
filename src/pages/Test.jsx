@@ -1,15 +1,15 @@
 import React from 'react';
 import Footer from '../components/home/Footer';
+import ExpandingButton from '../components/home/ExpandingButton';
 import FormularioAnonimo from '../components/home/forms/FormularioAnonimo';
 import FormularioNormal from '../components/home/forms/FormularioNormal';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import ExpandingButton from '../components/home/ExpandingButton';
 import Navbar from '../components/home/navigation/Navbar';
 import Hero from '../components/home/sections/Hero';
 import PqrsfSection from '../components/home/sections/PqrsfSection';
 import PQRSFDetails from '../components/home/sections/PQRSFDetails';
-function Home() {
+function Test() {
 	return (
 		<div>
 			<Navbar />
@@ -83,4 +83,4 @@ function Home() {
 	);
 }
 
-export default Home;
+export default Test;

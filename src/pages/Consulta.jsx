@@ -73,8 +73,8 @@ function Consulta() {
 				Consultar Estado de la Solicitud PQRSF
 			</h1>
 			<div className='grid grid-rows-1 justify-center justify-items-center align-items-center mx-2 lg:items-center md:mx-16 lg:mx-7 lg:gap-5 my-10 xl:mx-16 xl:grid-cols-[25%_75%]'>
-				<div className='hidden xl:block'>
-					<img src='/search.svg' className='xl:h-56 xl:w-auto' />
+				<div className='text-black hidden xl:flex items-center'>
+					<img src='/search.svg' alt='search' />
 				</div>
 				<div className='flex flex-col'>
 					<div className='px-2 bg-white shadow-[0_2.8px_2.2px_rgba(0,_0,_0,_0.034),_0_6.7px_5.3px_rgba(0,_0,_0,_0.048),_0_12.5px_10px_rgba(0,_0,_0,_0.06),_0_22.3px_17.9px_rgba(0,_0,_0,_0.072),_0_41.8px_33.4px_rgba(0,_0,_0,_0.086),_0_100px_80px_rgba(0,_0,_0,_0.12)] py-10 my-9 md:px-6 lg:my-10 xl:px-20'>

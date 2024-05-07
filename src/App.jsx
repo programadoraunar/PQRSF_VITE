@@ -10,6 +10,7 @@ import ProtectedRoutes from './ProtectedRoutes';
 import SolicitudesAnonimas from './pages/admin/SolicitudesAnonimas';
 import SolicitudesNormales from './pages/admin/SolicitudesNormales';
 import Consulta from './pages/Consulta';
+import Test from './pages/Test';
 
 function App() {
 	return (
@@ -19,6 +20,7 @@ function App() {
 					<Route path='/' element={<Home />}></Route>
 					<Route path='/login' element={<Login />}></Route>
 					<Route path='/consulta' element={<Consulta />}></Route>
+					<Route path='/test' element={<Test />}></Route>
 					<Route element={<ProtectedRoutes />}>
 						<Route path='/AdminProfile/' element={<LayoutAdmin />}>
 							<Route index element={<HomeAdmin />}></Route>

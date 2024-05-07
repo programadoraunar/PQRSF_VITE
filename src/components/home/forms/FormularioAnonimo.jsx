@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import { optionsDependencias, optionsSolicitud } from '../../utils/options';
+import { optionsDependencias, optionsSolicitud } from '../../../utils/options';
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { solicitudAnonimaSchema } from '../../validations/formSchema';
+import { solicitudAnonimaSchema } from '../../../validations/formSchema';
 // import { registrarSolicitudAnonima } from '../../supabase/actions/solicitudesFuntions';
 import {
 	obtnerUltimoRadicado,
 	registrarSolicitudAnonima,
-} from '../../supabase/actions/pqrsfFunctions';
-import Modal from './Modal';
-import Loading from '../ui/Loading';
+} from '../../../supabase/actions/pqrsfFunctions';
+import Modal from '../Modal';
+import Loading from '../../ui/Loading';
 import { PDFDownloadLink } from '@react-pdf/renderer';
-import Pdf from '../pdf/Pdf';
+import Pdf from '../../pdf/Pdf';
 
 /**
  * @component FormularioAnonimo

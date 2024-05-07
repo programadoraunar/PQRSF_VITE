@@ -98,6 +98,10 @@ export const solicitudNormalesSchema = z.object({
 		},
 	}),
 
+	documentNumber: z
+		.string()
+		.regex(/^\d+$/, 'El número de documento debe contener solo dígitos'),
+
 	tipoSolicitud: z.enum(tipoSolicitudNombres, {
 		errorMap: (issue, context) => {
 			if (issue.code === z.ZodIssueCode.invalid_enum_value) {
@@ -138,11 +142,11 @@ export const solicitudNormalesSchema = z.object({
 			message: 'La descripción no puede contener solo espacios en blanco.',
 		}),
 
-	nombre: z
+	nombres: z
 		.string()
 		.max(100, 'el nombre no puede exceder los 100 caracteres')
 		.refine(val => val.trim().length > 0, {
-			message: 'La nombre no puede contener solo espacios en blanco',
+			message: 'El nombre no puede contener solo espacios en blanco',
 		}),
 	apellido: z
 		.string()

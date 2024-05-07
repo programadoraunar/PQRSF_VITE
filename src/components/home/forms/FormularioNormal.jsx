@@ -9,6 +9,9 @@ import {
 	optionsSolicitud,
 	optionsIdentificacion,
 } from '../../../utils/options';
+import { motion, AnimatePresence } from 'framer-motion';
+import Loading from '../../ui/Loading';
+import ModalSolicitudNormal from '../ui/ModalSolicitudNormal';
 
 /**
  * @component FormularioNormal
@@ -17,45 +20,96 @@ import {
  */
 
 function FormularioNormal() {
-	const [formData, setFormData] = useState({
-		description: '',
-		nombre: '',
-		apellido: '',
-		segundoApellido: '',
-		direccion: '',
-		celular: '',
-		/* adjunto: null, */
-	});
-
 	const {
 		register,
 		handleSubmit,
 		setValue,
+		getValues,
 		formState: { errors },
 	} = useForm({
 		resolver: zodResolver(solicitudNormalesSchema),
 	});
 
+	const [formData, setFormData] = useState({
+		description: '',
+		/* adjunto: null, */
+	});
+
+	// Estado local para manejar el número y la fecha de radicado
+	const [numeroRadicado, setNumeroRadicado] = useState();
+	const [fechaRadicado, setFechaRadicado] = useState();
+	// Estado local para manejar el estado de carga
+	const [isLoading, setIsLoading] = useState(false);
+	// Estado local para manejar los valores del formulario
+	const [valores, setValores] = useState({
+		tipoIdentificacion: '',
+		documentNumber: '',
+		nombres: '',
+		apellido: '',
+		tipoSolicitud: '', // Estado para el tipo de solicitud
+		dependencia: '', // Estado para la dependencia
+		description: '', // Estado para la descripción
+	});
+
+	// Manejador de cambio para los campos del formulario solo para campo la descripcion
 	const handleChange = e => {
 		const { name, value } = e.target;
-		const cleanedValue = value.replace(/[^\w\s]/gi, ''); // Elimina caracteres especiales
+
+		// Limpiar el valor eliminando caracteres especiales
+		const cleanedValue = value.replace(/[^\w\s]/gi, '');
+		// Actualizar el estado del formulario
 		setFormData(prevData => ({
 			...prevData,
 			[name]: cleanedValue,
 		}));
 	};
+	// Estado local para mostrar el modal
+	const [mostrarModal, setMostrarModal] = useState(false);
+	// Manejador para mostrar el modal
+	const handleMostrarModal = () => {
+		setMostrarModal(true);
+	};
+	// Manejador para cerrar el modal y limpiar el formulario
+	const handleCerrarModal = () => {
+		setValue('tipoSolicitud', ''); // Limpiar el valor del campo tipoSolicitud
+		setValue('dependencia', ''); // Limpiar el valor del campo dependencia
+		setValue('description', ''); // Limpiar el valor del campo description
+		setMostrarModal(false); // Ocultar el modal
+	};
 
 	const onSubmit = data => {
-		console.log(data);
+		try {
+			setIsLoading(true);
+			console.log(data);
+
+			const valoresFormulario = getValues();
+			setValores({
+				tipoIdentificacion: valoresFormulario.tipoIdentificacion,
+				documentNumber: valoresFormulario.documentNumber,
+				nombres: valoresFormulario.nombres,
+				apellido: valoresFormulario.apellido,
+				tipoSolicitud: valoresFormulario.tipoSolicitud,
+				dependencia: valoresFormulario.dependencia,
+				description: valoresFormulario.description,
+			});
+			handleMostrarModal();
+		} catch (err) {
+			console.log(err);
+		} finally {
+			setIsLoading(false);
+			handleMostrarModal();
+		}
 	};
 	return (
-		<div className=' border-2 border-blue-zodiac-800 rounded-lg my-5 shadow-xl flex flex-col  bg-white'>
-			<h1 className='text-blue-zodiac-900 text-center font-gothicBold text-2xl py-2'>
-				Solicitudes Normales
-			</h1>
+		<div className=' border-2 border-blue-zodiac-950 rounded-lg my-5 shadow-xl flex flex-col  bg-white'>
+			<div className='bg-blue-zodiac-950 py-3'>
+				<h1 className='text-center text-lg font-gothicBold text-white'>
+					Solicitudes Normales
+				</h1>
+			</div>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<section id='infoSolicitante' className='flex flex-col text-black '>
-					<h1 className='text-center py-3 bg-blue-zodiac-950 text-white my-3'>
+					<h1 className='text-center py-3 font-gothicBold '>
 						Informacion Solicitante
 					</h1>
 					<div className='grid grid-cols-1 md:grid-cols-2 gap-4 px-2'>
@@ -85,15 +139,19 @@ function FormularioNormal() {
 						</div>
 						<div className='p-4'>
 							<div className='flex flex-col w-full lg:w-[85%]'>
-								<div className='py-2 text-blue-zodiac-950 text-start'>
+								<label className='py-2 text-blue-zodiac-950 text-start'>
 									Numero de Documento
-								</div>
+								</label>
 								<input
 									type='text'
 									className='text-blue-zodiac-950 hover:border-blue-zodiac-950'
 									placeholder='Ingrese su Numero de Documento'
+									{...register('documentNumber')}
 								/>
 							</div>
+							{errors.documentNumber && (
+								<p className='text-red-500'>{errors.documentNumber.message}</p>
+							)}
 						</div>
 						<div className=' p-4'>
 							<div className='flex flex-col w-full lg:w-[85%]'>
@@ -104,12 +162,12 @@ function FormularioNormal() {
 									className='text-blue-zodiac-950 hover:border-blue-zodiac-950'
 									placeholder='Ingrese su nombre'
 									type='text'
-									{...register('nombre')}
-									value={formData.nombre}
+									{...register('nombres')}
+									value={formData.nombres}
 									onChange={handleChange}
 								/>
-								{errors.nombre && (
-									<p className='text-red-500'>{errors.nombre.message}</p>
+								{errors.nombres && (
+									<p className='text-red-500'>{errors.nombres.message}</p>
 								)}
 							</div>
 						</div>
@@ -205,11 +263,11 @@ function FormularioNormal() {
 							</div>
 						</div>
 					</div>
-					<h2 className='text-center py-3 bg-blue-zodiac-950 text-white my-3'>
-						Informacion de la Solicitud
+					<h2 className='text-center py-3 font-gothicBold '>
+						Informacion Solicitud
 					</h2>
 					<div className='grid grid-cols-1 md:grid-cols-2 gap-4 px-2'>
-						<div className=''>
+						<div className='p-4'>
 							<div className='mb-4 mt-8 text-blue-zodiac-950 text-start'>
 								Tipo de Solicitud
 							</div>
@@ -234,7 +292,7 @@ function FormularioNormal() {
 								<p className='text-red-500'>{errors.tipoSolicitud.message}</p>
 							)}
 						</div>
-						<div>
+						<div className='p-4'>
 							<div className='mb-4 mt-8 text-blue-zodiac-950 text-start'>
 								Dependencia
 							</div>
@@ -260,7 +318,7 @@ function FormularioNormal() {
 								<p className='text-red-500'>{errors.dependencia.message}</p>
 							)}
 						</div>
-						<div>
+						<div className='p-4'>
 							<div className='mb-4 mt-8 text-blue-zodiac-950 text-start'>
 								Canal de Respuesta
 							</div>
@@ -283,26 +341,7 @@ function FormularioNormal() {
 								<p className='text-red-500'>{errors.canal.message}</p>
 							)}
 						</div>
-						<div className='flex flex-col'>
-							<label
-								htmlFor='description'
-								className='text-base py-2 text-blue-zodiac-950 text-start'
-							>
-								Description
-							</label>
-							<textarea
-								className='text-blue-zodiac-950 hover:border-blue-zodiac-950'
-								id='description'
-								placeholder='Start typing here...'
-								rows={6}
-								{...register('description')}
-								value={formData.description}
-								onChange={handleChange}
-							/>
-							{errors.description && (
-								<p className='text-red-500'>{errors.description.message}</p>
-							)}
-						</div>
+
 						{/* <input
                 type='file'
                 className='border text-black border-gray-300 p-2 rounded-md text-sm lg:text-xl'
@@ -312,6 +351,26 @@ function FormularioNormal() {
                 <p className='text-red-500'>{errors.adjunto.message}</p>
             )} */}
 					</div>
+					<div className='flex flex-col px-6'>
+						<label
+							htmlFor='description'
+							className='text-base py-2 text-blue-zodiac-950 text-start'
+						>
+							Description
+						</label>
+						<textarea
+							className='text-blue-zodiac-950 hover:border-blue-zodiac-950'
+							id='description'
+							placeholder='Start typing here...'
+							rows={6}
+							{...register('description')}
+							value={formData.description}
+							onChange={handleChange}
+						/>
+						{errors.description && (
+							<p className='text-red-500'>{errors.description.message}</p>
+						)}
+					</div>
 				</section>
 				<button
 					type='submit'
@@ -320,6 +379,39 @@ function FormularioNormal() {
 					Enviar
 				</button>
 			</form>
+			<AnimatePresence>
+				{isLoading ? (
+					<Loading loadingClassName='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2' />
+				) : (
+					mostrarModal && (
+						<motion.div
+							initial={{ opacity: 0, scale: 0.75 }}
+							animate={{ opacity: 1, scale: 1 }}
+							exit={{ opacity: 0, scale: 0 }}
+							className='w-full  h-full fixed top-0 left-0 bg-slate-500 bg-opacity-50 flex justify-center items-center '
+						>
+							<ModalSolicitudNormal
+								onClose={handleCerrarModal}
+								tipoIdentificacion={valores.tipoIdentificacion}
+								documentNumber={valores.documentNumber}
+								nombres={valores.nombres}
+								apellido={valores.apellido}
+								dependencia={valores.dependencia}
+								tipoSolicitud={valores.tipoSolicitud}
+								descripcion={valores.description}
+								isLoading={isLoading}
+							>
+								<div className='flex flex-col gap-3 mb-5'>
+									<h2 className='font-gothicBold'>Numero de Radicado:</h2>
+									4156456
+									<h2 className='font-gothicBold'>Fecha de Radicacion:</h2>
+									15-15-2024
+								</div>
+							</ModalSolicitudNormal>
+						</motion.div>
+					)
+				)}
+			</AnimatePresence>
 		</div>
 	);
 }

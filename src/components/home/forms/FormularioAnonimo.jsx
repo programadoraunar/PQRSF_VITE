@@ -10,7 +10,7 @@ import {
 	obtnerUltimoRadicado,
 	registrarSolicitudAnonima,
 } from '../../../supabase/actions/pqrsfFunctions';
-import Modal from '../Modal';
+import Modal from '../ui/Modal';
 import Loading from '../../ui/Loading';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import Pdf from '../../pdf/Pdf';
@@ -110,14 +110,14 @@ function FormularioAnonimo() {
 	};
 
 	return (
-		<div className='border-2 border-blue-zodiac-900 my-5 shadow-xl flex flex-col bg-white'>
+		<div className='border-2 border-blue-zodiac-950 my-5 shadow-xl flex flex-col bg-white'>
 			<div className='bg-blue-zodiac-950 py-3'>
-				<h1 className='text-center text-lg font-gothicBold'>
+				<h1 className='text-center text-lg font-gothicBold text-white'>
 					Solicitudes Anónimas
 				</h1>
 			</div>
 			<form onSubmit={handleSubmit(onSubmit)} className='px-3 py-3 '>
-				<div className='mb-4 text-base lg:text-base text-blue-zodiac-950 text-start'>
+				<div className='mb-4 text-base lg:text-base font-gothicBold text-blue-zodiac-950 text-start'>
 					Tipo de Solicitud
 				</div>
 				<select
@@ -137,7 +137,7 @@ function FormularioAnonimo() {
 				{errors.tipoSolicitud && (
 					<p className='text-red-500'>{errors.tipoSolicitud.message}</p>
 				)}
-				<div className='mb-4 mt-8 text-base text-blue-zodiac-950 text-start'>
+				<div className='mb-4 mt-8 text-base text-blue-zodiac-950 font-gothicBold text-start'>
 					Dependencia
 				</div>
 				<select

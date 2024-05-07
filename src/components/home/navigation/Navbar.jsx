@@ -1,5 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion'; // Asegúrate de importar motion desde framer-motion
+import { fadeIn } from '../../../utils/variants';
+import { Link } from 'react-router-dom';
+
 function Navbar() {
+	// Estado para controlar si el menú está abierto o cerrado
+	const [isOpen, setIsOpen] = useState(false);
+
+	// Función para alternar el estado del menú
+	const toggleMenu = () => {
+		setIsOpen(!isOpen);
+	};
 	return (
 		<nav
 			id='header'
@@ -17,7 +28,8 @@ function Navbar() {
 				<div className='block lg:hidden pr-4'>
 					<button
 						id='nav-toggle'
-						className='flex items-center p-1 text-pink-800 hover:text-gray-900 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out'
+						className='flex items-center p-1  hover:text-blue-zodiac-100 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out cursor-pointer'
+						onClick={toggleMenu}
 					>
 						<svg
 							className='fill-current h-6 w-6'
@@ -29,23 +41,31 @@ function Navbar() {
 						</svg>
 					</button>
 				</div>
-				<div
-					className='w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 bg-white lg:bg-transparent text-black p-4 lg:p-0 z-20'
+				<motion.div
+					className={`w-full flex-grow lg:flex lg:items-center lg:w-auto mt-2 lg:mt-0  lg:bg-transparent text-black p-4 lg:p-0 z-20 ${isOpen ? '' : 'hidden'}`}
 					id='nav-content'
+					initial={false}
+					animate={{ height: isOpen ? 'auto' : 0 }}
+					variants={fadeIn('down', 0.2)} // Aplicamos la animación fadeIn al contenido del menú
 				>
-					<ul className='list-reset lg:flex justify-end flex-1 items-center '>
+					<motion.ul
+						className='list-reset lg:flex justify-end flex-1 items-center '
+						initial={false}
+						animate={{ height: isOpen ? 'auto' : 0 }}
+						variants={fadeIn('down', 0.2)}
+					>
 						<li className='mr-3'>
 							<a
 								className='inline-block py-2 px-4 text-white hover:text-gray-200 no-underline'
-								href='#'
+								href='#PqrsfSection'
 							>
-								Formulario
+								Politica Datos Personales
 							</a>
 						</li>
 						<li className='mr-3'>
 							<a
 								className='inline-block text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4'
-								href='#'
+								href='#queEs'
 							>
 								¿Que es PQRSF?
 							</a>
@@ -53,19 +73,20 @@ function Navbar() {
 						<li className='mr-3'>
 							<a
 								className='inline-block text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4'
-								href='#'
+								href='#formularios'
 							>
-								Politica
+								Formulario
 							</a>
 						</li>
-					</ul>
-					<button
+					</motion.ul>
+					<Link
+						to='/login'
 						id='navAction'
 						className='mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full mt-4 lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out'
 					>
-						Action
-					</button>
-				</div>
+						Login
+					</Link>
+				</motion.div>
 			</div>
 			<hr className='border-b border-black opacity-25 my-0 py-0' />
 		</nav>

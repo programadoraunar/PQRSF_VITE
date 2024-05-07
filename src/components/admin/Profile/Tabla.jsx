@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { RiFlag2Line } from '@remixicon/react';
 import {
 	Badge,
@@ -10,62 +10,50 @@ import {
 	TableHeaderCell,
 	TableRow,
 } from '@tremor/react';
+import { obtenerUltimos7Registros } from '../../../supabase/actions/pqrsfFunctions';
+import Loading from '../../ui/Loading';
+import { optionsDependencias } from '../../../utils/options';
 
-const data = [
-	{
-		name: 'Viola Amherd',
-		Role: 'Federal Councillor',
-		departement:
-			'The Federal Department of Defence, Civil Protection and Sport (DDPS)',
-		status: 'active',
-	},
-	{
-		name: 'Albert Rösti',
-		Role: 'Federal Councillor',
-		departement:
-			'The Federal Department of the Environment, Transport, Energy and Communications (DETEC)',
-		status: 'active',
-	},
-	{
-		name: 'Beat Jans',
-		Role: 'Federal Councillor',
-		departement: 'The Federal Department of Justice and Police (FDJP)',
-		status: 'active',
-	},
-	{
-		name: 'Ignazio Cassis',
-		Role: 'Federal Councillor',
-		departement: 'The Federal Department of Foreign Affairs (FDFA)',
-		status: 'active',
-	},
-	{
-		name: 'Karin Keller-Sutter',
-		Role: 'Federal Councillor',
-		departement: 'The Federal Department of Finance (FDF)',
-		status: 'active',
-	},
-	{
-		name: 'Guy Parmelin',
-		Role: 'Federal Councillor',
-		departement:
-			'The Federal Department of Economic Affairs, Education and Research (EAER)',
-		status: 'active',
-	},
-	{
-		name: 'Elisabeth Baume-Schneider',
-		Role: 'Federal Councillor',
-		departement: 'The Federal Department of Home Affairs (FDHA)',
-		status: 'cerradas',
-	},
-];
 function Tabla() {
+	const [datos, setDatos] = useState();
+	const [isLoading, setIsLoading] = useState(false);
+
+	useEffect(() => {
+		async function fetchData() {
+			setIsLoading(true);
+			try {
+				const datos = await obtenerUltimos7Registros();
+				console.log('Datos de los últimos 7 registros:', datos);
+				setDatos(datos);
+			} catch (error) {
+				console.error(
+					'Error al obtener los últimos 7 registros:',
+					error.message,
+				);
+			} finally {
+				setIsLoading(false);
+			}
+		}
+		fetchData();
+	}, []);
+
+	// Función para obtener el nombre de la dependencia basado en su ID
+	const obtenerNombreDependencia = idDependencia => {
+		const dependenciaEncontrada = optionsDependencias.find(
+			dep => dep.id === idDependencia.toString(),
+		);
+		return dependenciaEncontrada
+			? dependenciaEncontrada.nombre
+			: 'Dependencia Desconocida';
+	};
+
 	return (
 		<div className='py-8'>
 			<Card style={{ backgroundColor: '#fff' }}>
 				<h3 className='text-blue-zodiac-950 font-bold text-xl lg:text-3xl'>
 					Ultimas Solicitudes
 				</h3>
-				<Table className='mt-5'>
+				<Table className='mt-5 tableMov'>
 					<TableHead>
 						<TableRow>
 							<TableHeaderCell className='table-header-cell'>
@@ -82,25 +70,47 @@ function Tabla() {
 							</TableHeaderCell>
 						</TableRow>
 					</TableHead>
-					<TableBody>
-						{data.map((item, index) => (
-							<TableRow
-								key={item.name}
-								style={{
-									backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#E2E4E7',
-								}}
-							>
-								<TableCell className='lg:text-lg'>{item.name}</TableCell>
-								<TableCell className='lg:text-lg'>{item.Role}</TableCell>
-								<TableCell className='lg:text-lg'>{item.departement}</TableCell>
-								<TableCell>
-									<Badge color='emerald' icon={RiFlag2Line}>
-										{item.status}
-									</Badge>
-								</TableCell>
-							</TableRow>
+					{!isLoading && datos && datos.length > 0 && (
+						<TableBody className='tableMov'>
+							{datos.map((item, index) => (
+								<TableRow
+									key={item.id_pqrsf}
+									style={{
+										backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#E2E4E7',
+									}}
+								>
+									<TableCell className='lg:text-lg'>
+										{item.tipo_solicitud_pqrs}
+									</TableCell>
+									<TableCell className='lg:text-lg'>
+										{item.fecha_envio}
+									</TableCell>
+									<TableCell className='lg:text-lg'>
+										{obtenerNombreDependencia(item.id_dependencia)}
+									</TableCell>
+									<TableCell>
+										<Badge color='emerald' icon={RiFlag2Line}>
+											{item.status}
+										</Badge>
+									</TableCell>
+								</TableRow>
+							))}
+						</TableBody>
+					)}
+					{!datos ||
+						(datos.length === 0 && (
+							<p className='text-center font-gothicBold text-red-400'>
+								No hay datos disponibles.
+							</p>
 						))}
-					</TableBody>
+
+					{isLoading && (
+						<TableRow>
+							<TableCell colSpan={4} className='text-center'>
+								<Loading />
+							</TableCell>
+						</TableRow>
+					)}
 				</Table>
 			</Card>
 		</div>

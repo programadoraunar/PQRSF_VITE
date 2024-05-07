@@ -1,6 +1,6 @@
 import React from 'react';
 import Footer from '../components/home/Footer';
-import ExpandingButton from '../components/home/ExpandingButton';
+import ExpandingButton from '../components/home/ui/ExpandingButton';
 import FormularioAnonimo from '../components/home/forms/FormularioAnonimo';
 import FormularioNormal from '../components/home/forms/FormularioNormal';
 import { motion } from 'framer-motion';

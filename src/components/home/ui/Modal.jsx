@@ -1,7 +1,7 @@
 import React from 'react';
 import { RiCloseCircleFill } from '@remixicon/react';
 import PropTypes from 'prop-types';
-import { optionsDependencias } from '../../utils/options';
+import { optionsDependencias } from '../../../utils/options';
 
 function Modal({
 	children,
@@ -21,37 +21,35 @@ function Modal({
 			: 'Dependencia Desconocida';
 	};
 	return (
-		<div className=''>
-			<div className='w-[400px] lg:w-[500px] min-h-[100px] bg-white relative'>
-				<div className='flex justify-between bg-blue-zodiac-950 py-3 px-4'>
-					<h1 className=''>Resumen Solicitud</h1>
-					<button className='' onClick={onClose}>
-						<RiCloseCircleFill className='text-whiter' />
-					</button>
-				</div>
-				{isLoading ? (
-					<div>nada</div>
-				) : (
-					<div className='text-black p-5'>
-						<h2
-							className='text-lg font-gothicBold
-						'
-						>
-							Información enviada:
-						</h2>
-
-						<div className='flex flex-col gap-3'>
-							<h4 className='font-gothicBold'>Tipo Solicitud: </h4>
-							<span>{tipoSolicitud}</span>
-							<p className='font-gothicBold'>Dependencia:</p>
-							<span>{obtenerNombreDependencia(dependencia)}</span>
-							<p className='font-gothicBold'>Descripcion:</p>
-							<span>{descripcion}</span>
-						</div>
-						{children}
-					</div>
-				)}
+		<div className='w-[400px] lg:w-[500px] min-h-[100px] bg-white relative'>
+			<div className='flex justify-between bg-blue-zodiac-950 py-3 px-4 '>
+				<h1 className='text-white'>Resumen Solicitud</h1>
+				<button className='' onClick={onClose}>
+					<RiCloseCircleFill className='text-white' />
+				</button>
 			</div>
+			{isLoading ? (
+				<div>nada</div>
+			) : (
+				<div className='text-black p-5'>
+					<h2
+						className='text-lg font-gothicBold
+						'
+					>
+						Información enviada:
+					</h2>
+
+					<div className='flex flex-col gap-3'>
+						<p className='font-gothicBold'>Tipo Solicitud: </p>
+						<span>{tipoSolicitud}</span>
+						<p className='font-gothicBold'>Dependencia:</p>
+						<span>{obtenerNombreDependencia(dependencia)}</span>
+						<p className='font-gothicBold'>Descripcion:</p>
+						<span>{descripcion}</span>
+					</div>
+					{children}
+				</div>
+			)}
 		</div>
 	);
 }

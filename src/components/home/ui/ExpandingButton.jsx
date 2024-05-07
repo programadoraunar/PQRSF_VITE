@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion'; // Asegúrate de importar motion desde framer-motion
 import PropTypes from 'prop-types';
-import { fadeIn } from '../../utils/variants';
+import { fadeIn } from '../../../utils/variants';
 const ExpandingButton = ({ buttonText, expandedContent }) => {
 	const [expanded, setExpanded] = useState(false);
 

@@ -4,7 +4,7 @@ import FormularioAnonimo from '../components/home/forms/FormularioAnonimo';
 import FormularioNormal from '../components/home/forms/FormularioNormal';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import ExpandingButton from '../components/home/ExpandingButton';
+import ExpandingButton from '../components/home/ui/ExpandingButton';
 import Navbar from '../components/home/navigation/Navbar';
 import Hero from '../components/home/sections/Hero';
 import PqrsfSection from '../components/home/sections/PqrsfSection';
@@ -16,7 +16,7 @@ function Home() {
 			<Hero />
 			<PqrsfSection />
 			<PQRSFDetails />
-			<section className='bg-gray-100 py-8'>
+			<section id='formularios' className='bg-gray-100 py-8'>
 				<div className='container mx-auto px-7 xl:px-48 pt-4 pb-12 text-gray-800'>
 					<h1 className='w-full my-2 text-5xl font-bold leading-tight text-center text-gray-800'>
 						Formularios

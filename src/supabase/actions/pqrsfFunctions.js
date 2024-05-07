@@ -63,3 +63,55 @@ export async function obtnerUltimoRadicado() {
 		throw new Error('Error al llamar a la función RPC.');
 	}
 }
+/**
+ * Función asincrónica para obtener los últimos 7 registros de la tabla 'pqrsf' en Supabase.
+ * @returns {Promise<Object>} Un objeto que contiene los datos de los últimos 7 registros.
+ * @throws {Error} Si ocurre un error durante la llamada a la función RPC.
+ * @throws {Error} Si no se pueden obtener los registros correctamente.
+ * // Ejemplo de uso:
+ * try {
+ *     const registros = await obtenerUltimos7Registros();
+ *     console.log('Últimos 7 registros:', registros);
+ * } catch (error) {
+ *     console.error('Error al obtener los últimos 7 registros:', error.message);
+ * }
+ */
+export async function obtenerUltimos7Registros() {
+	try {
+		// Llamar a la función RPC 'obtener_ultimo_radicado' en la base de datos
+		const { data, error } = await supabase.rpc('obtener_ultimos_7_registros');
+		console.log(data);
+		if (error) {
+			// Manejar error si ocurre durante la llamada a la función RPC
+			console.error('Error al obtener las solicitudes:', error);
+			throw new Error('Error al obtener las solicitudes.');
+		} else {
+			// Registro exitoso
+			return data;
+		}
+	} catch (err) {
+		// Manejar error en la llamada a la función RPC
+		console.error('Error al llamar a la función RPC:', err);
+		throw new Error('Error al llamar a la función RPC.');
+	}
+}
+
+export async function obtenerNumeroRegistros() {
+	try {
+		// Llamar a la función RPC 'obtener_ultimo_radicado' en la base de datos
+		const { data, error } = await supabase.rpc('obtenernumeroregistros');
+		console.log(data);
+		if (error) {
+			// Manejar error si ocurre durante la llamada a la función RPC
+			console.error('Error al obtener el total de solicitudes:', error);
+			throw new Error('Error al obtener el total de solicitudes.');
+		} else {
+			// Registro exitoso
+			return data;
+		}
+	} catch (err) {
+		// Manejar error en la llamada a la función RPC
+		console.error('Error al llamar a la función RPC:', err);
+		throw new Error('Error al llamar a la función RPC.');
+	}
+}

@@ -3,7 +3,7 @@ import home2 from '../../../assets/img/home2.svg';
 
 function PqrsfSection() {
 	return (
-		<section className='bg-white border-b py-8'>
+		<section id='PqrsfSection' className='bg-white border-b py-8'>
 			<div className='container max-w-6xl mx-auto m-8'>
 				<h1 className='w-full my-2 text-5xl font-bold leading-tight text-center text-gray-800'>
 					Sistema PQRSF

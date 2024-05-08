@@ -12,7 +12,8 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import Loading from '../../ui/Loading';
 import ModalSolicitudNormal from '../ui/ModalSolicitudNormal';
-
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import Pdf from '../../pdf/Pdf';
 /**
  * @component FormularioNormal
  * @description Componente que representa un formulario para enviar solicitudes normales.
@@ -46,8 +47,13 @@ function FormularioNormal() {
 		documentNumber: '',
 		nombres: '',
 		apellido: '',
+		segundoApellido: '',
+		direccion: '',
+		celular: '',
+		email: '',
 		tipoSolicitud: '', // Estado para el tipo de solicitud
 		dependencia: '', // Estado para la dependencia
+		canal: '',
 		description: '', // Estado para la descripción
 	});
 
@@ -88,8 +94,13 @@ function FormularioNormal() {
 				documentNumber: valoresFormulario.documentNumber,
 				nombres: valoresFormulario.nombres,
 				apellido: valoresFormulario.apellido,
+				segundoApellido: valoresFormulario.segundoApellido,
+				direccion: valoresFormulario.direccion,
+				celular: valoresFormulario.celular,
+				email: valoresFormulario.email,
 				tipoSolicitud: valoresFormulario.tipoSolicitud,
 				dependencia: valoresFormulario.dependencia,
+				canal: valoresFormulario.canal,
 				description: valoresFormulario.description,
 			});
 			handleMostrarModal();
@@ -396,11 +407,54 @@ function FormularioNormal() {
 								documentNumber={valores.documentNumber}
 								nombres={valores.nombres}
 								apellido={valores.apellido}
+								segundoApellido={valores.segundoApellido}
+								direccion={valores.direccion}
+								celular={valores.celular}
+								email={valores.email}
 								dependencia={valores.dependencia}
 								tipoSolicitud={valores.tipoSolicitud}
+								canal={valores.canal}
 								descripcion={valores.description}
 								isLoading={isLoading}
 							>
+								<div className='py-4'>
+									<p className='mb-3'>
+										A continuación, podrás revisar un resumen detallado de tu
+										solicitud. Te recomendamos descargar este resumen utilizando
+										el botón de descarga proporcionado. Es crucial que conserves
+										este documento, ya que contiene la información completa de
+										tu solicitud, así como el número de radicado asignado. Este
+										número es indispensable para realizar un seguimiento
+										efectivo del trámite en el futuro. Asegúrate de guardarlo en
+										un lugar seguro para futuras consultas.
+									</p>
+									<PDFDownloadLink
+										className='bg-blue-zodiac-900 text-white p-2 border rounded-lg hover:bg-blue-zodiac-950 cursor-pointer'
+										document={
+											<Pdf
+												tipoIdentificacion={valores.tipoIdentificacion}
+												documentNumber={valores.documentNumber}
+												nombres={valores.nombres}
+												apellido={valores.apellido}
+												segundoApellido={valores.segundoApellido}
+												direccion={valores.direccion}
+												celular={valores.celular}
+												email={valores.email}
+												tipoSolicitud={valores.tipoSolicitud}
+												dependencia={valores.dependencia}
+												descripcion={valores.description}
+												numeroRadicado={numeroRadicado}
+												fechaRadicado={fechaRadicado}
+											/>
+										}
+										fileName='documento.pdf'
+									>
+										{({ blob, url, loading, error }) =>
+											loading ? 'Cargando documento...' : 'Descargar PDF'
+										}
+									</PDFDownloadLink>
+								</div>
+
 								<div className='flex flex-col gap-3 mb-5'>
 									<h2 className='font-gothicBold'>Numero de Radicado:</h2>
 									4156456

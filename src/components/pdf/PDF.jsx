@@ -23,6 +23,14 @@ import { optionsDependencias } from '../../utils/options';
  * @returns {React.Element} Elemento de React que representa el PDF generado.
  */
 function Pdf({
+	tipoIdentificacion,
+	documentNumber,
+	nombres,
+	apellido,
+	segundoApellido,
+	direccion,
+	celular,
+	email,
 	tipoSolicitud,
 	dependencia,
 	descripcion,
@@ -85,6 +93,13 @@ function Pdf({
 			height: '100%',
 			objectFit: 'cover', // Ajusta la imagen al contenedor
 		},
+		columnsContainer: {
+			flexDirection: 'row',
+			justifyContent: 'space-between',
+		},
+		column: {
+			flex: 1,
+		},
 	});
 
 	return (
@@ -94,7 +109,50 @@ function Pdf({
 					<Image src={HeaderImage} />
 				</View>
 				<View style={styles.section}>
-					<Text style={styles.title}>Resumen de Solicitud</Text>
+					<View style={styles.columnsContainer}>
+						<View style={styles.column}>
+							{tipoIdentificacion && (
+								<View style={styles.infoContainer}>
+									<Text style={styles.subtitle}>Tipo Identificacion:</Text>
+									<Text style={styles.infoItem}>{tipoIdentificacion}</Text>
+								</View>
+							)}
+							{documentNumber && (
+								<View style={styles.infoContainer}>
+									<Text style={styles.subtitle}>Numero de Documento:</Text>
+									<Text style={styles.infoItem}>{documentNumber}</Text>
+								</View>
+							)}
+							{nombres && (
+								<View style={styles.infoContainer}>
+									<Text style={styles.subtitle}>Nombres:</Text>
+									<Text style={styles.infoItem}>
+										{`${nombres} ${apellido} ${segundoApellido}`}
+									</Text>
+								</View>
+							)}
+						</View>
+						<View style={styles.column}>
+							{direccion && (
+								<View style={styles.infoContainer}>
+									<Text style={styles.subtitle}>Direccion:</Text>
+									<Text style={styles.infoItem}>{direccion}</Text>
+								</View>
+							)}
+							{celular && (
+								<View style={styles.infoContainer}>
+									<Text style={styles.subtitle}>Celular:</Text>
+									<Text style={styles.infoItem}>{celular}</Text>
+								</View>
+							)}
+							{email && (
+								<View style={styles.infoContainer}>
+									<Text style={styles.subtitle}>Correo:</Text>
+									<Text style={styles.infoItem}>{email}</Text>
+								</View>
+							)}
+						</View>
+					</View>
 					<View style={styles.infoContainer}>
 						<Text style={styles.subtitle}>Tipo de Solicitud:</Text>
 						<Text style={styles.infoItem}>{tipoSolicitud}</Text>
@@ -142,6 +200,14 @@ Pdf.propTypes = {
 	descripcion: PropTypes.string.isRequired,
 	numeroRadicado: PropTypes.string.isRequired,
 	fechaRadicado: PropTypes.string.isRequired,
+	tipoIdentificacion: PropTypes.string, // Tipo de identificación
+	documentNumber: PropTypes.string, // Número de documento
+	nombres: PropTypes.string, // Nombres
+	apellido: PropTypes.string, // Apellido
+	segundoApellido: PropTypes.string, // Segundo Apellido
+	direccion: PropTypes.string, // Dirección
+	celular: PropTypes.string, // Número de celular
+	email: PropTypes.string, // Correo electrónico
 };
 
 export default Pdf;

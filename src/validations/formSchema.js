@@ -2,6 +2,7 @@ import {
 	optionsDependencias,
 	optionsIdentificacion,
 	optionsSolicitud,
+	optionsTipoSolicitante,
 	optionscanal,
 } from '../utils/options';
 import { z } from 'zod';
@@ -83,11 +84,27 @@ const tiposIdentificacionNombres = optionsIdentificacion.map(
 	option => option.nombre,
 );
 
+const tiposSolicitante = optionsTipoSolicitante.map(option => option.nombre);
+
 /**
  * @constant {z.ZodObject<any>} solicitudNormalesSchema
  * @description Esquema de validación para el formulario de solicitud Normales utilizando la librería Zod.
  */
 export const solicitudNormalesSchema = z.object({
+	tipoSolicitante: z.enum(tiposSolicitante, {
+		errorMap: (issue, context) => {
+			if (issue.code === z.ZodIssueCode.invalid_enum_value) {
+				return {
+					message:
+						'El valor de tipo de solicitud debe ser "Estudiante", "Docente"',
+				};
+			}
+			return { message: context.defaultError };
+		},
+	}),
+	programa: z.string().optional(),
+	semestre: z.string().optional(),
+	facultad: z.string().optional(),
 	tipoIdentificacion: z.enum(tiposIdentificacionNombres, {
 		errorMap: (issue, context) => {
 			if (issue.code === z.ZodIssueCode.invalid_enum_value) {

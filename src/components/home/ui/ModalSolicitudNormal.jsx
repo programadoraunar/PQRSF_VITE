@@ -19,6 +19,10 @@ function ModalSolicitudNormal({
 	dependencia,
 	canal,
 	descripcion,
+	semestre,
+	programa,
+	numeroRadicado,
+	fechaRadicado,
 	isLoading,
 }) {
 	// Función para obtener el nombre de la dependencia basado en su ID
@@ -54,8 +58,17 @@ function ModalSolicitudNormal({
 							</h2>
 							<p>s</p>
 						</div>
-						{children}
-						<div>
+						<div className='py-4'>
+							<p className='pb-4'>
+								A continuación, podrás revisar un resumen detallado de tu
+								solicitud. Te recomendamos descargar este resumen utilizando el
+								botón de descarga proporcionado. Es crucial que conserves este
+								documento, ya que contiene la información completa de tu
+								solicitud, así como el número de radicado asignado. Este número
+								es indispensable para realizar un seguimiento efectivo del
+								trámite en el futuro. Asegúrate de guardarlo en un lugar seguro
+								para futuras consultas.
+							</p>
 							<PdfDownloadButton
 								tipoIdentificacion={tipoIdentificacion}
 								documentNumber={documentNumber}
@@ -68,8 +81,8 @@ function ModalSolicitudNormal({
 								tipoSolicitud={tipoSolicitud}
 								dependencia={dependencia}
 								descripcion={descripcion}
-								numeroRadicado={131651}
-								fechaRadicado={465456}
+								numeroRadicado={numeroRadicado}
+								fechaRadicado={fechaRadicado}
 							/>
 						</div>
 
@@ -95,6 +108,8 @@ function ModalSolicitudNormal({
 							<span>{obtenerNombreCanal(canal)}</span>
 							<p className='font-gothicBold'>Descripcion:</p>
 							<span>{descripcion}</span>
+
+							{children}
 						</div>
 					</div>
 				)}
@@ -117,7 +132,11 @@ ModalSolicitudNormal.propTypes = {
 	dependencia: PropTypes.string.isRequired, // ID de la dependencia
 	canal: PropTypes.string.isRequired, // Canal de la solicitud
 	descripcion: PropTypes.string.isRequired, // Descripción de la solicitud
+	programa: PropTypes.string,
+	semestre: PropTypes.string,
 	isLoading: PropTypes.node,
+	numeroRadicado: PropTypes.string,
+	fechaRadicado: PropTypes.string,
 };
 
 export default ModalSolicitudNormal;

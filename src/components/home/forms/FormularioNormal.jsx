@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -11,13 +11,13 @@ import {
 } from '../../../utils/options';
 import {
 	obtnerUltimoRadicado,
-	registrarSolicitudNormal,
+	registrarSolicitudNormalAlumno,
+	registrarSolicitudNormalDocente,
 } from '../../../supabase/actions/pqrsfFunctions';
 import { motion, AnimatePresence } from 'framer-motion';
 import Loading from '../../ui/Loading';
 import ModalSolicitudNormal from '../ui/ModalSolicitudNormal';
-import { PDFDownloadLink } from '@react-pdf/renderer';
-import Pdf from '../../pdf/Pdf';
+import TipoSolicitanteSelector from './normal/TipoSolicitanteSelector';
 /**
  * @component FormularioNormal
  * @description Componente que representa un formulario para enviar solicitudes normales.
@@ -71,9 +71,12 @@ function FormularioNormal() {
 		setMostrarModal(false); // Ocultar el modal
 	};
 	const valoresFormulario = getValues();
-	const onSubmit = data => {
+	const onSubmit = async data => {
+		console.log(data);
+
 		try {
 			setIsLoading(true);
+			console.log(data);
 
 			const tipoIdentificacion = data.tipoIdentificacion;
 			const numeroDocumento = data.documentNumber;
@@ -87,21 +90,72 @@ function FormularioNormal() {
 			const idDependencia = parseInt(data.dependencia, 10);
 			const descripcionData = data.description;
 			const canal = parseInt(data.canal, 10);
-			/* const datos = registrarSolicitudNormal(
-				tipoIdentificacion,
-				numeroDocumento,
-				nombre,
-				primerApellido,
-				segundoApellido,
-				direccion,
-				celular,
-				correo,
-				idtipoSolicitud,
-				idDependencia,
-				canal,
-				descripcionData,
-			);
-			console.log(datos); */
+			const programa = data.programa;
+			const semestre = data.semestre;
+			const facultad = data.facultad;
+			if (data.tipoSolicitante === 'Docente') {
+				try {
+					const res = await registrarSolicitudNormalDocente(
+						tipoIdentificacion,
+						numeroDocumento,
+						nombre,
+						primerApellido,
+						segundoApellido,
+						direccion,
+						celular,
+						correo,
+						idtipoSolicitud,
+						idDependencia,
+						canal,
+						descripcionData,
+						facultad,
+					);
+					console.log(res);
+					const dataRadicado = await obtnerUltimoRadicado();
+					console.log(dataRadicado);
+					const fechaFormateada = new Date(
+						dataRadicado.fecha_hora_radicacion,
+					).toLocaleString('es-CO', { timeZone: 'America/Bogota' });
+
+					setNumeroRadicado(dataRadicado.id_radicado);
+					setFechaRadicado(fechaFormateada);
+				} catch (error) {
+					console.error('Error:', error);
+				}
+			} else {
+				try {
+					const res = await registrarSolicitudNormalAlumno(
+						tipoIdentificacion,
+						numeroDocumento,
+						nombre,
+						primerApellido,
+						segundoApellido,
+						direccion,
+						celular,
+						correo,
+						idtipoSolicitud,
+						idDependencia,
+						canal,
+						descripcionData,
+						programa,
+						semestre,
+					);
+					console.log(res);
+
+					// Aquí puedes realizar operaciones adicionales después de registrar la solicitud normal
+					const dataRadicado = await obtnerUltimoRadicado();
+					console.log(dataRadicado);
+					const fechaFormateada = new Date(
+						dataRadicado.fecha_hora_radicacion,
+					).toLocaleString('es-CO', { timeZone: 'America/Bogota' });
+
+					setNumeroRadicado(dataRadicado.id_radicado);
+					setFechaRadicado(fechaFormateada);
+				} catch (error) {
+					console.error('Error:', error);
+					// Manejar el error adecuadamente
+				}
+			}
 			handleMostrarModal();
 		} catch (err) {
 			console.log(err);
@@ -110,6 +164,27 @@ function FormularioNormal() {
 			handleMostrarModal();
 		}
 	};
+
+	const [esEstudiante, setEsEstudiante] = useState(false);
+	const [esDocente, setEsDocente] = useState(false);
+
+	const handleChangeTipoSolicitante = e => {
+		const tipoIdentificacionSeleccionado = e.target.value;
+
+		setEsEstudiante(tipoIdentificacionSeleccionado === 'Estudiante');
+
+		setEsDocente(tipoIdentificacionSeleccionado === 'Docente');
+	};
+	useEffect(() => {
+		// Limpiar campos al cambiar la selección
+		if (!esEstudiante) {
+			setValue('programa', ''); // Limpiar programa
+			setValue('semestre', ''); // Limpiar semestre
+		}
+		if (!esDocente) {
+			setValue('facultad', ''); // Limpiar facultad
+		}
+	}, [esEstudiante, esDocente]);
 	return (
 		<div className=' border-2 border-blue-zodiac-950 rounded-lg my-5 shadow-xl flex flex-col  bg-white'>
 			<div className='bg-blue-zodiac-950 py-3'>
@@ -123,6 +198,15 @@ function FormularioNormal() {
 						Informacion Solicitante
 					</h1>
 					<div className='grid grid-cols-1 md:grid-cols-2 gap-4 px-2'>
+						<div className='p-4'>
+							<TipoSolicitanteSelector
+								register={register}
+								handleChangeTipoSolicitante={handleChangeTipoSolicitante}
+								esEstudiante={esEstudiante}
+								esDocente={esDocente}
+								errors={errors}
+							/>
+						</div>
 						<div className='p-4'>
 							<div className='mb-4 mt-4 text-blue-zodiac-950 text-start'>
 								Tipo de Identificacion
@@ -414,26 +498,17 @@ function FormularioNormal() {
 								tipoSolicitud={valoresFormulario.tipoSolicitud}
 								canal={valoresFormulario.canal}
 								descripcion={valoresFormulario.description}
+								semestre={valoresFormulario.semestre}
+								programa={valoresFormulario.programa}
+								numeroRadicado={numeroRadicado}
+								fechaRadicado={fechaRadicado}
 								isLoading={isLoading}
 							>
-								<div className='py-4'>
-									<p className='mb-3'>
-										A continuación, podrás revisar un resumen detallado de tu
-										solicitud. Te recomendamos descargar este resumen utilizando
-										el botón de descarga proporcionado. Es crucial que conserves
-										este documento, ya que contiene la información completa de
-										tu solicitud, así como el número de radicado asignado. Este
-										número es indispensable para realizar un seguimiento
-										efectivo del trámite en el futuro. Asegúrate de guardarlo en
-										un lugar seguro para futuras consultas.
-									</p>
-								</div>
-
 								<div className='flex flex-col gap-3 mb-5'>
 									<h2 className='font-gothicBold'>Numero de Radicado:</h2>
-									4156456
+									{numeroRadicado}
 									<h2 className='font-gothicBold'>Fecha de Radicacion:</h2>
-									15-15-2024
+									{fechaRadicado}
 								</div>
 							</ModalSolicitudNormal>
 						</motion.div>

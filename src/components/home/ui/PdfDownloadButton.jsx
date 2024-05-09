@@ -15,6 +15,8 @@ function PdfDownloadButton({
 	tipoSolicitud,
 	dependencia,
 	descripcion,
+	numeroRadicado,
+	fechaRadicado,
 }) {
 	const [instance, updateInstance] = usePDF({});
 	const handleGeneratePdf = () => {
@@ -31,8 +33,8 @@ function PdfDownloadButton({
 				tipoSolicitud={tipoSolicitud}
 				dependencia={dependencia}
 				descripcion={descripcion}
-				numeroRadicado={556665}
-				fechaRadicado={656565}
+				numeroRadicado={numeroRadicado}
+				fechaRadicado={fechaRadicado}
 			/>,
 		);
 	};
@@ -45,11 +47,20 @@ function PdfDownloadButton({
 	return (
 		<div>
 			{!instance.loading && !instance.url && (
-				<button onClick={handleGeneratePdf}>Generar PDF</button>
+				<button
+					onClick={handleGeneratePdf}
+					className='p-3 bg-blue-zodiac-950 text-white'
+				>
+					Generar PDF
+				</button>
 			)}
 			{instance.loading && <div>Cargando documento...</div>}
 			{instance.url && (
-				<a href={instance.url} download='test.pdf'>
+				<a
+					href={instance.url}
+					download='test.pdf'
+					className='p-3 bg-blue-zodiac-950 text-white'
+				>
 					Descargar
 				</a>
 			)}
@@ -68,6 +79,8 @@ PdfDownloadButton.propTypes = {
 	tipoSolicitud: PropTypes.string.isRequired,
 	dependencia: PropTypes.string.isRequired,
 	descripcion: PropTypes.string.isRequired,
+	numeroRadicado: PropTypes.string,
+	fechaRadicado: PropTypes.string,
 };
 
 export default PdfDownloadButton;

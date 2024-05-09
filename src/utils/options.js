@@ -57,6 +57,22 @@ export const optionsIdentificacion = [
 	{ id: '4', nombre: 'NUIP - Numero Unico de Identificacion Personal' },
 ];
 
+export const optionsTipoSolicitante = [
+	{ id: '1', nombre: 'Estudiante' },
+	{ id: '2', nombre: 'Docente' },
+];
+
+export const optionsProgramas = [
+	{ id: '1', nombre: 'Ingenieria Informatica' },
+	{ id: '2', nombre: 'Contaduria' },
+	{ id: '3', nombre: 'Modas' },
+];
+
+export const optionsFacultad = [
+	{ id: '1', nombre: 'Ciencias Administrativas Y Contables' },
+	{ id: '2', nombre: 'Ingenieria' },
+];
+
 /**
  * @constant {Array<string>} optionsSolicitud
  * @description Arreglo que contiene los tipos de solicitud para los formularios.

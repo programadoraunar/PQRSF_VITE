@@ -176,3 +176,107 @@ export async function registrarSolicitudNormal(
 		throw new Error('Error al llamar a la función RPC.');
 	}
 }
+
+export async function registrarSolicitudNormalAlumno(
+	tipoIdentificacion,
+	documentNumber,
+	nombresUsu,
+	apellidoUsu,
+	segundoApellidoUsu,
+	direccionUsu,
+	celularUsu,
+	emailUsu,
+	tipoSolicitud,
+	dependencia,
+	canal,
+	descripcionText,
+	programaText,
+	semestreText,
+) {
+	try {
+		// Llamar a la función RPC 'registrar_pqrsf_normal_alumno' en la base de datos
+		const { data, error } = await supabase.rpc(
+			'registrar_pqrsf_normal_alumno',
+			{
+				tipo_identificacion: tipoIdentificacion,
+				document_number: documentNumber,
+				nombres: nombresUsu,
+				apellido: apellidoUsu,
+				segundo_apellido: segundoApellidoUsu,
+				direccion: direccionUsu,
+				celular: celularUsu,
+				email: emailUsu,
+				tipo_solicitud_pqrsf: tipoSolicitud,
+				id_dependencia: dependencia,
+				id_canal: canal,
+				descripcion: descripcionText,
+				programa: programaText,
+				semestre: semestreText,
+			},
+		);
+
+		if (error) {
+			// Manejar error si ocurre durante la llamada a la función RPC
+			console.error('Error al registrar solicitud normal:', error);
+			throw new Error('Error al registrar solicitud normal.');
+		} else {
+			// Registro exitoso
+			return data;
+		}
+	} catch (err) {
+		// Manejar error en la llamada a la función RPC
+		console.error('Error al llamar a la función RPC:', err);
+		throw new Error('Error al llamar a la función RPC.');
+	}
+}
+
+export async function registrarSolicitudNormalDocente(
+	tipoIdentificacion,
+	documentNumber,
+	nombresUsu,
+	apellidoUsu,
+	segundoApellidoUsu,
+	direccionUsu,
+	celularUsu,
+	emailUsu,
+	tipoSolicitud,
+	dependencia,
+	canal,
+	descripcionText,
+	facultadText,
+) {
+	try {
+		// Llamar a la función RPC 'registrar_pqrsf_normal_docente' en la base de datos
+		const { data, error } = await supabase.rpc(
+			'registrar_pqrsf_normal_docente',
+			{
+				tipo_identificacion: tipoIdentificacion,
+				document_number: documentNumber,
+				nombres: nombresUsu,
+				apellido: apellidoUsu,
+				segundo_apellido: segundoApellidoUsu,
+				direccion: direccionUsu,
+				celular: celularUsu,
+				email: emailUsu,
+				tipo_solicitud_pqrsf: tipoSolicitud,
+				id_dependencia: dependencia,
+				id_canal: canal,
+				descripcion: descripcionText,
+				facultad: facultadText,
+			},
+		);
+
+		if (error) {
+			// Manejar error si ocurre durante la llamada a la función RPC
+			console.error('Error al registrar solicitud normal para docente:', error);
+			throw new Error('Error al registrar solicitud normal para docente.');
+		} else {
+			// Registro exitoso
+			return data;
+		}
+	} catch (err) {
+		// Manejar error en la llamada a la función RPC
+		console.error('Error al llamar a la función RPC para docente:', err);
+		throw new Error('Error al llamar a la función RPC para docente.');
+	}
+}

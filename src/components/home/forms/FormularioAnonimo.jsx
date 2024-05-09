@@ -77,6 +77,7 @@ function FormularioAnonimo() {
 	const onSubmit = async dato => {
 		try {
 			setIsLoading(true);
+
 			const idtipoSolicitud = dato.tipoSolicitud;
 			const idDependencia = parseInt(dato.dependencia, 10);
 			const descripcionData = dato.description;

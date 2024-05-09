@@ -79,14 +79,16 @@ export const solicitudAnonimaSchema = z.object({
             `Extensión de archivo no permitida. Las extensiones permitidas son: ${allowedExtensions.join(', ')}`,
         ), */
 });
-const tiposIdentificacionIds = optionsIdentificacion.map(option => option.id);
+const tiposIdentificacionNombres = optionsIdentificacion.map(
+	option => option.nombre,
+);
 
 /**
  * @constant {z.ZodObject<any>} solicitudNormalesSchema
  * @description Esquema de validación para el formulario de solicitud Normales utilizando la librería Zod.
  */
 export const solicitudNormalesSchema = z.object({
-	tipoIdentificacion: z.enum(tiposIdentificacionIds, {
+	tipoIdentificacion: z.enum(tiposIdentificacionNombres, {
 		errorMap: (issue, context) => {
 			if (issue.code === z.ZodIssueCode.invalid_enum_value) {
 				return {

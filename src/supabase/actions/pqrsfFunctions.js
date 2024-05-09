@@ -115,3 +115,64 @@ export async function obtenerNumeroRegistros() {
 		throw new Error('Error al llamar a la función RPC.');
 	}
 }
+
+export async function registrarSolicitudNormal(
+	tipoIdentificacion,
+	documentNumber,
+	nombresUsu,
+	apellidoUsu,
+	segundoApellidoUsu,
+	direccionUsu,
+	celularUsu,
+	emailUsu,
+	tipoSolicitud,
+	dependencia,
+	canal,
+	descripcionText,
+) {
+	try {
+		console.log({
+			apellido: apellidoUsu,
+			celular: celularUsu,
+			descripcion: descripcionText,
+			direccion: direccionUsu,
+			document_number: documentNumber,
+			email: emailUsu,
+			id_canal: canal,
+			id_dependencia: dependencia,
+			nombres: nombresUsu,
+			segundo_apellido: segundoApellidoUsu,
+			tipo_identificacion: tipoIdentificacion,
+			tipo_solicitud_pqrsf: tipoSolicitud,
+		});
+
+		// Llamar a la función RPC 'obtener_ultimo_radicado' en la base de datos
+		const { data, error } = await supabase.rpc('registrar_usuario_y_pqrsf', {
+			apellido: apellidoUsu,
+			celular: celularUsu,
+			descripcion: descripcionText,
+			direccion: direccionUsu,
+			document_number: documentNumber,
+			email: emailUsu,
+			id_canal: canal,
+			id_dependencia: dependencia,
+			nombres: nombresUsu,
+			segundo_apellido: segundoApellidoUsu,
+			tipo_identificacion: tipoIdentificacion,
+			tipo_solicitud_pqrsf: tipoSolicitud,
+		});
+		console.log(data);
+		if (error) {
+			// Manejar error si ocurre durante la llamada a la función RPC
+			console.error('Error al registrar solicitud normal:', error);
+			throw new Error('Error al registrar solicitud normal.');
+		} else {
+			// Registro exitoso
+			return data;
+		}
+	} catch (err) {
+		// Manejar error en la llamada a la función RPC
+		console.error('Error al llamar a la función RPC:', err);
+		throw new Error('Error al llamar a la función RPC.');
+	}
+}

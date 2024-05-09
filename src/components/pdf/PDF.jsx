@@ -198,8 +198,8 @@ Pdf.propTypes = {
 	tipoSolicitud: PropTypes.string.isRequired,
 	dependencia: PropTypes.string.isRequired,
 	descripcion: PropTypes.string.isRequired,
-	numeroRadicado: PropTypes.string.isRequired,
-	fechaRadicado: PropTypes.string.isRequired,
+	numeroRadicado: PropTypes.string,
+	fechaRadicado: PropTypes.string,
 	tipoIdentificacion: PropTypes.string, // Tipo de identificación
 	documentNumber: PropTypes.string, // Número de documento
 	nombres: PropTypes.string, // Nombres

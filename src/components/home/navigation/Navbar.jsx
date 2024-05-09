@@ -55,12 +55,12 @@ function Navbar() {
 						variants={fadeIn('down', 0.2)}
 					>
 						<li className='mr-3'>
-							<a
+							<Link
 								className='inline-block py-2 px-4 text-white hover:text-gray-200 no-underline'
-								href='#PqrsfSection'
+								to='https://www.aunar.edu.co/politicas-de-proteccion-de-datos/'
 							>
 								Politica Datos Personales
-							</a>
+							</Link>
 						</li>
 						<li className='mr-3'>
 							<a
@@ -79,13 +79,6 @@ function Navbar() {
 							</a>
 						</li>
 					</motion.ul>
-					<Link
-						to='/login'
-						id='navAction'
-						className='mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full mt-4 lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out'
-					>
-						Login
-					</Link>
 				</motion.div>
 			</div>
 			<hr className='border-b border-black opacity-25 my-0 py-0' />

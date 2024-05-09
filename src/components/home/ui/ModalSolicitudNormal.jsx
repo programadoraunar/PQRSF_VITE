@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { RiCloseCircleFill } from '@remixicon/react';
-import { optionsDependencias } from '../../../utils/options';
+import { optionsDependencias, optionscanal } from '../../../utils/options';
+import PdfDownloadButton from './PdfDownloadButton';
 
 function ModalSolicitudNormal({
 	children,
@@ -29,6 +30,11 @@ function ModalSolicitudNormal({
 			? dependenciaEncontrada.nombre
 			: 'Dependencia Desconocida';
 	};
+	const obtenerNombreCanal = idCanal => {
+		const canalEncontrado = optionscanal.find(dep => dep.id === idCanal);
+		return canalEncontrado ? canalEncontrado.nombre : 'Canal Desconocido';
+	};
+
 	return (
 		<div className='w-[400px] min-h-[100px] sm:w-[550px] sm:h-[600px]  md:w-[550px] lg:w-[600px] lg:h-[650px] bg-white border rounded-lg relative'>
 			<div className='flex justify-between bg-blue-zodiac-950 py-3 px-4 '>
@@ -49,6 +55,24 @@ function ModalSolicitudNormal({
 							<p>s</p>
 						</div>
 						{children}
+						<div>
+							<PdfDownloadButton
+								tipoIdentificacion={tipoIdentificacion}
+								documentNumber={documentNumber}
+								nombres={nombres}
+								apellido={apellido}
+								segundoApellido={segundoApellido}
+								direccion={direccion}
+								celular={celular}
+								email={email}
+								tipoSolicitud={tipoSolicitud}
+								dependencia={dependencia}
+								descripcion={descripcion}
+								numeroRadicado={131651}
+								fechaRadicado={465456}
+							/>
+						</div>
+
 						<div className='flex flex-col gap-3'>
 							<p className='font-gothicBold'>Tipo de Identificacion: </p>
 							<span>{tipoIdentificacion}</span>
@@ -68,7 +92,7 @@ function ModalSolicitudNormal({
 							<p className='font-gothicBold'>Dependencia:</p>
 							<span>{obtenerNombreDependencia(dependencia)}</span>
 							<p className='font-gothicBold'>Canal:</p>
-							<span>{canal}</span>
+							<span>{obtenerNombreCanal(canal)}</span>
 							<p className='font-gothicBold'>Descripcion:</p>
 							<span>{descripcion}</span>
 						</div>

@@ -9,6 +9,10 @@ import {
 	optionsSolicitud,
 	optionsIdentificacion,
 } from '../../../utils/options';
+import {
+	obtnerUltimoRadicado,
+	registrarSolicitudNormal,
+} from '../../../supabase/actions/pqrsfFunctions';
 import { motion, AnimatePresence } from 'framer-motion';
 import Loading from '../../ui/Loading';
 import ModalSolicitudNormal from '../ui/ModalSolicitudNormal';
@@ -41,22 +45,6 @@ function FormularioNormal() {
 	const [fechaRadicado, setFechaRadicado] = useState();
 	// Estado local para manejar el estado de carga
 	const [isLoading, setIsLoading] = useState(false);
-	// Estado local para manejar los valores del formulario
-	const [valores, setValores] = useState({
-		tipoIdentificacion: '',
-		documentNumber: '',
-		nombres: '',
-		apellido: '',
-		segundoApellido: '',
-		direccion: '',
-		celular: '',
-		email: '',
-		tipoSolicitud: '', // Estado para el tipo de solicitud
-		dependencia: '', // Estado para la dependencia
-		canal: '',
-		description: '', // Estado para la descripción
-	});
-
 	// Manejador de cambio para los campos del formulario solo para campo la descripcion
 	const handleChange = e => {
 		const { name, value } = e.target;
@@ -82,27 +70,38 @@ function FormularioNormal() {
 		setValue('description', ''); // Limpiar el valor del campo description
 		setMostrarModal(false); // Ocultar el modal
 	};
-
+	const valoresFormulario = getValues();
 	const onSubmit = data => {
 		try {
 			setIsLoading(true);
-			console.log(data);
 
-			const valoresFormulario = getValues();
-			setValores({
-				tipoIdentificacion: valoresFormulario.tipoIdentificacion,
-				documentNumber: valoresFormulario.documentNumber,
-				nombres: valoresFormulario.nombres,
-				apellido: valoresFormulario.apellido,
-				segundoApellido: valoresFormulario.segundoApellido,
-				direccion: valoresFormulario.direccion,
-				celular: valoresFormulario.celular,
-				email: valoresFormulario.email,
-				tipoSolicitud: valoresFormulario.tipoSolicitud,
-				dependencia: valoresFormulario.dependencia,
-				canal: valoresFormulario.canal,
-				description: valoresFormulario.description,
-			});
+			const tipoIdentificacion = data.tipoIdentificacion;
+			const numeroDocumento = data.documentNumber;
+			const nombre = data.nombres;
+			const primerApellido = data.apellido;
+			const segundoApellido = data.segundoApellido;
+			const direccion = data.direccion;
+			const celular = data.celular;
+			const correo = data.email;
+			const idtipoSolicitud = data.tipoSolicitud;
+			const idDependencia = parseInt(data.dependencia, 10);
+			const descripcionData = data.description;
+			const canal = parseInt(data.canal, 10);
+			/* const datos = registrarSolicitudNormal(
+				tipoIdentificacion,
+				numeroDocumento,
+				nombre,
+				primerApellido,
+				segundoApellido,
+				direccion,
+				celular,
+				correo,
+				idtipoSolicitud,
+				idDependencia,
+				canal,
+				descripcionData,
+			);
+			console.log(datos); */
 			handleMostrarModal();
 		} catch (err) {
 			console.log(err);
@@ -137,7 +136,7 @@ function FormularioNormal() {
 								}}
 							>
 								{optionsIdentificacion.map((option, index) => (
-									<option key={index} value={option.id}>
+									<option key={index} value={option.nombre}>
 										{option.nombre}
 									</option>
 								))}
@@ -403,18 +402,18 @@ function FormularioNormal() {
 						>
 							<ModalSolicitudNormal
 								onClose={handleCerrarModal}
-								tipoIdentificacion={valores.tipoIdentificacion}
-								documentNumber={valores.documentNumber}
-								nombres={valores.nombres}
-								apellido={valores.apellido}
-								segundoApellido={valores.segundoApellido}
-								direccion={valores.direccion}
-								celular={valores.celular}
-								email={valores.email}
-								dependencia={valores.dependencia}
-								tipoSolicitud={valores.tipoSolicitud}
-								canal={valores.canal}
-								descripcion={valores.description}
+								tipoIdentificacion={valoresFormulario.tipoIdentificacion}
+								documentNumber={valoresFormulario.documentNumber}
+								nombres={valoresFormulario.nombres}
+								apellido={valoresFormulario.apellido}
+								segundoApellido={valoresFormulario.segundoApellido}
+								direccion={valoresFormulario.direccion}
+								celular={valoresFormulario.celular}
+								email={valoresFormulario.email}
+								dependencia={valoresFormulario.dependencia}
+								tipoSolicitud={valoresFormulario.tipoSolicitud}
+								canal={valoresFormulario.canal}
+								descripcion={valoresFormulario.description}
 								isLoading={isLoading}
 							>
 								<div className='py-4'>
@@ -428,31 +427,6 @@ function FormularioNormal() {
 										efectivo del trámite en el futuro. Asegúrate de guardarlo en
 										un lugar seguro para futuras consultas.
 									</p>
-									<PDFDownloadLink
-										className='bg-blue-zodiac-900 text-white p-2 border rounded-lg hover:bg-blue-zodiac-950 cursor-pointer'
-										document={
-											<Pdf
-												tipoIdentificacion={valores.tipoIdentificacion}
-												documentNumber={valores.documentNumber}
-												nombres={valores.nombres}
-												apellido={valores.apellido}
-												segundoApellido={valores.segundoApellido}
-												direccion={valores.direccion}
-												celular={valores.celular}
-												email={valores.email}
-												tipoSolicitud={valores.tipoSolicitud}
-												dependencia={valores.dependencia}
-												descripcion={valores.description}
-												numeroRadicado={numeroRadicado}
-												fechaRadicado={fechaRadicado}
-											/>
-										}
-										fileName='documento.pdf'
-									>
-										{({ blob, url, loading, error }) =>
-											loading ? 'Cargando documento...' : 'Descargar PDF'
-										}
-									</PDFDownloadLink>
 								</div>
 
 								<div className='flex flex-col gap-3 mb-5'>

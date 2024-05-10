@@ -12,6 +12,7 @@ function useProfile() {
 	useEffect(() => {
 		const getProfile = async () => {
 			const result = await getUserProfile();
+			console.log(result);
 			if (result) {
 				setUserProfile(result);
 			}

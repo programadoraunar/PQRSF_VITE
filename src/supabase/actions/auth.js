@@ -47,11 +47,13 @@ export const signIn = async (email, password) => {
  */
 export const getUserProfile = async () => {
 	try {
-		const user = supabase.auth.getUser();
+		const user = await supabase.auth.getUser();
+		const id = user.data.user.id;
 		if (user) {
 			const { data, error, status } = await supabase
 				.from('usuario')
 				.select('*')
+				.eq('id_usuario', id)
 				.single();
 			if (error && status === 406) {
 				return { error: 'Error al obtener el perfil de usuario.' };

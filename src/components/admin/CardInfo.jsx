@@ -61,7 +61,7 @@ function CardInfo(props) {
 
 CardInfo.propTypes = {
 	solicitud: PropTypes.string, // ajusta el tipo según lo que esperas para solicitud
-	totalSolicitudes: PropTypes.number.isRequired,
+	totalSolicitudes: PropTypes.number,
 	text: PropTypes.string.isRequired,
 };
 

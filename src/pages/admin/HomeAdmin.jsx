@@ -5,10 +5,10 @@ import { obtenerNumeroRegistros } from '../../supabase/actions/pqrsfFunctions';
 function HomeAdmin() {
 	const [dataConsulta, setDataConsulta] = useState();
 	const [isLoading, setIsLoading] = useState(false);
-	console.log(dataConsulta);
 	useEffect(() => {
 		async function fetchData() {
 			try {
+				setIsLoading(true);
 				const datos = await obtenerNumeroRegistros();
 				console.log('Datos de los últimos 7 registros:', datos);
 				setDataConsulta(datos);

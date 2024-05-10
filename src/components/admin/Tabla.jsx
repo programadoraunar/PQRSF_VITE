@@ -1,5 +1,7 @@
 import React from 'react';
 import { RiFlag2Line } from '@remixicon/react';
+import PropTypes from 'prop-types';
+
 import {
 	Badge,
 	Card,
@@ -57,7 +59,9 @@ const data = [
 		status: 'cerradas',
 	},
 ];
-function Tabla() {
+function Tabla({ selectValue, dataValue }) {
+	console.log(selectValue);
+	console.log(dataValue);
 	return (
 		<div className='py-8'>
 			<Card style={{ backgroundColor: '#fff' }}>
@@ -114,5 +118,8 @@ function Tabla() {
 		</div>
 	);
 }
-
+Tabla.propTypes = {
+	selectValue: PropTypes.string,
+	dataValue: PropTypes.string,
+};
 export default Tabla;

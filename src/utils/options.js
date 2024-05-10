@@ -73,6 +73,13 @@ export const optionsFacultad = [
 	{ id: '2', nombre: 'Ingenieria' },
 ];
 
+export const optionsEstados = [
+	{ id: '1', nombre: 'Regidtrada' },
+	{ id: '2', nombre: 'Asignada' },
+	{ id: '3', nombre: 'En Espera' },
+	{ id: '4', nombre: 'Respondida' },
+];
+
 /**
  * @constant {Array<string>} optionsSolicitud
  * @description Arreglo que contiene los tipos de solicitud para los formularios.

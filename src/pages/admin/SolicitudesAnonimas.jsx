@@ -1,6 +1,5 @@
 import React from 'react';
-import Tabla from '../../components/admin/Tabla';
-import SearchHeader from '../../components/admin/SolicitudesNormales/SearchHeader';
+import SearchHeader from '../../components/admin/SolicitudesNormales/SearchHeaderWithTable';
 
 function SolicitudesAnonimas() {
 	return (
@@ -9,7 +8,6 @@ function SolicitudesAnonimas() {
 				Consultar Solicitudes Anonimas
 			</h1>
 			<SearchHeader />
-			<Tabla />
 		</div>
 	);
 }

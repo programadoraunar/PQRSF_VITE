@@ -12,7 +12,7 @@ import {
 } from '@tremor/react';
 import { obtenerUltimos7Registros } from '../../../supabase/actions/pqrsfFunctions';
 import Loading from '../../ui/Loading';
-import { optionsDependencias } from '../../../utils/options';
+import { optionsDependencias, optionsEstados } from '../../../utils/options';
 
 function Tabla() {
 	const [datos, setDatos] = useState();
@@ -45,6 +45,13 @@ function Tabla() {
 		return dependenciaEncontrada
 			? dependenciaEncontrada.nombre
 			: 'Dependencia Desconocida';
+	};
+	// Función para obtener el nombre de la dependencia basado en su ID
+	const obtenerNombreEstados = idEstado => {
+		const estadoEncontrado = optionsEstados.find(
+			est => est.id === idEstado.toString(),
+		);
+		return estadoEncontrado ? estadoEncontrado.nombre : 'Estado Desconocida';
 	};
 
 	return (
@@ -89,8 +96,8 @@ function Tabla() {
 										{obtenerNombreDependencia(item.id_dependencia)}
 									</TableCell>
 									<TableCell>
-										<Badge color='emerald' icon={RiFlag2Line}>
-											{item.status}
+										<Badge color='gray' icon={RiFlag2Line}>
+											{obtenerNombreEstados(item.id_estado)}
 										</Badge>
 									</TableCell>
 								</TableRow>

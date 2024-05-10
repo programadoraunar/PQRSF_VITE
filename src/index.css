@@ -25,9 +25,6 @@
 .custom-select {
 	width: 300px !important; /* Ancho deseado para el componente Select */
 }
-.custom-date {
-	width: 250px !important; /* Ancho deseado para el componente Select */
-}
 
 .tableMov {
 	overflow-x: auto; /* Habilita el scroll horizontal */
@@ -74,6 +71,4 @@
 .custom-select {
 	width: auto !important; /* Ancho deseado para el componente Select */
 }
-.custom-date {
-	width: auto !important; /* Ancho deseado para el componente Select */
-}
+

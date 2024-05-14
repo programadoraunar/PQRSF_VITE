@@ -20,7 +20,7 @@ function Navbar() {
 				<div className='pl-4 flex items-center'>
 					<a
 						className='toggleColour text-white no-underline hover:no-underline font-bold text-2xl lg:text-4xl'
-						href='#'
+						href='/'
 					>
 						<img src='/logo_aunar2.svg' width={300} alt='logo' />
 					</a>
@@ -65,7 +65,7 @@ function Navbar() {
 						<li className='mr-3'>
 							<a
 								className='inline-block text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4'
-								href='#queEs'
+								href='/#queEs'
 							>
 								¿Que es PQRSF?
 							</a>
@@ -73,9 +73,17 @@ function Navbar() {
 						<li className='mr-3'>
 							<a
 								className='inline-block text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4'
-								href='#formularios'
+								href='/#formularios'
 							>
 								Formulario
+							</a>
+						</li>
+						<li className='mr-3'>
+							<a
+								className='inline-block text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4'
+								href='/consulta'
+							>
+								Consultar
 							</a>
 						</li>
 					</motion.ul>

@@ -33,7 +33,7 @@ function TipoSolicitanteSelector({
 				Tipo de Solicitante
 			</div>
 			<select
-				className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer'
+				className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer bg-white'
 				{...register('tipoSolicitante')}
 				onChange={handleChangeTipoSolicitante}
 			>
@@ -53,7 +53,7 @@ function TipoSolicitanteSelector({
 								Programa
 							</label>
 							<select
-								className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer'
+								className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer bg-white'
 								{...register('programa')}
 							>
 								{optionsProgramas.map(programa => (
@@ -70,7 +70,7 @@ function TipoSolicitanteSelector({
 								Semestre
 							</label>
 							<input
-								className='text-blue-zodiac-950 hover:border-blue-zodiac-950'
+								className='text-blue-zodiac-950 hover:border-blue-zodiac-950 bg-white'
 								placeholder='Ingrese su semestre'
 								type='text'
 								{...register('semestre')}
@@ -89,7 +89,7 @@ function TipoSolicitanteSelector({
 								Facultad
 							</label>
 							<select
-								className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer'
+								className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer bg-white'
 								{...register('facultad')}
 							>
 								{optionsFacultad.map(facultad => (

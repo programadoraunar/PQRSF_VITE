@@ -5,6 +5,7 @@ import { obtenerNumeroRegistros } from '../../supabase/actions/pqrsfFunctions';
 function HomeAdmin() {
 	const [dataConsulta, setDataConsulta] = useState();
 	const [isLoading, setIsLoading] = useState(false);
+	console.log(dataConsulta);
 	useEffect(() => {
 		async function fetchData() {
 			try {
@@ -31,20 +32,15 @@ function HomeAdmin() {
 					<div>Cargando...</div> // Mostrar un mensaje de carga mientras isLoading es true
 				) : (
 					<>
-						<CardInfo
-							solicitud='total'
-							totalSolicitudes={dataConsulta}
-							text='Total de Solicitudes PQRSF Registradas'
-						/>
-						<CardInfo
-							solicitud='close'
-							totalSolicitudes={100}
-							text='Total de Solicitudes PQRSF Cerradas'
-						/>
+						<CardInfo solicitud={'total'} totalSolicitudes={dataConsulta} />
+						<CardInfo solicitud={'close'} totalSolicitudes={dataConsulta} />
 					</>
 				)}
 			</div>
-			{/* tabla de prueba */}
+			{/* tabla ultimas solicitudes */}
+			<h2 className='text-black font-gothicBold text-2xl py-8'>
+				Ultimas Solicitudes
+			</h2>
 			<Tabla />
 		</div>
 	);

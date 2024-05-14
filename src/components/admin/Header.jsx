@@ -86,7 +86,7 @@ function Header() {
 								src='https://img.freepik.com/foto-gratis/feliz-optimista-guapo-gerente-ventas-latina-apuntando-lado-mirando-camara_1262-12679.jpg'
 								className='w-7 h-7 object-cover rounded-full'
 							/>
-							<span className='text-md lg:text-2xl'>Adminstrador</span>
+							<span className='text-md lg:text-xl'>Adminstrador</span>
 							<RiArrowDownSLine />
 						</MenuButton>
 					}

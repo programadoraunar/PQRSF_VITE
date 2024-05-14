@@ -51,7 +51,7 @@ function Home() {
 							/>
 						</div>
 
-						<div className='flex flex-col justify-center'>
+						<div className='flex flex-col justify-center text-white'>
 							<Link to='/consulta'>
 								<motion.button
 									whileHover={{ scale: 1.05 }}
@@ -60,18 +60,6 @@ function Home() {
 									className='flex items-center justify-center gap-3 py-4 px-10 rounded-b-lg bg-blue-zodiac-950 cursor-pointer w-full lg:w-80'
 								>
 									Consultar Estado Solicitud
-								</motion.button>
-							</Link>
-						</div>
-						<div className='flex flex-col justify-center'>
-							<Link to='https://www.aunar.edu.co/politicas-de-proteccion-de-datos/'>
-								<motion.button
-									whileHover={{ scale: 1.05 }}
-									onHoverStart={e => {}}
-									onHoverEnd={e => {}}
-									className='flex items-center justify-center gap-3 py-4 px-10 rounded-b-lg bg-blue-zodiac-950 cursor-pointer w-full lg:w-80'
-								>
-									Politica de Tratamiento de Datos
 								</motion.button>
 							</Link>
 						</div>

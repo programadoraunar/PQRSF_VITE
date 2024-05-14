@@ -1,6 +1,5 @@
 import React from 'react';
-import { RiListView, RiAddLine } from '@remixicon/react';
-import { Card } from '@tremor/react';
+import { RiListView, RiAddLine, RiHistoryLine } from '@remixicon/react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -8,6 +7,9 @@ function CardInfo(props) {
 	const { solicitud, totalSolicitudes, text } = props;
 	let status = '';
 	let textColor = '';
+	let icon = '';
+	let title = '';
+	let borderColor = '';
 	switch (solicitud) {
 		case 'pending':
 			status = 'bg-yellow-500/10 text-yellow-500';
@@ -18,43 +20,33 @@ function CardInfo(props) {
 			textColor = 'text-blue-500';
 			break;
 		case 'close':
+			borderColor = 'border-t-4 border-green-500';
+			title = 'Solicitudes Cerradas';
+			icon = <RiHistoryLine className='w-20 h-16' />;
 			status = 'bg-green-500/10 text-green-500';
 			textColor = 'text-green-500';
 			break;
 		case 'total':
+			borderColor = 'border-t-4 border-red-500';
+			title = 'Total de Solicitudes';
+			icon = <RiListView className='w-20 h-16' />;
 			status = 'bg-pink-500/10 text-pink-500';
 			textColor = 'text-blue-zodiac-950';
 			break;
 	}
 	return (
-		<div>
-			<Card
-				className='mx-auto max-w-x'
-				decoration='top'
-				decorationColor='blue'
-				style={{ backgroundColor: '#fff' }}
-			>
-				<div>
-					<RiListView
-						className={`text-4xl ${status} p-2 box-content rounded-xl`}
-					/>
+		<div
+			className={`card card-side bg-white shadow-xl text-black ${borderColor} mt-2`}
+		>
+			<figure className={`${status}`}>{icon}</figure>
+			<div className='card-body'>
+				<div className='flex items-center justify-between mb-4'>
+					<h3 className='text-lg'>{title}</h3>
+					<i className='fas fa-user-graduate'>👌</i>
 				</div>
-				<div>
-					<h1 className='text-4xl text-blue-zodiac-950 font-bold mb-4'>
-						{totalSolicitudes}
-					</h1>
-					<p className={textColor}>{text}</p>
-				</div>
-				<hr className='border border-dashed border-blue-zodiac-950 my-4' />
-				<div>
-					<Link
-						to='/'
-						className='flex items-center gap-2 text-blue-zodiac-950 hover:underline'
-					>
-						<RiAddLine /> Listar
-					</Link>
-				</div>
-			</Card>
+				<p className='text-3xl font-gothicBold '>{totalSolicitudes}</p>
+				<p className={textColor}>Total de Solicitudes registradas</p>
+			</div>
 		</div>
 	);
 }

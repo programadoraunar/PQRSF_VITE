@@ -2,16 +2,6 @@ import React from 'react';
 import { RiFlag2Line } from '@remixicon/react';
 import PropTypes from 'prop-types';
 
-import {
-	Badge,
-	Card,
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableHeaderCell,
-	TableRow,
-} from '@tremor/react';
 const data = [
 	{
 		name: 'Viola Amherd',
@@ -59,64 +49,8 @@ const data = [
 		status: 'cerradas',
 	},
 ];
-function Tabla({ selectValue, dataValue }) {
-	console.log(selectValue);
-	console.log(dataValue);
-	return (
-		<div className='py-8'>
-			<Card style={{ backgroundColor: '#fff' }}>
-				<Table className='tableMov'>
-					<TableHead>
-						<TableRow>
-							<TableHeaderCell className='table-header-cell'>
-								N* Radicado
-							</TableHeaderCell>
-							<TableHeaderCell className='table-header-cell'>
-								Tipo Solicitud
-							</TableHeaderCell>
-							<TableHeaderCell className='table-header-cell'>
-								Fecha de Llegada
-							</TableHeaderCell>
-							<TableHeaderCell className='table-header-cell'>
-								Descripcion
-							</TableHeaderCell>
-							<TableHeaderCell className='table-header-cell'>
-								Dependencia
-							</TableHeaderCell>
-							<TableHeaderCell className='table-header-cell'>
-								Estado
-							</TableHeaderCell>
-							<TableHeaderCell className='table-header-cell'>
-								Accion
-							</TableHeaderCell>
-						</TableRow>
-					</TableHead>
-					<TableBody className='tableMov'>
-						{data.map((item, index) => (
-							<TableRow
-								key={item.name}
-								style={{
-									backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#E2E4E7',
-								}}
-							>
-								<TableCell className='lg:text-lg'></TableCell>
-								<TableCell className='lg:text-lg'>{item.name}</TableCell>
-								<TableCell className='lg:text-lg'>{item.Role}</TableCell>
-								<TableCell className='lg:text-lg'>{item.departement}</TableCell>
-								<TableCell className='lg:text-lg'></TableCell>
-								<TableCell>
-									<Badge color='emerald' icon={RiFlag2Line}>
-										{item.status}
-									</Badge>
-								</TableCell>
-								<TableCell></TableCell>
-							</TableRow>
-						))}
-					</TableBody>
-				</Table>
-			</Card>
-		</div>
-	);
+function Tabla() {
+	return <div className='py-8'></div>;
 }
 Tabla.propTypes = {
 	selectValue: PropTypes.string,

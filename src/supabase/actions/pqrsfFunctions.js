@@ -279,3 +279,81 @@ export async function registrarSolicitudNormalDocente(
 		throw new Error('Error al llamar a la función RPC para docente.');
 	}
 }
+
+/**
+ * Obtiene las PQRSF filtradas por fechas y tipo de anonimato.
+ *
+ * @param {number} cantidadRegistros - La cantidad de registros a obtener.
+ * @param {string} fechaDesde - La fecha de inicio del rango de fechas (YYYY-MM-DD).
+ * @param {string} fechaHasta - La fecha de fin del rango de fechas (YYYY-MM-DD).
+ * @param {boolean} esAnonima - Si las PQRSF son anónimas.
+ * @returns {Promise<Object[]>} - Una promesa que resuelve a los registros obtenidos.
+ * @throws {Error} - Si hay un error al obtener las solicitudes.
+ */
+export async function obtenerPqrsfPorFechas(
+	cantidadRegistros,
+	fechaDesde,
+	fechaHasta,
+	esAnonima,
+) {
+	try {
+		const { data, error } = await supabase.rpc('obtener_pqrsf_por_fechas', {
+			cantidad_registros: cantidadRegistros,
+			fecha_desde: fechaDesde,
+			fecha_hasta: fechaHasta,
+			es_anonima_param: esAnonima,
+		});
+
+		if (error) {
+			console.error('Error al obtener las solicitudes:', error);
+			throw new Error('Error al obtener las solicitudes.');
+		} else {
+			return data;
+		}
+	} catch (err) {
+		console.error('Error al llamar a la función RPC:', err);
+		throw new Error('Error al llamar a la función RPC.');
+	}
+}
+
+/**
+ * Obtiene las PQRSF filtradas por fechas, tipo de anonimato y tipo de solicitud.
+ *
+ * @param {number} cantidadRegistros - La cantidad de registros a obtener.
+ * @param {string} fechaDesde - La fecha de inicio del rango de fechas (YYYY-MM-DD).
+ * @param {string} fechaHasta - La fecha de fin del rango de fechas (YYYY-MM-DD).
+ * @param {boolean} esAnonima - Si las PQRSF son anónimas.
+ * @param {string} tipoSolicitud - El tipo de solicitud PQRSF.
+ * @returns {Promise<Object[]>} - Una promesa que resuelve a los registros obtenidos.
+ * @throws {Error} - Si hay un error al obtener las solicitudes.
+ */
+export async function obtenerPqrsfPorFechasYTipo(
+	cantidadRegistros,
+	fechaDesde,
+	fechaHasta,
+	esAnonima,
+	tipoSolicitud,
+) {
+	try {
+		const { data, error } = await supabase.rpc(
+			'obtener_pqrsf_por_fechas_y_tipo',
+			{
+				cantidad_registros: cantidadRegistros,
+				fecha_desde: fechaDesde,
+				fecha_hasta: fechaHasta,
+				es_anonima_param: esAnonima,
+				tipo_solicitud_param: tipoSolicitud,
+			},
+		);
+
+		if (error) {
+			console.error('Error al obtener las solicitudes:', error);
+			throw new Error('Error al obtener las solicitudes.');
+		} else {
+			return data;
+		}
+	} catch (err) {
+		console.error('Error al llamar a la función RPC:', err);
+		throw new Error('Error al llamar a la función RPC.');
+	}
+}

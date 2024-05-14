@@ -212,7 +212,7 @@ function FormularioNormal() {
 								Tipo de Identificacion
 							</div>
 							<select
-								className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer'
+								className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer bg-white'
 								{...register('tipoIdentificacion')}
 								onChange={e => {
 									console.log('Valor seleccionado:', e.target.value);
@@ -238,7 +238,7 @@ function FormularioNormal() {
 								</label>
 								<input
 									type='text'
-									className='text-blue-zodiac-950 hover:border-blue-zodiac-950'
+									className='text-blue-zodiac-950 hover:border-blue-zodiac-950 bg-white'
 									placeholder='Ingrese su Numero de Documento'
 									{...register('documentNumber')}
 								/>
@@ -253,7 +253,7 @@ function FormularioNormal() {
 									Nombres Del Solicitante
 								</label>
 								<input
-									className='text-blue-zodiac-950 hover:border-blue-zodiac-950'
+									className='text-blue-zodiac-950 hover:border-blue-zodiac-950 bg-white'
 									placeholder='Ingrese su nombre'
 									type='text'
 									{...register('nombres')}
@@ -271,7 +271,7 @@ function FormularioNormal() {
 									Primer Apellido
 								</label>
 								<input
-									className='text-blue-zodiac-950 hover:border-blue-zodiac-950'
+									className='text-blue-zodiac-950 hover:border-blue-zodiac-950 bg-white'
 									placeholder='Ingrese su Apellido'
 									type='text'
 									{...register('apellido')}
@@ -289,7 +289,7 @@ function FormularioNormal() {
 									Segundo Apellido
 								</label>
 								<input
-									className='text-blue-zodiac-950 hover:border-blue-zodiac-950'
+									className='text-blue-zodiac-950 hover:border-blue-zodiac-950 bg-white'
 									placeholder='Ingrese su Apellido'
 									type='text'
 									{...register('segundoApellido')}
@@ -310,7 +310,7 @@ function FormularioNormal() {
 									Direccion
 								</label>
 								<input
-									className='text-blue-zodiac-950 hover:border-blue-zodiac-950'
+									className='text-blue-zodiac-950 hover:border-blue-zodiac-950 bg-white'
 									placeholder='Ingrese su direccion'
 									type='text'
 									{...register('direccion')}
@@ -327,7 +327,7 @@ function FormularioNormal() {
 									Celular
 								</label>
 								<input
-									className='text-blue-zodiac-950 hover:border-blue-zodiac-950'
+									className='text-blue-zodiac-950 hover:border-blue-zodiac-950 bg-white'
 									placeholder='Ingrese su Celular'
 									type='number'
 									{...register('celular')}
@@ -345,7 +345,7 @@ function FormularioNormal() {
 									Correo
 								</label>
 								<input
-									className='text-blue-zodiac-950 hover:border-blue-zodiac-950'
+									className='text-blue-zodiac-950 hover:border-blue-zodiac-950 bg-white'
 									placeholder='Ingrese su Correo Electronico'
 									type='text'
 									{...register('email')}
@@ -366,7 +366,7 @@ function FormularioNormal() {
 								Tipo de Solicitud
 							</div>
 							<select
-								className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer'
+								className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer bg-white'
 								{...register('tipoSolicitud')}
 								onChange={e => {
 									console.log(
@@ -391,7 +391,7 @@ function FormularioNormal() {
 								Dependencia
 							</div>
 							<select
-								className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer'
+								className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer bg-white'
 								{...register('dependencia')}
 								onChange={e => {
 									console.log(
@@ -417,7 +417,7 @@ function FormularioNormal() {
 								Canal de Respuesta
 							</div>
 							<select
-								className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer'
+								className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer bg-white'
 								{...register('canal')}
 								onChange={e => {
 									console.log('Valor seleccionado:', e.target.value);
@@ -453,7 +453,7 @@ function FormularioNormal() {
 							Description
 						</label>
 						<textarea
-							className='text-blue-zodiac-950 hover:border-blue-zodiac-950'
+							className='text-blue-zodiac-950 hover:border-blue-zodiac-950 bg-white'
 							id='description'
 							placeholder='Start typing here...'
 							rows={6}

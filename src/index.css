@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @font-face {
 	font-family: "GothicRegular";
 	src: url('./assets/fonts/CenturyGothicRegular.ttf') format('truetype');
@@ -18,17 +17,15 @@
   
 
 /* Estilos para ocultar las barras de desplazamiento en toda la aplicación, excepto en .tableMov */
-*:not(.tableMov)::-webkit-scrollbar {
+/* SliderBar.css */
+.slider-bar-container::-webkit-scrollbar {
 	display: none; /* Oculta la barra de desplazamiento */
-}
-
+  }
+  
 .custom-select {
 	width: 300px !important; /* Ancho deseado para el componente Select */
 }
 
-.tableMov {
-	overflow-x: auto; /* Habilita el scroll horizontal */
-}
 .customTextSize {
 	font-size: 25px !important;
 }
@@ -49,26 +46,17 @@
 .gradient {
 	background: linear-gradient(90deg, #337fd5 0%, #01e1ff 100%);
   }
-
+/* Asegúrate de que el texto de los input del DateRangePicker sea siempre negro */
+.react-calendar__tile--active{
+	color: black !important;
+}
+  
 /* En tu archivo CSS */
 @media (max-width: 600px) {
 	/* Cambiar el tamaño de fuente para dispositivos con ancho máximo de 600px (dispositivos móviles) */
 	.toast {
 		font-size: 10px; /* Tamaño de fuente más pequeño para dispositivos móviles */
 	}
-    .tremor-Button-text {
-        font-size: 15px !important;
-    }
 }
 
-.table-header-cell {
-	font-size: 1rem; /* Por ejemplo, puedes ajustar el tamaño de fuente según tus preferencias */
-	color: #000 !important; /* Color de texto */
-}
-.tableMov {
-	overflow-x: auto; /* Habilita el scroll horizontal */
-}
-.custom-select {
-	width: auto !important; /* Ancho deseado para el componente Select */
-}
 

@@ -8,6 +8,8 @@ import { radicadoSchema } from '../validations/consultaSchema';
 import { supabase } from '../supabase/client';
 import { motion } from 'framer-motion';
 import Loading from '../components/ui/Loading';
+import { optionsEstados } from '../utils/options';
+import Navbar from '../components/home/navigation/Navbar';
 function Consulta() {
 	const {
 		register,
@@ -49,32 +51,48 @@ function Consulta() {
 		} finally {
 			setIsLoading(false);
 		}
+		/**
+		 * Función para obtener el nombre del estado basado en su ID.
+		 * @param {string} idEstado - ID del estado.
+		 * @returns {string} Nombre del estado.
+		 */
+	};
+
+	const obtenerNombreEstados = idEstado => {
+		const estadoEncontrado = optionsEstados.find(
+			est => est.id === idEstado.toString(),
+		);
+		return estadoEncontrado ? estadoEncontrado.nombre : 'Estado Desconocida';
 	};
 
 	return (
-		<div className='flex flex-col'>
-			<div className='flex justify-center lg:justify-start py-10 bg-blue-zodiac-950 lg:px-24'>
-				<img
-					src='/logo-autonoma-de-narino.png'
-					alt='Logo De La Auitonoma'
-					className='w-full max-w-[8rem] sm:max-w-[7rem] md:max-w-[8rem]  lg:max-w-[9rem] xl:max-w-[10rem]'
-				/>
-			</div>
-			<div className='bg-[#F4D460] px-5 py-3'>
-				<Link
-					to='/'
-					className='text-blue-zodiac-950 flex gap-2 hover:bg-[#f0bd2f] w-30 lg:text-2xl items-center'
-				>
-					<RiHome2Line />
-					Inicio
-				</Link>
-			</div>
+		<div className='flex flex-col pt-28'>
+			<Navbar />
 			<h1 className='font-gothicBold text-black pt-16 text-center font-medium text-3xl'>
 				Consultar Estado de la Solicitud PQRSF
 			</h1>
+			<div className='px-10 xl:px-48 my-6'>
+				<p className='text-black'>
+					- <span className='font-gothicBold'>Registrada:</span> Su solicitud ha
+					sido recibida correctamente en nuestro sistema. Esto significa que
+					hemos iniciado el proceso para atenderla. <br />
+					<span className='font-gothicBold'>- Asignada: </span> Su caso ha sido
+					asignado a un equipo especializado que se encargará de revisarlo y
+					darle una respuesta. En esta etapa, estamos trabajando activamente en
+					su solicitud.
+					<br />- <span className='font-gothicBold'>Finalizada: </span> Hemos
+					completado el proceso de revisión y atención a su solicitud. Usted
+					recibirá (o ya recibió) una respuesta formal por los canales
+					correspondientes.
+					<br />
+					Recuerde que puede consultar el estado actualizado de su caso en
+					cualquier momento a través de nuestro sistema en línea. Si tiene
+					alguna duda adicional, no dude en contactarnos.
+				</p>
+			</div>
 			<div className='grid grid-rows-1 justify-center justify-items-center align-items-center mx-2 lg:items-center md:mx-16 lg:mx-7 lg:gap-5 my-10 xl:mx-16 xl:grid-cols-[25%_75%]'>
 				<div className='text-black hidden xl:flex items-center'>
-					<img src='/search.svg' alt='search' />
+					<img src='/search.svg' width={550} alt='search' />
 				</div>
 				<div className='flex flex-col'>
 					<div className='px-2 bg-white shadow-[0_2.8px_2.2px_rgba(0,_0,_0,_0.034),_0_6.7px_5.3px_rgba(0,_0,_0,_0.048),_0_12.5px_10px_rgba(0,_0,_0,_0.06),_0_22.3px_17.9px_rgba(0,_0,_0,_0.072),_0_41.8px_33.4px_rgba(0,_0,_0,_0.086),_0_100px_80px_rgba(0,_0,_0,_0.12)] py-10 my-9 md:px-6 lg:my-10 xl:px-20'>
@@ -91,7 +109,7 @@ function Consulta() {
 									{...register('radicado')}
 									onChange={handleChange}
 									type='text'
-									className='w-52 my-5 text-blue-zodiac-950 border hover:border-blue-zodiac-950 p-1'
+									className='w-52 my-5 text-blue-zodiac-950 border hover:border-blue-zodiac-950 p-1 bg-white'
 									placeholder='Número de radicado'
 								/>
 								{errors.radicado && (
@@ -141,7 +159,9 @@ function Consulta() {
 											<span className='lg:hidden absolute top-0 left-0 bg-blue-zodiac-900 px-2 py-1 text-xs font-bold uppercase'>
 												Estado
 											</span>
-											<p className='text-black'>{item.id_estado}</p>
+											<p className='text-black'>
+												{obtenerNombreEstados(item.id_estado)}
+											</p>
 										</td>
 										<td className='w-full lg:w-auto p-3 text-white border border-b text-center block lg:table-cell relative lg:static'>
 											<span className='lg:hidden absolute top-0 left-0 bg-blue-zodiac-900 px-2 py-1 text-xs font-bold uppercase'>

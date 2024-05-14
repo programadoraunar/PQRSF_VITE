@@ -122,7 +122,7 @@ function FormularioAnonimo() {
 					Tipo de Solicitud
 				</div>
 				<select
-					className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer'
+					className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer bg-white'
 					{...register('tipoSolicitud')}
 					onChange={e => {
 						setValue('tipoSolicitud', e.target.value);
@@ -142,7 +142,7 @@ function FormularioAnonimo() {
 					Dependencia
 				</div>
 				<select
-					className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer'
+					className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer bg-white'
 					{...register('dependencia')}
 					onChange={e => {
 						console.log('Valor seleccionado:', e.target.value);
@@ -167,7 +167,7 @@ function FormularioAnonimo() {
 						Descripción
 					</label>
 					<textarea
-						className='text-blue-zodiac-950 hover:border-blue-zodiac-950'
+						className='text-blue-zodiac-950 hover:border-blue-zodiac-950 bg-white'
 						id='description'
 						placeholder='Comienza a escribir aquí...'
 						rows={6}

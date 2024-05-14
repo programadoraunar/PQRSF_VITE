@@ -176,7 +176,7 @@ function SearchHeaderWithTable({ setDatosSolicitudes }) {
 							onClick={handleSubmit(onSubmitFilterDateAndType)}
 							className='btn px-2 py-0 text-xs'
 						>
-							<RiSearch2Line className='h-4 w-4 text-white' /> Filtrar
+							<RiSearch2Line className='h-4 w-4 text-white' />
 						</button>
 					</div>
 					{errors.tipoSolicitud && (

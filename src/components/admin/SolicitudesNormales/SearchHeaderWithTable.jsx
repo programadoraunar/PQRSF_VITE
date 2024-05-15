@@ -171,6 +171,7 @@ function SearchHeaderWithTable({ setDatosSolicitudes }) {
 							<option value='Queja'>Queja</option>
 							<option value='Reclamo'>Reclamo</option>
 							<option value='Sugerencia'>Sugerencia</option>
+							<option value='Felicitacion'>Felicitacion</option>
 						</select>
 						<button
 							type='button'

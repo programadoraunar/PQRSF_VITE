@@ -6,6 +6,7 @@ import {
 	obtenerPqrsfPorFechas,
 	obtenerPqrsfPorFechasYTipo,
 } from '../../../supabase/actions/pqrsfFunctions';
+import PropTypes from 'prop-types';
 
 function SearchHeaderWithTable({ setDatosSolicitudes }) {
 	const {
@@ -163,13 +164,14 @@ function SearchHeaderWithTable({ setDatosSolicitudes }) {
 							{...register('tipoSolicitud')}
 							className='select select-info w-full bg-white text-black'
 						>
-							<option value='' disabled selected>
+							<option value='' disabled>
 								Seleccione el tipo de solicitud
 							</option>
 							<option value='Peticion'>Petición</option>
 							<option value='Queja'>Queja</option>
 							<option value='Reclamo'>Reclamo</option>
 							<option value='Sugerencia'>Sugerencia</option>
+							<option value='Felicitacion'>Felicitacion</option>
 						</select>
 						<button
 							type='button'
@@ -189,5 +191,7 @@ function SearchHeaderWithTable({ setDatosSolicitudes }) {
 		</div>
 	);
 }
-
+SearchHeaderWithTable.propTypes = {
+	setDatosSolicitudes: PropTypes.func.isRequired,
+};
 export default SearchHeaderWithTable;

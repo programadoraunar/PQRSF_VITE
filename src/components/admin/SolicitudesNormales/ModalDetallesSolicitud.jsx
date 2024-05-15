@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 function ModalDetallesSolicitud({ solicitud, onClose }) {
 	return (
 		<div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
-			<div className='bg-white p-6 rounded-lg max-w-lg w-full'>
+			<div className='bg-white p-6 rounded-lg max-w-xl w-full'>
 				<h2 className='text-xl font-bold mb-4'>Detalles de la Solicitud</h2>
 				<p>
 					<strong>ID Usuario:</strong> {solicitud.ret_id_usuario}

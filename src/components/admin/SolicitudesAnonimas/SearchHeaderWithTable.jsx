@@ -176,7 +176,7 @@ function SearchHeaderWithTable({ setDatosSolicitudes, setIsLoading }) {
 							<option value='Peticion'>Petición</option>
 							<option value='Queja'>Queja</option>
 							<option value='Reclamo'>Reclamo</option>
-							<option value='Sugerencia'>Sugerencia</option>
+							<option value='Suguerencia'>Sugerencia</option>
 							<option value='Felicitacion'>Felicitacion</option>
 						</select>
 						<button

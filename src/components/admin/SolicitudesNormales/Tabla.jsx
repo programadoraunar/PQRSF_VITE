@@ -3,6 +3,8 @@ import { optionsDependencias } from '../../../utils/options';
 import PropTypes from 'prop-types';
 import ModalDetallesSolicitud from './ModalDetallesSolicitud';
 import Loading from '../../ui/Loading';
+import { motion } from 'framer-motion';
+import { actualizarEstadoSolicitud } from '../../../supabase/actions/postPqrsFuntions';
 function Tabla({ datosSolicitudes, isLoading }) {
 	const [selectedSolicitud, setSelectedSolicitud] = useState(null);
 	const tieneFechaAsignacion = datosSolicitudes.some(
@@ -25,6 +27,16 @@ function Tabla({ datosSolicitudes, isLoading }) {
 
 	const closeModal = () => {
 		setSelectedSolicitud(null);
+	};
+
+	const asignar = async (idPqrsf, estado) => {
+		console.log(idPqrsf);
+		try {
+			const result = await actualizarEstadoSolicitud(idPqrsf, estado);
+			console.log(result);
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	return (
@@ -78,7 +90,12 @@ function Tabla({ datosSolicitudes, isLoading }) {
 										</td>
 									)}
 									<td className='text-sm'>
-										<button className='btn'>Asignar</button>
+										<button
+											onClick={() => asignar(solicitud.ret_id_pqrsf, 2)}
+											className='btn'
+										>
+											Asignar
+										</button>
 									</td>
 									<td className='text-sm'>
 										<button
@@ -113,10 +130,17 @@ function Tabla({ datosSolicitudes, isLoading }) {
 				</tfoot>
 			</table>
 			{selectedSolicitud && (
-				<ModalDetallesSolicitud
-					solicitud={selectedSolicitud}
-					onClose={closeModal}
-				/>
+				<motion.div
+					initial={{ opacity: 0, scale: 0.75 }}
+					animate={{ opacity: 1, scale: 1 }}
+					exit={{ opacity: 0, scale: 0 }}
+					className='w-full  h-full fixed top-0 left-0 bg-slate-500 bg-opacity-50 flex justify-center items-center'
+				>
+					<ModalDetallesSolicitud
+						solicitud={selectedSolicitud}
+						onClose={closeModal}
+					/>
+				</motion.div>
 			)}
 		</div>
 	);

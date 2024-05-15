@@ -48,7 +48,7 @@ function Login() {
 	};
 
 	return (
-		<div className='bg-blueBase'>
+		<div className='bg-blue-zodiac-950'>
 			<div className='font-sans text-#333'>
 				<div className='min-h-screen flex flex-col items-center justify-center py-6'>
 					<div className='grid md:grid-cols-2 items-center gap-10 max-w-6xl w-full'>

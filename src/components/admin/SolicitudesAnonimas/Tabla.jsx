@@ -1,8 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { optionsDependencias } from '../../../utils/options';
-
-function Tabla({ datosSolicitudes }) {
+import Loading from '../../ui/Loading';
+/**
+ * Componente de tabla para mostrar una lista de solicitudes anónimas.
+ *
+ * @param {Object} props - Component props.
+ * @param {Array} props.datosSolicitudes - Array of solicitud objects.
+ * @param {boolean} props.isLoading - Boolean indicating if the data is still loading.
+ * @returns {JSX.Element} The rendered component.
+ */
+function Tabla({ datosSolicitudes, isLoading }) {
 	const tieneFechaAsignacion = datosSolicitudes.some(
 		solicitud => solicitud.ret_fecha_asignacion,
 	);
@@ -33,44 +41,51 @@ function Tabla({ datosSolicitudes }) {
 					</tr>
 				</thead>
 				<tbody>
-					{datosSolicitudes.length === 0 ? (
-						<tr>
-							<td colSpan='7' className='text-center'>
-								No hay datos disponibles
-							</td>
-						</tr>
-					) : (
-						datosSolicitudes.map(solicitud => (
-							<tr key={solicitud.ret_id_pqrsf}>
-								<td className='text-sm'>{solicitud.ret_id_radicado}</td>
-								<td className='text-sm'>
-									{solicitud.ret_tipo_solicitud_pqrsf}
-								</td>
-								<td className='text-sm'>
-									{obtenerNombreDependencia(solicitud.ret_id_dependencia)}
-								</td>
-								<td className='text-sm'>{solicitud.ret_descripcion}</td>
-
-								<td className='text-sm'>{solicitud.ret_fecha_envio}</td>
-								{tieneFechaAsignacion && (
-									<td className='text-sm'>
-										{solicitud.ret_fecha_asignacion
-											? solicitud.ret_fecha_asignacion
-											: 'N/A'}
-									</td>
-								)}
-								{tieneFechaRespuesta && (
-									<td className='text-sm'>
-										{solicitud.ret_fecha_respuesta
-											? solicitud.ret_fecha_respuesta
-											: 'N/A'}
-									</td>
-								)}
-								<td className='text-sm'>
-									<button className='btn'>Asignar</button>
+					{!isLoading ? (
+						datosSolicitudes.length === 0 ? (
+							<tr>
+								<td colSpan='7' className='text-center'>
+									No hay datos disponibles
 								</td>
 							</tr>
-						))
+						) : (
+							datosSolicitudes.map(solicitud => (
+								<tr key={solicitud.ret_id_pqrsf}>
+									<td className='text-sm'>{solicitud.ret_id_radicado}</td>
+									<td className='text-sm'>
+										{solicitud.ret_tipo_solicitud_pqrsf}
+									</td>
+									<td className='text-sm'>
+										{obtenerNombreDependencia(solicitud.ret_id_dependencia)}
+									</td>
+									<td className='text-sm'>{solicitud.ret_descripcion}</td>
+									<td className='text-sm'>{solicitud.ret_fecha_envio}</td>
+									{tieneFechaAsignacion && (
+										<td className='text-sm'>
+											{solicitud.ret_fecha_asignacion
+												? solicitud.ret_fecha_asignacion
+												: 'N/A'}
+										</td>
+									)}
+									{tieneFechaRespuesta && (
+										<td className='text-sm'>
+											{solicitud.ret_fecha_respuesta
+												? solicitud.ret_fecha_respuesta
+												: 'N/A'}
+										</td>
+									)}
+									<td className='text-sm'>
+										<button className='btn'>Asignar</button>
+									</td>
+								</tr>
+							))
+						)
+					) : (
+						<tr>
+							<td colSpan='7' className='text-center'>
+								<Loading />
+							</td>
+						</tr>
 					)}
 				</tbody>
 				<tfoot className='text-black'>
@@ -106,5 +121,6 @@ Tabla.propTypes = {
 			ret_es_anonima: PropTypes.bool,
 		}),
 	).isRequired,
+	isLoading: PropTypes.bool.isRequired,
 };
 export default Tabla;

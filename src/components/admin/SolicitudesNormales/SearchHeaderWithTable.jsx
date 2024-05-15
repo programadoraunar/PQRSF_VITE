@@ -8,7 +8,7 @@ import {
 } from '../../../supabase/actions/pqrsfFunctions';
 import PropTypes from 'prop-types';
 
-function SearchHeaderWithTable({ setDatosSolicitudes }) {
+function SearchHeaderWithTable({ setDatosSolicitudes, setIsLoading }) {
 	const {
 		register,
 		handleSubmit,
@@ -48,6 +48,7 @@ function SearchHeaderWithTable({ setDatosSolicitudes }) {
 
 		const [fechaDesde, fechaHasta] = formattedDates;
 		try {
+			setIsLoading(true);
 			const data = await obtenerPqrsfPorFechas(
 				numberOfRecords,
 				fechaDesde,
@@ -58,6 +59,8 @@ function SearchHeaderWithTable({ setDatosSolicitudes }) {
 			console.log(data);
 		} catch (error) {
 			console.log(error);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -90,6 +93,7 @@ function SearchHeaderWithTable({ setDatosSolicitudes }) {
 
 		const [fechaDesde, fechaHasta] = formattedDates;
 		try {
+			setIsLoading(true);
 			const data = await obtenerPqrsfPorFechasYTipo(
 				numberOfRecords,
 				fechaDesde,
@@ -101,6 +105,8 @@ function SearchHeaderWithTable({ setDatosSolicitudes }) {
 			console.log(data);
 		} catch (error) {
 			console.log(error);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -193,5 +199,6 @@ function SearchHeaderWithTable({ setDatosSolicitudes }) {
 }
 SearchHeaderWithTable.propTypes = {
 	setDatosSolicitudes: PropTypes.func.isRequired,
+	setIsLoading: PropTypes.func,
 };
 export default SearchHeaderWithTable;

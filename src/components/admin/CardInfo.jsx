@@ -1,6 +1,5 @@
 import React from 'react';
-import { RiListView, RiAddLine, RiHistoryLine } from '@remixicon/react';
-import { Link } from 'react-router-dom';
+import { RiListView, RiHistoryLine, RiProgress1Line } from '@remixicon/react';
 import PropTypes from 'prop-types';
 
 function CardInfo(props) {
@@ -16,8 +15,11 @@ function CardInfo(props) {
 			textColor = 'text-yellow-500';
 			break;
 		case 'inProcess':
-			status = 'bg-blue-500/10 text-blue-500';
-			textColor = 'text-blue-500';
+			borderColor = 'border-t-4 border-yellow-500';
+			title = 'Solicitudes En Proceso';
+			icon = <RiProgress1Line className='w-20 h-16' />;
+			status = 'bg-yellow-500/10 text-yellow-500';
+			textColor = 'text-yellow-600';
 			break;
 		case 'close':
 			borderColor = 'border-t-4 border-green-500';
@@ -44,7 +46,7 @@ function CardInfo(props) {
 					<h3 className='text-lg'>{title}</h3>
 					<i className='fas fa-user-graduate'>👌</i>
 				</div>
-				<p className='text-3xl font-gothicBold '>{totalSolicitudes}</p>
+				<p className='text-3xl font-gothicBold'>{totalSolicitudes}</p>
 				<p className={textColor}>Total de Solicitudes registradas</p>
 			</div>
 		</div>

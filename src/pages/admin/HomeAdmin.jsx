@@ -34,6 +34,7 @@ function HomeAdmin() {
 					<>
 						<CardInfo solicitud={'total'} totalSolicitudes={dataConsulta} />
 						<CardInfo solicitud={'close'} totalSolicitudes={dataConsulta} />
+						<CardInfo solicitud={'inProcess'} totalSolicitudes={dataConsulta} />
 					</>
 				)}
 			</div>

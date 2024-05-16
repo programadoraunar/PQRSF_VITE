@@ -1,16 +1,11 @@
 import React from 'react';
 import Footer from '../components/home/Footer';
-import ExpandingButton from '../components/home/ui/ExpandingButton';
-import FormularioAnonimo from '../components/home/forms/FormularioAnonimo';
-import FormularioNormal from '../components/home/forms/FormularioNormal';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+
 import Navbar from '../components/home/navigation/Navbar';
 import Hero from '../components/home/sections/Hero';
 import PqrsfSection from '../components/home/sections/PqrsfSection';
 import PQRSFDetails from '../components/home/sections/PQRSFDetails';
 import Pruebas from '../components/home/Pruebas';
-
 function Test() {
 	return (
 		<div>

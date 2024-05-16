@@ -92,6 +92,7 @@ function SearchHeaderWithTable({ setDatosSolicitudes, setIsLoading }) {
 		});
 
 		const [fechaDesde, fechaHasta] = formattedDates;
+		console.log(fechaDesde);
 		try {
 			setIsLoading(true);
 			const data = await obtenerPqrsfPorFechasYTipo(
@@ -108,6 +109,43 @@ function SearchHeaderWithTable({ setDatosSolicitudes, setIsLoading }) {
 		} finally {
 			setIsLoading(false);
 		}
+	};
+	const onSubmitFilterDateTypeAndState = async () => {
+		if (!validateNumberOfRecords()) return;
+
+		const { numberOfRecords, dateRange, tipoSolicitud, estado } = getValues();
+		if (!dateRange) {
+			setError('dateRange', {
+				type: 'manual',
+				message: 'Seleccione un rango de fechas',
+			});
+			return;
+		}
+		clearErrors('dateRange');
+
+		if (!tipoSolicitud) {
+			setError('tipoSolicitud', {
+				type: 'manual',
+				message: 'Seleccione el tipo de solicitud',
+			});
+			return;
+		}
+		clearErrors('tipoSolicitud');
+		if (!estado) {
+			setError('estado', {
+				type: 'manual',
+				message: 'Seleccione un Estado',
+			});
+			return;
+		}
+		clearErrors('estado');
+
+		const formattedDates = dateRange.map(date => {
+			const formattedDate = new Date(date).toISOString().split('T')[0];
+			return formattedDate;
+		});
+
+		const [fechaDesde, fechaHasta] = formattedDates;
 	};
 
 	return (
@@ -154,7 +192,7 @@ function SearchHeaderWithTable({ setDatosSolicitudes, setIsLoading }) {
 							onClick={handleSubmit(onSubmitFilterDateRange)}
 							className='btn px-1 py-0 text-xs flex items-center space-x-1'
 						>
-							<RiSearch2Line className='h-4 w-4 text-white' />
+							<RiSearch2Line className='h-4 w-4 text-blue-zodiac-950' />
 						</button>
 					</div>
 					{errors.dateRange && (
@@ -184,13 +222,41 @@ function SearchHeaderWithTable({ setDatosSolicitudes, setIsLoading }) {
 							onClick={handleSubmit(onSubmitFilterDateAndType)}
 							className='btn px-2 py-0 text-xs'
 						>
-							<RiSearch2Line className='h-4 w-4 text-white' />
+							<RiSearch2Line className='h-4 w-4 text-blue-zodiac-950' />
 						</button>
 					</div>
 					{errors.tipoSolicitud && (
 						<p className='text-red-500 text-sm'>
 							{errors.tipoSolicitud.message}
 						</p>
+					)}
+				</div>
+				<div className='flex flex-col items-center w-full max-w-xs'>
+					<label htmlFor='tipoSolicitud' className='my-2'>
+						Estado
+					</label>
+					<div className='flex'>
+						<select
+							className='select select-info w-full bg-white text-black'
+							{...register('estado')}
+						>
+							<option value='' disabled selected>
+								Estado de la solicitud
+							</option>
+							<option value='Peticion'>Registradas</option>
+							<option value='Queja'>Asignadas</option>
+							<option value='Reclamo'>Finalizadas</option>
+						</select>
+						<button
+							type='button'
+							className='btn px-2 py-0 text-xs'
+							onClick={handleSubmit(onSubmitFilterDateTypeAndState)}
+						>
+							<RiSearch2Line className='h-4 w-4 text-blue-zodiac-950' />
+						</button>
+					</div>
+					{errors.estado && (
+						<p className='text-red-500 text-sm'>{errors.estado.message}</p>
 					)}
 				</div>
 			</form>

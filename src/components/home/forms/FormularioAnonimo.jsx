@@ -6,14 +6,13 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { solicitudAnonimaSchema } from '../../../validations/formSchema';
 // import { registrarSolicitudAnonima } from '../../supabase/actions/solicitudesFuntions';
-import {
-	obtnerUltimoRadicado,
-	registrarSolicitudAnonima,
-} from '../../../supabase/actions/pqrsfFunctions';
+import { registrarSolicitudAnonima } from '../../../supabase/actions/postPqrsFuntions';
+
 import Modal from '../ui/Modal';
 import Loading from '../../ui/Loading';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import Pdf from '../../pdf/Pdf';
+import { obtnerUltimoRadicado } from '../../../supabase/actions/pqrsfFunctions';
 
 /**
  * @component FormularioAnonimo

@@ -154,7 +154,7 @@ function SearchHeaderWithTable({ setDatosSolicitudes, setIsLoading }) {
 							onClick={handleSubmit(onSubmitFilterDateRange)}
 							className='btn px-1 py-0 text-xs flex items-center space-x-1'
 						>
-							<RiSearch2Line className='h-4 w-4 text-white' />
+							<RiSearch2Line className='h-4 w-4 text-blue-zodiac-950' />
 						</button>
 					</div>
 					{errors.dateRange && (
@@ -184,7 +184,7 @@ function SearchHeaderWithTable({ setDatosSolicitudes, setIsLoading }) {
 							onClick={handleSubmit(onSubmitFilterDateAndType)}
 							className='btn px-2 py-0 text-xs'
 						>
-							<RiSearch2Line className='h-4 w-4 text-white' />
+							<RiSearch2Line className='h-4 w-4 text-blue-zodiac-950' />
 						</button>
 					</div>
 					{errors.tipoSolicitud && (

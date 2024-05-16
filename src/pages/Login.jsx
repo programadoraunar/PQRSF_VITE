@@ -82,7 +82,7 @@ function Login() {
 										type='email'
 										autoComplete='email'
 										required
-										className='bg-gray-100 placeholder:text-gray-600 w-full text-sm px-4 py-3.5 rounded-md outline-blue-600  text-black'
+										className='input placeholder:text-gray-500 w-full text-sm px-4 py-3.5 rounded-md outline-blue-600  text-black'
 										placeholder='Email'
 										{...register('email')}
 										value={email}
@@ -97,7 +97,7 @@ function Login() {
 										type='password'
 										autoComplete='current-password'
 										required
-										className='bg-gray-100 placeholder:text-gray-600 w-full text-sm px-4 py-3.5 rounded-md outline-blue-600 text-black'
+										className='input placeholder:text-gray-500 w-full text-sm px-4 py-3.5 rounded-md outline-blue-600 text-black'
 										placeholder='Contraseña'
 										{...register('password')}
 										value={password}

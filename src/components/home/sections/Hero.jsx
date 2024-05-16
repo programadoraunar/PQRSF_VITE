@@ -24,7 +24,7 @@ function Hero() {
 					</div>
 				</div>
 			</div>
-			<div className='relative -mt-24 lg:-mt-44 2xl:-mt-56'>
+			<div className='relative  -mt-24 lg:-mt-44 2xl:-mt-56'>
 				<svg
 					viewBox='0 0 1428 174'
 					version='1.1'

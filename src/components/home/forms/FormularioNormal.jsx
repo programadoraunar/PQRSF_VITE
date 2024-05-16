@@ -10,14 +10,14 @@ import {
 	optionsIdentificacion,
 } from '../../../utils/options';
 import {
-	obtnerUltimoRadicado,
 	registrarSolicitudNormalAlumno,
 	registrarSolicitudNormalDocente,
-} from '../../../supabase/actions/pqrsfFunctions';
+} from '../../../supabase/actions/postPqrsFuntions';
 import { motion, AnimatePresence } from 'framer-motion';
 import Loading from '../../ui/Loading';
 import ModalSolicitudNormal from '../ui/ModalSolicitudNormal';
 import TipoSolicitanteSelector from './normal/TipoSolicitanteSelector';
+import { obtnerUltimoRadicado } from '../../../supabase/actions/pqrsfFunctions';
 /**
  * @component FormularioNormal
  * @description Componente que representa un formulario para enviar solicitudes normales.
@@ -482,7 +482,7 @@ function FormularioNormal() {
 							initial={{ opacity: 0, scale: 0.75 }}
 							animate={{ opacity: 1, scale: 1 }}
 							exit={{ opacity: 0, scale: 0 }}
-							className='w-full  h-full fixed top-0 left-0 bg-slate-500 bg-opacity-50 flex justify-center items-center '
+							className='w-full  h-full fixed top-0 left-0 bg-slate-500 bg-opacity-50 flex justify-center items-center z-50 '
 						>
 							<ModalSolicitudNormal
 								onClose={handleCerrarModal}

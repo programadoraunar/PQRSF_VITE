@@ -68,7 +68,7 @@ function Consulta() {
 	return (
 		<div className='flex flex-col pt-28'>
 			<Navbar />
-			<h1 className='font-gothicBold text-black pt-16 text-center font-medium text-3xl'>
+			<h1 className='font-gothicBold text-black py-16 text-center font-medium text-3xl'>
 				Consultar Estado de la Solicitud PQRSF
 			</h1>
 			<div className='px-10 xl:px-48 my-6'>

@@ -40,23 +40,22 @@ function ModalSolicitudNormal({
 	};
 
 	return (
-		<div className='w-[400px] min-h-[100px] sm:w-[550px] sm:h-[600px]  md:w-[550px] lg:w-[600px] lg:h-[650px] bg-white border rounded-lg relative'>
-			<div className='flex justify-between bg-blue-zodiac-950 py-3 px-4 '>
+		<div className=' w-[90vw] max-w-[600px] min-h-[100px] sm:w-[550px] sm:h-[700px] md:w-[550px] lg:w-[700px] lg:h-[800px] bg-white border rounded-lg'>
+			<div className='flex justify-between bg-blue-zodiac-950 py-3 px-4'>
 				<h1 className='text-white'>Resumen Solicitud</h1>
 				<button className='' onClick={onClose}>
 					<RiCloseCircleFill className='text-white' />
 				</button>
 			</div>
-			<div className='tableMov max-h-[400px] sm:max-h-[550px] lg:max-h-[600px] p-5'>
+			<div className='overflow-y-auto max-h-[calc(100vh-200px)] p-5'>
 				{isLoading ? (
-					<div>nada</div>
+					<div className='text-center'>Cargando...</div>
 				) : (
 					<div className='text-black'>
 						<div className='flex justify-between items-center'>
 							<h2 className='text-lg lg:text-xl font-gothicBold'>
 								Información enviada:
 							</h2>
-							<p>s</p>
 						</div>
 						<div className='py-4'>
 							<p className='pb-4'>
@@ -87,28 +86,46 @@ function ModalSolicitudNormal({
 						</div>
 
 						<div className='flex flex-col gap-3'>
-							<p className='font-gothicBold'>Tipo de Identificacion: </p>
-							<span>{tipoIdentificacion}</span>
-							<p className='font-gothicBold'>Numero de Documento: </p>
-							<span>{documentNumber}</span>
-							<p className='font-gothicBold'>Nombres: </p>
-							<span>{`${nombres} ${apellido} ${segundoApellido}`}</span>
-
-							<p className='font-gothicBold'>Direccion: </p>
-							<span>{direccion}</span>
-							<p className='font-gothicBold'>Celular: </p>
-							<span>{celular}</span>
-							<p className='font-gothicBold'>Email: </p>
-							<span>{email}</span>
-							<p className='font-gothicBold'>Tipo Solicitud: </p>
-							<span>{tipoSolicitud}</span>
-							<p className='font-gothicBold'>Dependencia:</p>
-							<span>{obtenerNombreDependencia(dependencia)}</span>
-							<p className='font-gothicBold'>Canal:</p>
-							<span>{obtenerNombreCanal(canal)}</span>
-							<p className='font-gothicBold'>Descripcion:</p>
-							<span>{descripcion}</span>
-
+							<div>
+								<p className='font-gothicBold'>Tipo de Identificación:</p>
+								<span>{tipoIdentificacion}</span>
+							</div>
+							<div>
+								<p className='font-gothicBold'>Número de Documento:</p>
+								<span>{documentNumber}</span>
+							</div>
+							<div>
+								<p className='font-gothicBold'>Nombres:</p>
+								<span>{`${nombres} ${apellido} ${segundoApellido}`}</span>
+							</div>
+							<div>
+								<p className='font-gothicBold'>Dirección:</p>
+								<span>{direccion}</span>
+							</div>
+							<div>
+								<p className='font-gothicBold'>Celular:</p>
+								<span>{celular}</span>
+							</div>
+							<div>
+								<p className='font-gothicBold'>Email:</p>
+								<span>{email}</span>
+							</div>
+							<div>
+								<p className='font-gothicBold'>Tipo de Solicitud:</p>
+								<span>{tipoSolicitud}</span>
+							</div>
+							<div>
+								<p className='font-gothicBold'>Dependencia:</p>
+								<span>{obtenerNombreDependencia(dependencia)}</span>
+							</div>
+							<div>
+								<p className='font-gothicBold'>Canal:</p>
+								<span>{obtenerNombreCanal(canal)}</span>
+							</div>
+							<div>
+								<p className='font-gothicBold'>Descripción:</p>
+								<span>{descripcion}</span>
+							</div>
 							{children}
 						</div>
 					</div>

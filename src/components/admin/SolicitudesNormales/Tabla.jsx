@@ -7,6 +7,12 @@ import { Toaster, toast } from 'sonner';
 import { RiCheckDoubleFill } from '@remixicon/react';
 import { actualizarEstadoSolicitud } from '../../../supabase/actions/postPqrsFuntions';
 import useObtenerNombre from '../../../utils/useObtenerNombre';
+/**
+ * Componente de tabla para mostrar solicitudes.
+ * @param {Object[]} datosSolicitudes - Array de objetos que contiene los datos de las solicitudes.
+ * @param {boolean} isLoading - Indica si los datos se están cargando actualmente.
+ * @returns {JSX.Element} Componente de tabla de solicitudes.
+ */
 function Tabla({ datosSolicitudes, isLoading }) {
 	const [selectedSolicitud, setSelectedSolicitud] = useState(null);
 	const [solicitudes, setSolicitudes] = useState(datosSolicitudes);
@@ -29,11 +35,13 @@ function Tabla({ datosSolicitudes, isLoading }) {
 	};
 
 	const asignar = async (idPqrsf, estado) => {
+		console.log(idPqrsf);
 		try {
 			const result = await actualizarEstadoSolicitud(idPqrsf, estado);
+
 			if (result) {
 				const solicitudModificada = solicitudes.find(
-					solicitud => solicitud.ret_id_pqrsf === idPqrsf,
+					solicitud => solicitud.ret_id_radicado === idPqrsf,
 				);
 				if (solicitudModificada) {
 					const fechaActual = new Date();
@@ -114,7 +122,7 @@ function Tabla({ datosSolicitudes, isLoading }) {
 										<td className='text-sm'>
 											{solicitud.ret_fecha_asignacion
 												? solicitud.ret_fecha_asignacion
-												: 'N/A'}
+												: 'Sin Fecha'}
 										</td>
 									)}
 									{tieneFechaRespuesta && (
@@ -131,7 +139,7 @@ function Tabla({ datosSolicitudes, isLoading }) {
 									</td>
 									<td className='text-sm'>
 										<button
-											onClick={() => asignar(solicitud.ret_id_pqrsf, 2)}
+											onClick={() => asignar(solicitud.ret_id_radicado, 2)}
 											className='btn'
 										>
 											Asignar

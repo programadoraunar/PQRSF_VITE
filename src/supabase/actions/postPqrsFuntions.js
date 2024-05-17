@@ -1,5 +1,18 @@
+/**
+ * Módulo que contiene funciones post para interactuar con la base de datos
+ * relacionadas con las PQRSF (Peticiones, Quejas, Reclamos, Sugerencias, Felicitaciones).
+ * @module postPqrsfFunctions
+ */
+
 import { supabase } from '../client';
 
+/**
+ * Actualiza el estado de una solicitud en la base de datos.
+ * @param {number} idPqrsf - ID de la solicitud que se va a actualizar.
+ * @param {number} nuevoEstado - Nuevo estado que se asignará a la solicitud.
+ * @returns {Promise<string>} Mensaje de éxito si la actualización es exitosa.
+ * @throws {Error} Si hay un error durante la actualización del estado de la solicitud.
+ */
 export async function actualizarEstadoSolicitud(idPqrsf, nuevoEstado) {
 	try {
 		// Llamar a la función para actualizar el estado de la solicitud
@@ -28,6 +41,25 @@ export async function actualizarEstadoSolicitud(idPqrsf, nuevoEstado) {
 		);
 	}
 }
+/**
+ * Registra una solicitud normal de un alumno en la base de datos.
+ * @param {string} tipoIdentificacion - Tipo de identificación del alumno.
+ * @param {string} documentNumber - Número de documento del alumno.
+ * @param {string} nombresUsu - Nombres del alumno.
+ * @param {string} apellidoUsu - Apellido del alumno.
+ * @param {string} segundoApellidoUsu - Segundo apellido del alumno.
+ * @param {string} direccionUsu - Dirección del alumno.
+ * @param {string} celularUsu - Número de celular del alumno.
+ * @param {string} emailUsu - Correo electrónico del alumno.
+ * @param {string} tipoSolicitud - Tipo de solicitud.
+ * @param {number} dependencia - ID de la dependencia.
+ * @param {number} canal - ID del canal de comunicación.
+ * @param {string} descripcionText - Descripción de la solicitud.
+ * @param {string} programaText - Programa del alumno (solo para alumnos).
+ * @param {string} semestreText - Semestre del alumno (solo para alumnos).
+ * @returns {Promise<Object>} Datos de la solicitud registrada.
+ * @throws {Error} Si hay un error durante el registro de la solicitud.
+ */
 export async function registrarSolicitudNormalAlumno(
 	tipoIdentificacion,
 	documentNumber,
@@ -80,7 +112,24 @@ export async function registrarSolicitudNormalAlumno(
 		throw new Error('Error al llamar a la función RPC.');
 	}
 }
-
+/**
+ * Registra una solicitud normal de un docente en la base de datos.
+ * @param {string} tipoIdentificacion - Tipo de identificación del docente.
+ * @param {string} documentNumber - Número de documento del docente.
+ * @param {string} nombresUsu - Nombres del docente.
+ * @param {string} apellidoUsu - Apellido del docente.
+ * @param {string} segundoApellidoUsu - Segundo apellido del docente.
+ * @param {string} direccionUsu - Dirección del docente.
+ * @param {string} celularUsu - Número de celular del docente.
+ * @param {string} emailUsu - Correo electrónico del docente.
+ * @param {string} tipoSolicitud - Tipo de solicitud.
+ * @param {number} dependencia - ID de la dependencia.
+ * @param {number} canal - ID del canal de comunicación.
+ * @param {string} descripcionText - Descripción de la solicitud.
+ * @param {string} facultadText - Facultad del docente (solo para docentes).
+ * @returns {Promise<Object>} Datos de la solicitud registrada.
+ * @throws {Error} Si hay un error durante el registro de la solicitud.
+ */
 export async function registrarSolicitudNormalDocente(
 	tipoIdentificacion,
 	documentNumber,
@@ -131,6 +180,23 @@ export async function registrarSolicitudNormalDocente(
 		throw new Error('Error al llamar a la función RPC para docente.');
 	}
 }
+/**
+ * Registra una solicitud normal en la base de datos.
+ * @param {string} tipoIdentificacion - Tipo de identificación del usuario.
+ * @param {string} documentNumber - Número de documento del usuario.
+ * @param {string} nombresUsu - Nombres del usuario.
+ * @param {string} apellidoUsu - Apellido del usuario.
+ * @param {string} segundoApellidoUsu - Segundo apellido del usuario.
+ * @param {string} direccionUsu - Dirección del usuario
+ * @param {string} celularUsu - Número de celular del usuario.
+ * @param {string} emailUsu - Correo electrónico del usuario.
+ * @param {string} tipoSolicitud - Tipo de solicitud.
+ * @param {number} dependencia - ID de la dependencia.
+ * @param {number} canal - ID del canal de comunicación.
+ * @param {string} descripcionText - Descripción de la solicitud.
+ * @returns {Promise<Object>} Datos de la solicitud registrada.
+ * @throws {Error} Si hay un error durante el registro de la solicitud.
+ */
 export async function registrarSolicitudNormal(
 	tipoIdentificacion,
 	documentNumber,

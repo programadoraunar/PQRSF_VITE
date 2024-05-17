@@ -30,39 +30,40 @@ function Tabla({ datosSolicitudes, isLoading }) {
 
 	const asignar = async (idPqrsf, estado) => {
 		try {
-			// const result = await actualizarEstadoSolicitud(idPqrsf, estado);
-			// console.log(result);
-
-			const solicitudModificada = solicitudes.find(
-				solicitud => solicitud.ret_id_pqrsf === idPqrsf,
-			);
-			if (solicitudModificada) {
-				const fechaActual = new Date();
-				const año = fechaActual.getFullYear();
-				const mes = String(fechaActual.getMonth() + 1).padStart(2, '0'); // El mes se indexa desde 0, por eso sumamos 1
-				const dia = String(fechaActual.getDate()).padStart(2, '0');
-				const fechaFormateada = `${año}-${mes}-${dia}`;
-				solicitudModificada.ret_fecha_asignacion = fechaFormateada; // Establece la fecha de asignación formateada
-				// Actualiza la solicitud en el estado local
-				setSolicitudes(prevSolicitudes =>
-					prevSolicitudes.map(solicitud =>
-						solicitud.ret_id_pqrsf === idPqrsf
-							? solicitudModificada
-							: solicitud,
-					),
+			const result = await actualizarEstadoSolicitud(idPqrsf, estado);
+			if (result) {
+				const solicitudModificada = solicitudes.find(
+					solicitud => solicitud.ret_id_pqrsf === idPqrsf,
 				);
-				toast('¡Asignanada!', {
-					description:
-						'La solicitud ha sido asiganada a la dependecia correspondiente .',
-					duration: 5000,
-					position: 'bottom-center',
-					unstyled: true,
-					classNames: {
-						toast:
-							'bg-[#FDF7E5] p-4 text-black font-gothicRegular rounded-lg border-l-4 border-[#ca6d15]',
-						title: 'text-xl font-gothicBold',
-					},
-				});
+				if (solicitudModificada) {
+					const fechaActual = new Date();
+					const año = fechaActual.getFullYear();
+					const mes = String(fechaActual.getMonth() + 1).padStart(2, '0'); // El mes se indexa desde 0, por eso sumamos 1
+					const dia = String(fechaActual.getDate()).padStart(2, '0');
+					const fechaFormateada = `${año}-${mes}-${dia}`;
+					solicitudModificada.ret_fecha_asignacion = fechaFormateada; // Establece la fecha de asignación formateada
+					solicitudModificada.ret_id_estado = 2; // cambia el estado para asignar
+					// Actualiza la solicitud en el estado local
+					setSolicitudes(prevSolicitudes =>
+						prevSolicitudes.map(solicitud =>
+							solicitud.ret_id_pqrsf === idPqrsf
+								? solicitudModificada
+								: solicitud,
+						),
+					);
+					toast('¡Asignanada!', {
+						description:
+							'La solicitud ha sido asiganada a la dependecia correspondiente .',
+						duration: 5000,
+						position: 'bottom-center',
+						unstyled: true,
+						classNames: {
+							toast:
+								'bg-[#FDF7E5] p-4 text-black font-gothicRegular rounded-lg border-l-4 border-[#ca6d15]',
+							title: 'text-xl font-gothicBold',
+						},
+					});
+				}
 			}
 		} catch (error) {
 			console.log(error);

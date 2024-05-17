@@ -15,7 +15,7 @@ export async function actualizarEstadoSolicitud(idPqrsf, nuevoEstado) {
 			throw new Error('Error al actualizar estado de solicitud.');
 		} else {
 			// Actualización exitosa
-			return data;
+			return data || 'Estado actualizado con éxito';
 		}
 	} catch (err) {
 		// Manejar error en la llamada a la función RPC

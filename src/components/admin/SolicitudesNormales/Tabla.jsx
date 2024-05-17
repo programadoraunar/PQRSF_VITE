@@ -1,26 +1,25 @@
-import React, { useState } from 'react';
-import { optionsDependencias } from '../../../utils/options';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ModalDetallesSolicitud from './ModalDetallesSolicitud';
 import Loading from '../../ui/Loading';
 import { motion } from 'framer-motion';
+import { Toaster, toast } from 'sonner';
+import { RiCheckDoubleFill } from '@remixicon/react';
 import { actualizarEstadoSolicitud } from '../../../supabase/actions/postPqrsFuntions';
+import useObtenerNombre from '../../../utils/useObtenerNombre';
 function Tabla({ datosSolicitudes, isLoading }) {
 	const [selectedSolicitud, setSelectedSolicitud] = useState(null);
-	const tieneFechaAsignacion = datosSolicitudes.some(
+	const [solicitudes, setSolicitudes] = useState(datosSolicitudes);
+	useEffect(() => {
+		setSolicitudes(datosSolicitudes);
+	}, [datosSolicitudes]);
+	const tieneFechaAsignacion = solicitudes.some(
 		solicitud => solicitud.ret_fecha_asignacion,
 	);
-	const tieneFechaRespuesta = datosSolicitudes.some(
+	const tieneFechaRespuesta = solicitudes.some(
 		solicitud => solicitud.ret_fecha_respuesta,
 	);
-	const obtenerNombreDependencia = idDependencia => {
-		const dependenciaEncontrada = optionsDependencias.find(
-			dep => dep.id === idDependencia.toString(),
-		);
-		return dependenciaEncontrada
-			? dependenciaEncontrada.nombre
-			: 'Dependencia Desconocida';
-	};
+
 	const openModal = solicitud => {
 		setSelectedSolicitud(solicitud);
 	};
@@ -30,14 +29,47 @@ function Tabla({ datosSolicitudes, isLoading }) {
 	};
 
 	const asignar = async (idPqrsf, estado) => {
-		console.log(idPqrsf);
 		try {
-			const result = await actualizarEstadoSolicitud(idPqrsf, estado);
-			console.log(result);
+			// const result = await actualizarEstadoSolicitud(idPqrsf, estado);
+			// console.log(result);
+
+			const solicitudModificada = solicitudes.find(
+				solicitud => solicitud.ret_id_pqrsf === idPqrsf,
+			);
+			if (solicitudModificada) {
+				const fechaActual = new Date();
+				const año = fechaActual.getFullYear();
+				const mes = String(fechaActual.getMonth() + 1).padStart(2, '0'); // El mes se indexa desde 0, por eso sumamos 1
+				const dia = String(fechaActual.getDate()).padStart(2, '0');
+				const fechaFormateada = `${año}-${mes}-${dia}`;
+				solicitudModificada.ret_fecha_asignacion = fechaFormateada; // Establece la fecha de asignación formateada
+				// Actualiza la solicitud en el estado local
+				setSolicitudes(prevSolicitudes =>
+					prevSolicitudes.map(solicitud =>
+						solicitud.ret_id_pqrsf === idPqrsf
+							? solicitudModificada
+							: solicitud,
+					),
+				);
+				toast('¡Asignanada!', {
+					description:
+						'La solicitud ha sido asiganada a la dependecia correspondiente .',
+					duration: 5000,
+					position: 'bottom-center',
+					unstyled: true,
+					classNames: {
+						toast:
+							'bg-[#FDF7E5] p-4 text-black font-gothicRegular rounded-lg border-l-4 border-[#ca6d15]',
+						title: 'text-xl font-gothicBold',
+					},
+				});
+			}
 		} catch (error) {
 			console.log(error);
 		}
 	};
+	const { obtenerNombreDependencia, obtenerNombreEstado, obtenerColorEstado } =
+		useObtenerNombre();
 
 	return (
 		<div className='overflow-x-auto text-black py-5 '>
@@ -49,22 +81,24 @@ function Tabla({ datosSolicitudes, isLoading }) {
 						<th>Dependencia</th>
 						<th>Descripcion</th>
 						<th>Fecha Envio</th>
+
 						{tieneFechaAsignacion && <th>Fecha Asignacion</th>}
 						{tieneFechaRespuesta && <th>Fecha de Respuesta</th>}
+						<th>Estado</th>
 						<th>Asignar</th>
 						<th>Detalles</th>
 					</tr>
 				</thead>
 				<tbody>
 					{!isLoading ? (
-						datosSolicitudes.length === 0 ? (
+						solicitudes.length === 0 ? (
 							<tr>
 								<td colSpan='7' className='text-center'>
 									No hay datos disponibles
 								</td>
 							</tr>
 						) : (
-							datosSolicitudes.map(solicitud => (
+							solicitudes.map(solicitud => (
 								<tr key={solicitud.ret_id_pqrsf}>
 									<td className='text-sm'>{solicitud.ret_id_radicado}</td>
 									<td className='text-sm'>
@@ -83,12 +117,17 @@ function Tabla({ datosSolicitudes, isLoading }) {
 										</td>
 									)}
 									{tieneFechaRespuesta && (
-										<td className='text-sm'>
+										<td className='text-sm '>
 											{solicitud.ret_fecha_respuesta
 												? solicitud.ret_fecha_respuesta
 												: 'N/A'}
 										</td>
 									)}
+									<td
+										className={`${obtenerColorEstado(solicitud.ret_id_estado)} text-sm`}
+									>
+										{obtenerNombreEstado(solicitud.ret_id_estado)}
+									</td>
 									<td className='text-sm'>
 										<button
 											onClick={() => asignar(solicitud.ret_id_pqrsf, 2)}
@@ -134,7 +173,7 @@ function Tabla({ datosSolicitudes, isLoading }) {
 					initial={{ opacity: 0, scale: 0.75 }}
 					animate={{ opacity: 1, scale: 1 }}
 					exit={{ opacity: 0, scale: 0 }}
-					className='w-full  h-full fixed top-0 left-0 bg-slate-500 bg-opacity-50 flex justify-center items-center'
+					className='w-full   h-full fixed top-0 left-0 bg-slate-500 bg-opacity-50 flex justify-center items-center z-50'
 				>
 					<ModalDetallesSolicitud
 						solicitud={selectedSolicitud}
@@ -142,6 +181,11 @@ function Tabla({ datosSolicitudes, isLoading }) {
 					/>
 				</motion.div>
 			)}
+			<Toaster
+				icons={{
+					success: <RiCheckDoubleFill />,
+				}}
+			/>
 		</div>
 	);
 }
@@ -158,7 +202,7 @@ Tabla.propTypes = {
 			ret_id_dependencia: PropTypes.number,
 			ret_id_estado: PropTypes.number,
 			ret_id_radicado: PropTypes.string,
-			ret_id_canal: PropTypes.string,
+			ret_id_canal: PropTypes.number,
 			ret_es_anonima: PropTypes.bool,
 		}),
 	).isRequired,

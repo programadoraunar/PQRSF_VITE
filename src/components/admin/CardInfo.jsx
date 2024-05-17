@@ -3,27 +3,30 @@ import { RiListView, RiHistoryLine, RiProgress1Line } from '@remixicon/react';
 import PropTypes from 'prop-types';
 
 function CardInfo(props) {
-	const { solicitud, totalSolicitudes, text } = props;
+	const { solicitud, totalSolicitudes } = props;
 	let status = '';
 	let textColor = '';
 	let icon = '';
 	let title = '';
 	let borderColor = '';
 	switch (solicitud) {
-		case 'pending':
-			status = 'bg-yellow-500/10 text-yellow-500';
-			textColor = 'text-yellow-500';
+		case 'register':
+			borderColor = 'border-t-4 border-blue-zodiac-800';
+			title = 'Solicitudes En Estado Registradas';
+			icon = <RiProgress1Line className='w-20 h-16' />;
+			status = 'bg-blue-zodiac-500/10 text-blue-zodiac-800';
+			textColor = 'text-blue-zodiac-800';
 			break;
 		case 'inProcess':
 			borderColor = 'border-t-4 border-yellow-500';
-			title = 'Solicitudes En Proceso';
+			title = 'Solicitudes En Estado Proceso';
 			icon = <RiProgress1Line className='w-20 h-16' />;
 			status = 'bg-yellow-500/10 text-yellow-500';
 			textColor = 'text-yellow-600';
 			break;
 		case 'close':
 			borderColor = 'border-t-4 border-green-500';
-			title = 'Solicitudes Cerradas';
+			title = 'Solicitudes en Estado Cerradas';
 			icon = <RiHistoryLine className='w-20 h-16' />;
 			status = 'bg-green-500/10 text-green-500';
 			textColor = 'text-green-500';

@@ -13,7 +13,11 @@ function SolicitudesNormales() {
 				setDatosSolicitudes={setDatosSolicitudes}
 				setIsLoading={setIsLoading}
 			/>
-			<Tabla datosSolicitudes={datosSolicitudes} isLoading={isLoading} />
+			<Tabla
+				datosSolicitudes={datosSolicitudes}
+				isLoading={isLoading}
+				setIsLoading={setIsLoading}
+			/>
 		</div>
 	);
 }

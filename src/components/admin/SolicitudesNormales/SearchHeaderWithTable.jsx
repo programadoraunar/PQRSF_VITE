@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import DataRange from '../../ui/DataRange';
 import { RiSearch2Line } from '@remixicon/react';
 import { useForm, Controller } from 'react-hook-form';
 import {
 	obtenerPqrsfPorFechas,
 	obtenerPqrsfPorFechasYTipo,
+	obtenerPqrsfPorFechasYTipoYEstado,
 } from '../../../supabase/actions/pqrsfFunctions';
 import PropTypes from 'prop-types';
 
 function SearchHeaderWithTable({ setDatosSolicitudes, setIsLoading }) {
+	const [mostrarSelectState, setMostrarSelectState] = useState(false);
 	const {
 		register,
 		handleSubmit,
@@ -92,7 +94,7 @@ function SearchHeaderWithTable({ setDatosSolicitudes, setIsLoading }) {
 		});
 
 		const [fechaDesde, fechaHasta] = formattedDates;
-		console.log(fechaDesde);
+
 		try {
 			setIsLoading(true);
 			const data = await obtenerPqrsfPorFechasYTipo(
@@ -103,7 +105,7 @@ function SearchHeaderWithTable({ setDatosSolicitudes, setIsLoading }) {
 				tipoSolicitud,
 			);
 			setDatosSolicitudes(data);
-			console.log(data);
+			setMostrarSelectState(true);
 		} catch (error) {
 			console.log(error);
 		} finally {
@@ -146,6 +148,26 @@ function SearchHeaderWithTable({ setDatosSolicitudes, setIsLoading }) {
 		});
 
 		const [fechaDesde, fechaHasta] = formattedDates;
+		console.log(numberOfRecords, fechaDesde, fechaHasta, tipoSolicitud, estado);
+		const estadoInt = parseInt(estado);
+		console.log(estadoInt);
+		try {
+			setIsLoading(true);
+			const data = await obtenerPqrsfPorFechasYTipoYEstado(
+				numberOfRecords,
+				fechaDesde,
+				fechaHasta,
+				false,
+				tipoSolicitud,
+				estadoInt,
+			);
+			setDatosSolicitudes(data);
+			setMostrarSelectState(true);
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	return (
@@ -231,34 +253,36 @@ function SearchHeaderWithTable({ setDatosSolicitudes, setIsLoading }) {
 						</p>
 					)}
 				</div>
-				<div className='flex flex-col items-center w-full max-w-xs'>
-					<label htmlFor='tipoSolicitud' className='my-2'>
-						Estado
-					</label>
-					<div className='flex'>
-						<select
-							className='select select-info w-full bg-white text-black'
-							{...register('estado')}
-						>
-							<option value='' disabled selected>
-								Estado de la solicitud
-							</option>
-							<option value='Peticion'>Registradas</option>
-							<option value='Queja'>Asignadas</option>
-							<option value='Reclamo'>Finalizadas</option>
-						</select>
-						<button
-							type='button'
-							className='btn px-2 py-0 text-xs'
-							onClick={handleSubmit(onSubmitFilterDateTypeAndState)}
-						>
-							<RiSearch2Line className='h-4 w-4 text-blue-zodiac-950' />
-						</button>
+				{mostrarSelectState && (
+					<div className='flex flex-col items-center w-full max-w-xs'>
+						<label htmlFor='tipoSolicitud' className='my-2'>
+							Estado
+						</label>
+						<div className='flex'>
+							<select
+								className='select select-info w-full bg-white text-black'
+								{...register('estado')}
+							>
+								<option value='' disabled selected>
+									Estado de la solicitud
+								</option>
+								<option value='1'>Registradas</option>
+								<option value='2'>Asignadas</option>
+								<option value='3'>Finalizadas</option>
+							</select>
+							<button
+								type='button'
+								className='btn px-2 py-0 text-xs'
+								onClick={handleSubmit(onSubmitFilterDateTypeAndState)}
+							>
+								<RiSearch2Line className='h-4 w-4 text-blue-zodiac-950' />
+							</button>
+						</div>
+						{errors.estado && (
+							<p className='text-red-500 text-sm'>{errors.estado.message}</p>
+						)}
 					</div>
-					{errors.estado && (
-						<p className='text-red-500 text-sm'>{errors.estado.message}</p>
-					)}
-				</div>
+				)}
 			</form>
 		</div>
 	);

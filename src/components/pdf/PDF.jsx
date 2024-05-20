@@ -33,6 +33,7 @@ function Pdf({
 	email,
 	tipoSolicitud,
 	dependencia,
+	sede,
 	descripcion,
 	numeroRadicado,
 	fechaRadicado,
@@ -164,6 +165,11 @@ function Pdf({
 						</Text>
 					</View>
 					<View style={styles.infoContainer}>
+						<Text style={styles.subtitle}>Sede:</Text>
+						<Text style={styles.infoItem}>{sede}</Text>
+					</View>
+
+					<View style={styles.infoContainer}>
 						<Text style={styles.subtitle}>Descripción:</Text>
 						<Text style={styles.infoItem}>{descripcion}</Text>
 					</View>
@@ -208,6 +214,7 @@ Pdf.propTypes = {
 	direccion: PropTypes.string, // Dirección
 	celular: PropTypes.string, // Número de celular
 	email: PropTypes.string, // Correo electrónico
+	sede: PropTypes.string, // Correo electrónico
 };
 
 export default Pdf;

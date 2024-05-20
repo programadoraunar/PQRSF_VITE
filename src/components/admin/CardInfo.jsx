@@ -9,12 +9,15 @@ function CardInfo(props) {
 	let icon = '';
 	let title = '';
 	let borderColor = '';
+	let description = '';
 	switch (solicitud) {
 		case 'register':
 			borderColor = 'border-t-4 border-blue-zodiac-800';
 			title = 'Solicitudes En Estado Registradas';
 			icon = <RiProgress1Line className='w-20 h-16' />;
 			status = 'bg-blue-zodiac-500/10 text-blue-zodiac-800';
+			description =
+				'Slicitudes Que Actualmete se encuentran en estado de registro';
 			textColor = 'text-blue-zodiac-800';
 			break;
 		case 'inProcess':
@@ -22,6 +25,7 @@ function CardInfo(props) {
 			title = 'Solicitudes En Estado Proceso';
 			icon = <RiProgress1Line className='w-20 h-16' />;
 			status = 'bg-yellow-500/10 text-yellow-500';
+			description = 'Solicitudes que estan asignadas';
 			textColor = 'text-yellow-600';
 			break;
 		case 'close':
@@ -29,12 +33,14 @@ function CardInfo(props) {
 			title = 'Solicitudes en Estado Cerradas';
 			icon = <RiHistoryLine className='w-20 h-16' />;
 			status = 'bg-green-500/10 text-green-500';
+			description = 'Solicitudes que estan cerradas';
 			textColor = 'text-green-500';
 			break;
 		case 'total':
 			borderColor = 'border-t-4 border-red-500';
 			title = 'Total de Solicitudes';
 			icon = <RiListView className='w-20 h-16' />;
+			description = 'Total de solicitudes registradas en el sistema';
 			status = 'bg-pink-500/10 text-pink-500';
 			textColor = 'text-blue-zodiac-950';
 			break;
@@ -50,7 +56,7 @@ function CardInfo(props) {
 					<i className='fas fa-user-graduate'>👌</i>
 				</div>
 				<p className='text-3xl font-gothicBold'>{totalSolicitudes}</p>
-				<p className={textColor}>Total de Solicitudes registradas</p>
+				<p className={textColor}>{description}</p>
 			</div>
 		</div>
 	);

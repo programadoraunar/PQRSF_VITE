@@ -270,24 +270,29 @@ export async function registrarSolicitudAnonima(
 	tipoSolicitud,
 	idDependencia,
 	descripcionText,
+	sedeText,
 ) {
 	try {
-		// Llamar a la función RPC 'insertar_pqrsf_anonima' en la base de datos
-		const { data, error } = await supabase.rpc('insertar_pqrsf_anonima', {
+		// Llama a la función RPC 'insertar_pqrsf_anonima' en la base de datos
+		const { data, error } = await supabase.rpc('registrar_pqrsf_anonima', {
 			descripcion: descripcionText,
 			id_dependencia: idDependencia,
+			sede: sedeText,
 			tipo_solicitud_pqrs: tipoSolicitud,
 		});
 
 		if (error) {
-			// Manejar error si ocurre durante la llamada a la función RPC
+			// Maneja el error si ocurre durante la llamada a la función RPC
 			console.error('Error al registrar solicitud anónima:', error);
+			return { error };
 		} else {
-			// Registro exitoso
+			// Si no hay errores, retorna los datos
 			console.log('Solicitud anónima registrada con éxito:', data);
+			return { data };
 		}
 	} catch (err) {
-		// Manejar error en la llamada a la función RPC
+		// Maneja el error en la llamada a la función RPC
 		console.error('Error al llamar a la función RPC:', err);
+		return { error: err.message };
 	}
 }

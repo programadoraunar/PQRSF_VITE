@@ -132,6 +132,7 @@ function Tabla({ datosSolicitudes, isLoading }) {
 												: 'N/A'}
 										</td>
 									)}
+
 									<td
 										className={`${obtenerColorEstado(solicitud.ret_id_estado)} text-sm`}
 									>

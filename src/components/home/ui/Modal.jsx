@@ -8,6 +8,7 @@ function Modal({
 	onClose,
 	dependencia,
 	tipoSolicitud,
+	sede,
 	descripcion,
 	isLoading,
 }) {
@@ -44,6 +45,8 @@ function Modal({
 						<span>{tipoSolicitud}</span>
 						<p className='font-gothicBold'>Dependencia:</p>
 						<span>{obtenerNombreDependencia(dependencia)}</span>
+						<p className='font-gothicBold'>Sede:</p>
+						<span>{sede}</span>
 						<p className='font-gothicBold'>Descripcion:</p>
 						<span>{descripcion}</span>
 					</div>
@@ -59,6 +62,7 @@ Modal.propTypes = {
 	dependencia: PropTypes.string.isRequired, // ID de la dependencia
 	tipoSolicitud: PropTypes.string.isRequired, // Tipo de solicitud
 	descripcion: PropTypes.string.isRequired, // Descripción de la solicitud
+	sede: PropTypes.string,
 	isLoading: PropTypes.node,
 };
 

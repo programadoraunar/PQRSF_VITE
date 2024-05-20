@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import { optionsDependencias, optionsSolicitud } from '../../../utils/options';
+import {
+	optionsDependencias,
+	optionsSolicitud,
+	optionsSede,
+} from '../../../utils/options';
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useForm } from 'react-hook-form';
@@ -44,6 +48,7 @@ function FormularioAnonimo() {
 		tipoSolicitud: '', // Estado para el tipo de solicitud
 		dependencia: '', // Estado para la dependencia
 		description: '', // Estado para la descripción
+		sede: '',
 	});
 
 	// Manejador de cambio para los campos del formulario solo para campo la descripcion
@@ -69,6 +74,7 @@ function FormularioAnonimo() {
 		setValue('tipoSolicitud', ''); // Limpiar el valor del campo tipoSolicitud
 		setValue('dependencia', ''); // Limpiar el valor del campo dependencia
 		setValue('description', ''); // Limpiar el valor del campo description
+		setValue('sede', '');
 		setMostrarModal(false); // Ocultar el modal
 	};
 
@@ -80,13 +86,15 @@ function FormularioAnonimo() {
 			const idtipoSolicitud = dato.tipoSolicitud;
 			const idDependencia = parseInt(dato.dependencia, 10);
 			const descripcionData = dato.description;
+			const sedeText = dato.sede;
 
-			const data = await registrarSolicitudAnonima(
+			const resultado = await registrarSolicitudAnonima(
 				idtipoSolicitud,
 				idDependencia,
 				descripcionData,
+				sedeText,
 			);
-			console.log(data);
+			console.log(resultado);
 			const dataRadicado = await obtnerUltimoRadicado();
 			const fechaFormateada = new Date(
 				dataRadicado.fecha_hora_radicacion,
@@ -100,6 +108,7 @@ function FormularioAnonimo() {
 				tipoSolicitud: valoresFormulario.tipoSolicitud,
 				dependencia: valoresFormulario.dependencia,
 				description: valoresFormulario.description,
+				sede: valoresFormulario.sede,
 			});
 		} catch (err) {
 			console.error('Error durante el envío de la solicitud:', err);
@@ -126,7 +135,6 @@ function FormularioAnonimo() {
 					onChange={e => {
 						setValue('tipoSolicitud', e.target.value);
 					}}
-					value={formData.dependencia}
 				>
 					{optionsSolicitud.map((option, index) => (
 						<option key={index} value={option.nombre}>
@@ -157,6 +165,24 @@ function FormularioAnonimo() {
 				{errors.dependencia && (
 					<p className='text-red-500'>{errors.dependencia.message}</p>
 				)}
+				<div className='mb-4 mt-8 text-base text-blue-zodiac-950 font-gothicBold text-start'>
+					Sede
+				</div>
+				<select
+					className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer bg-white'
+					{...register('sede')}
+					onChange={e => {
+						console.log('Valor seleccionado:', e.target.value);
+						setValue('sede', e.target.value);
+					}}
+				>
+					{optionsSede.map((sede, index) => (
+						<option key={index} value={sede.nombre}>
+							{sede.nombre}
+						</option>
+					))}
+				</select>
+				{errors.sede && <p className='text-red-500'>{errors.sede.message}</p>}
 
 				<div className='flex flex-col'>
 					<label
@@ -200,6 +226,7 @@ function FormularioAnonimo() {
 								onClose={handleCerrarModal}
 								dependencia={valores.dependencia}
 								tipoSolicitud={valores.tipoSolicitud}
+								sede={valores.sede}
 								descripcion={valores.description}
 								isLoading={isLoading}
 							>

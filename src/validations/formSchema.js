@@ -4,6 +4,7 @@ import {
 	optionsSolicitud,
 	optionsTipoSolicitante,
 	optionscanal,
+	optionsSede,
 } from '../utils/options';
 import { z } from 'zod';
 
@@ -31,6 +32,7 @@ const tipoSolicitudNombres = optionsSolicitud.map(option => option.nombre);
  */
 const dependenciasIds = optionsDependencias.map(option => option.id);
 
+const sedesNombres = optionsSede.map(option => option.nombre);
 /**
  * @constant {z.ZodObject<any>} solicitudAnonimaSchema
  * @description Esquema de validación para el formulario de solicitud anónima utilizando la librería Zod.
@@ -53,6 +55,16 @@ export const solicitudAnonimaSchema = z.object({
 				return {
 					message:
 						'El valor de dependencia debe ser uno de los valores permitidos.',
+				};
+			}
+			return { message: context.defaultError };
+		},
+	}),
+	sede: z.enum(sedesNombres, {
+		errorMap: (issue, context) => {
+			if (issue.code === z.ZodIssueCode.invalid_enum_value) {
+				return {
+					message: 'El valor de sede debe ser uno de los valores permitidos.',
 				};
 			}
 			return { message: context.defaultError };

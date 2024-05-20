@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
 	optionsDependencias,
 	optionsSolicitud,
 	optionsSede,
 } from '../../../utils/options';
-
+import ReCAPTCHA from 'react-google-recaptcha';
+import { retCaptchaUrl } from '../../../reCaptcha/reCaptcha';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -37,7 +38,7 @@ function FormularioAnonimo() {
 	const [formData, setFormData] = useState({
 		description: '',
 	});
-
+	const captcha = useRef(null);
 	// Estado local para manejar el número y la fecha de radicado
 	const [numeroRadicado, setNumeroRadicado] = useState();
 	const [fechaRadicado, setFechaRadicado] = useState();
@@ -80,41 +81,45 @@ function FormularioAnonimo() {
 
 	// Manejador de envío del formulario
 	const onSubmit = async dato => {
-		try {
-			setIsLoading(true);
+		if (captcha.current.getValue()) {
+			try {
+				setIsLoading(true);
 
-			const idtipoSolicitud = dato.tipoSolicitud;
-			const idDependencia = parseInt(dato.dependencia, 10);
-			const descripcionData = dato.description;
-			const sedeText = dato.sede;
+				const idtipoSolicitud = dato.tipoSolicitud;
+				const idDependencia = parseInt(dato.dependencia, 10);
+				const descripcionData = dato.description;
+				const sedeText = dato.sede;
 
-			const resultado = await registrarSolicitudAnonima(
-				idtipoSolicitud,
-				idDependencia,
-				descripcionData,
-				sedeText,
-			);
-			console.log(resultado);
-			const dataRadicado = await obtnerUltimoRadicado();
-			const fechaFormateada = new Date(
-				dataRadicado.fecha_hora_radicacion,
-			).toLocaleString('es-CO', { timeZone: 'America/Bogota' });
+				const resultado = await registrarSolicitudAnonima(
+					idtipoSolicitud,
+					idDependencia,
+					descripcionData,
+					sedeText,
+				);
+				console.log(resultado);
+				const dataRadicado = await obtnerUltimoRadicado();
+				const fechaFormateada = new Date(
+					dataRadicado.fecha_hora_radicacion,
+				).toLocaleString('es-CO', { timeZone: 'America/Bogota' });
 
-			setNumeroRadicado(dataRadicado.id_radicado);
-			setFechaRadicado(fechaFormateada);
+				setNumeroRadicado(dataRadicado.id_radicado);
+				setFechaRadicado(fechaFormateada);
 
-			const valoresFormulario = getValues();
-			setValores({
-				tipoSolicitud: valoresFormulario.tipoSolicitud,
-				dependencia: valoresFormulario.dependencia,
-				description: valoresFormulario.description,
-				sede: valoresFormulario.sede,
-			});
-		} catch (err) {
-			console.error('Error durante el envío de la solicitud:', err);
-		} finally {
-			setIsLoading(false);
-			handleMostrarModal();
+				const valoresFormulario = getValues();
+				setValores({
+					tipoSolicitud: valoresFormulario.tipoSolicitud,
+					dependencia: valoresFormulario.dependencia,
+					description: valoresFormulario.description,
+					sede: valoresFormulario.sede,
+				});
+			} catch (err) {
+				console.error('Error durante el envío de la solicitud:', err);
+			} finally {
+				setIsLoading(false);
+				handleMostrarModal();
+			}
+		} else {
+			console.log('no captcha');
 		}
 	};
 
@@ -203,6 +208,9 @@ function FormularioAnonimo() {
 					{errors.description && (
 						<p className='text-red-500'>{errors.description.message}</p>
 					)}
+				</div>
+				<div>
+					<ReCAPTCHA ref={captcha} sitekey={retCaptchaUrl} />
 				</div>
 				<button
 					type='submit'

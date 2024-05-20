@@ -15,6 +15,7 @@ function PdfDownloadButton({
 	tipoSolicitud,
 	dependencia,
 	descripcion,
+	sede,
 	numeroRadicado,
 	fechaRadicado,
 }) {
@@ -33,6 +34,7 @@ function PdfDownloadButton({
 				tipoSolicitud={tipoSolicitud}
 				dependencia={dependencia}
 				descripcion={descripcion}
+				sede={sede}
 				numeroRadicado={numeroRadicado}
 				fechaRadicado={fechaRadicado}
 			/>,
@@ -79,6 +81,7 @@ PdfDownloadButton.propTypes = {
 	tipoSolicitud: PropTypes.string.isRequired,
 	dependencia: PropTypes.string.isRequired,
 	descripcion: PropTypes.string.isRequired,
+	sede: PropTypes.string,
 	numeroRadicado: PropTypes.string,
 	fechaRadicado: PropTypes.string,
 };

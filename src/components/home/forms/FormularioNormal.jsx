@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-
+import { retCaptchaUrl } from '../../../reCaptcha/reCaptcha';
 import { solicitudNormalesSchema } from '../../../validations/formSchema';
 import {
 	optionscanal,
 	optionsDependencias,
 	optionsSolicitud,
 	optionsIdentificacion,
+	optionsSede,
 } from '../../../utils/options';
 import {
 	registrarSolicitudNormalAlumno,
@@ -18,6 +19,7 @@ import Loading from '../../ui/Loading';
 import ModalSolicitudNormal from '../ui/ModalSolicitudNormal';
 import TipoSolicitanteSelector from './normal/TipoSolicitanteSelector';
 import { obtnerUltimoRadicado } from '../../../supabase/actions/pqrsfFunctions';
+import ReCAPTCHA from 'react-google-recaptcha';
 /**
  * @component FormularioNormal
  * @description Componente que representa un formulario para enviar solicitudes normales.
@@ -39,6 +41,8 @@ function FormularioNormal() {
 		description: '',
 		/* adjunto: null, */
 	});
+	const captcha = useRef(null);
+	const [captchaCompleted, setCaptchaCompleted] = useState(true); // Estado para controlar si el ReCAPTCHA se ha completado
 
 	// Estado local para manejar el número y la fecha de radicado
 	const [numeroRadicado, setNumeroRadicado] = useState();
@@ -56,6 +60,9 @@ function FormularioNormal() {
 			...prevData,
 			[name]: cleanedValue,
 		}));
+		if (captcha.current.getValue()) {
+			setCaptchaCompleted(true); // Actualiza el estado cuando el ReCAPTCHA se ha completado
+		}
 	};
 	// Estado local para mostrar el modal
 	const [mostrarModal, setMostrarModal] = useState(false);
@@ -72,96 +79,101 @@ function FormularioNormal() {
 	};
 	const valoresFormulario = getValues();
 	const onSubmit = async data => {
-		console.log(data);
+		if (captcha.current.getValue()) {
+			try {
+				setIsLoading(true);
+				const tipoIdentificacion = data.tipoIdentificacion;
+				const numeroDocumento = data.documentNumber;
+				const nombre = data.nombres;
+				const primerApellido = data.apellido;
+				const segundoApellido = data.segundoApellido;
+				const direccion = data.direccion;
+				const celular = data.celular;
+				const correo = data.email;
+				const idtipoSolicitud = data.tipoSolicitud;
+				const idDependencia = parseInt(data.dependencia, 10);
+				const descripcionData = data.description;
+				const canal = parseInt(data.canal, 10);
+				const programa = data.programa;
+				const semestre = data.semestre;
+				const facultad = data.facultad;
+				const sede = data.sede;
 
-		try {
-			setIsLoading(true);
-			console.log(data);
+				if (data.tipoSolicitante === 'Docente') {
+					try {
+						const res = await registrarSolicitudNormalDocente(
+							tipoIdentificacion,
+							numeroDocumento,
+							nombre,
+							primerApellido,
+							segundoApellido,
+							direccion,
+							celular,
+							correo,
+							idtipoSolicitud,
+							idDependencia,
+							canal,
+							descripcionData,
+							facultad,
+							sede,
+						);
+						console.log(res);
+						const dataRadicado = await obtnerUltimoRadicado();
+						console.log(dataRadicado);
+						const fechaFormateada = new Date(
+							dataRadicado.fecha_hora_radicacion,
+						).toLocaleString('es-CO', { timeZone: 'America/Bogota' });
 
-			const tipoIdentificacion = data.tipoIdentificacion;
-			const numeroDocumento = data.documentNumber;
-			const nombre = data.nombres;
-			const primerApellido = data.apellido;
-			const segundoApellido = data.segundoApellido;
-			const direccion = data.direccion;
-			const celular = data.celular;
-			const correo = data.email;
-			const idtipoSolicitud = data.tipoSolicitud;
-			const idDependencia = parseInt(data.dependencia, 10);
-			const descripcionData = data.description;
-			const canal = parseInt(data.canal, 10);
-			const programa = data.programa;
-			const semestre = data.semestre;
-			const facultad = data.facultad;
-			if (data.tipoSolicitante === 'Docente') {
-				try {
-					const res = await registrarSolicitudNormalDocente(
-						tipoIdentificacion,
-						numeroDocumento,
-						nombre,
-						primerApellido,
-						segundoApellido,
-						direccion,
-						celular,
-						correo,
-						idtipoSolicitud,
-						idDependencia,
-						canal,
-						descripcionData,
-						facultad,
-					);
-					console.log(res);
-					const dataRadicado = await obtnerUltimoRadicado();
-					console.log(dataRadicado);
-					const fechaFormateada = new Date(
-						dataRadicado.fecha_hora_radicacion,
-					).toLocaleString('es-CO', { timeZone: 'America/Bogota' });
+						setNumeroRadicado(dataRadicado.id_radicado);
+						setFechaRadicado(fechaFormateada);
+					} catch (error) {
+						console.error('Error:', error);
+					}
+				} else {
+					try {
+						const res = await registrarSolicitudNormalAlumno(
+							tipoIdentificacion,
+							numeroDocumento,
+							nombre,
+							primerApellido,
+							segundoApellido,
+							direccion,
+							celular,
+							correo,
+							idtipoSolicitud,
+							idDependencia,
+							canal,
+							descripcionData,
+							programa,
+							semestre,
+							sede,
+						);
+						console.log(res);
 
-					setNumeroRadicado(dataRadicado.id_radicado);
-					setFechaRadicado(fechaFormateada);
-				} catch (error) {
-					console.error('Error:', error);
+						// Aquí puedes realizar operaciones adicionales después de registrar la solicitud normal
+						const dataRadicado = await obtnerUltimoRadicado();
+						console.log(dataRadicado);
+						const fechaFormateada = new Date(
+							dataRadicado.fecha_hora_radicacion,
+						).toLocaleString('es-CO', { timeZone: 'America/Bogota' });
+
+						setNumeroRadicado(dataRadicado.id_radicado);
+						setFechaRadicado(fechaFormateada);
+					} catch (error) {
+						console.error('Error:', error);
+						// Manejar el error adecuadamente
+					}
 				}
-			} else {
-				try {
-					const res = await registrarSolicitudNormalAlumno(
-						tipoIdentificacion,
-						numeroDocumento,
-						nombre,
-						primerApellido,
-						segundoApellido,
-						direccion,
-						celular,
-						correo,
-						idtipoSolicitud,
-						idDependencia,
-						canal,
-						descripcionData,
-						programa,
-						semestre,
-					);
-					console.log(res);
-
-					// Aquí puedes realizar operaciones adicionales después de registrar la solicitud normal
-					const dataRadicado = await obtnerUltimoRadicado();
-					console.log(dataRadicado);
-					const fechaFormateada = new Date(
-						dataRadicado.fecha_hora_radicacion,
-					).toLocaleString('es-CO', { timeZone: 'America/Bogota' });
-
-					setNumeroRadicado(dataRadicado.id_radicado);
-					setFechaRadicado(fechaFormateada);
-				} catch (error) {
-					console.error('Error:', error);
-					// Manejar el error adecuadamente
-				}
+				handleMostrarModal();
+			} catch (err) {
+				console.log(err);
+			} finally {
+				setIsLoading(false);
+				setCaptchaCompleted(false);
+				handleMostrarModal();
 			}
-			handleMostrarModal();
-		} catch (err) {
-			console.log(err);
-		} finally {
-			setIsLoading(false);
-			handleMostrarModal();
+		} else {
+			setCaptchaCompleted(false);
 		}
 	};
 
@@ -435,6 +447,27 @@ function FormularioNormal() {
 								<p className='text-red-500'>{errors.canal.message}</p>
 							)}
 						</div>
+						<div className='p-4'>
+							<div className='mb-4 mt-8 text-bas text-start'>Sede</div>
+							<select
+								className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer bg-white'
+								{...register('sede')}
+								onChange={e => {
+									console.log('Valor seleccionado:', e.target.value);
+									setValue('sede', e.target.value);
+								}}
+							>
+								{optionsSede.map((sede, index) => (
+									<option key={index} value={sede.nombre}>
+										{sede.nombre}
+									</option>
+								))}
+							</select>
+						</div>
+
+						{errors.sede && (
+							<p className='text-red-500'>{errors.sede.message}</p>
+						)}
 
 						{/* <input
                 type='file'
@@ -466,12 +499,22 @@ function FormularioNormal() {
 						)}
 					</div>
 				</section>
-				<button
-					type='submit'
-					className='mt-4 px-4 py-2 m-3 bg-blue-zodiac-900 hover:bg-blue-zodiac-950 text-white rounded-lg'
-				>
-					Enviar
-				</button>
+				<div className='flex flex-col justify-center items-center'>
+					<ReCAPTCHA
+						ref={captcha}
+						sitekey={retCaptchaUrl}
+						onChange={handleChange}
+					/>
+					{!captchaCompleted && (
+						<p className='text-red-500'>Por favor, complete el ReCAPTCHA.</p>
+					)}
+					<button
+						type='submit'
+						className='mt-4 px-4 py-2 m-3 bg-blue-zodiac-900 hover:bg-blue-zodiac-950 text-white rounded-lg'
+					>
+						Enviar
+					</button>
+				</div>
 			</form>
 			<AnimatePresence>
 				{isLoading ? (
@@ -502,6 +545,7 @@ function FormularioNormal() {
 								programa={valoresFormulario.programa}
 								numeroRadicado={numeroRadicado}
 								fechaRadicado={fechaRadicado}
+								sede={valoresFormulario.sede}
 								isLoading={isLoading}
 							>
 								<div className='flex flex-col gap-3 mb-5'>

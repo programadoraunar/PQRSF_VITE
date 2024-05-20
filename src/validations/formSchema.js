@@ -155,6 +155,16 @@ export const solicitudNormalesSchema = z.object({
 			return { message: context.defaultError };
 		},
 	}),
+	sede: z.enum(sedesNombres, {
+		errorMap: (issue, context) => {
+			if (issue.code === z.ZodIssueCode.invalid_enum_value) {
+				return {
+					message: 'El valor de sede debe ser uno de los valores permitidos.',
+				};
+			}
+			return { message: context.defaultError };
+		},
+	}),
 	canal: z.enum(canalIds, {
 		errorMap: (issue, context) => {
 			if (issue.code === z.ZodIssueCode.invalid_enum_value) {

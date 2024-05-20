@@ -15,6 +15,7 @@ export default {
 				gothicBold: ['GothicBold'],
 			},
 			colors: {
+				yellowBase: '#EDD12F',
 				blueBase: '#0B2851',
 				textBlank: '#d5f1ff',
 				textGrey: '#b4e8ff',

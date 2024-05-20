@@ -39,6 +39,7 @@ function FormularioAnonimo() {
 		description: '',
 	});
 	const captcha = useRef(null);
+	const [captchaCompleted, setCaptchaCompleted] = useState(true); // Estado para controlar si el ReCAPTCHA se ha completado
 	// Estado local para manejar el número y la fecha de radicado
 	const [numeroRadicado, setNumeroRadicado] = useState();
 	const [fechaRadicado, setFechaRadicado] = useState();
@@ -63,6 +64,10 @@ function FormularioAnonimo() {
 			...prevData,
 			[name]: cleanedValue,
 		}));
+
+		if (captcha.current.getValue()) {
+			setCaptchaCompleted(true); // Actualiza el estado cuando el ReCAPTCHA se ha completado
+		}
 	};
 	// Estado local para mostrar el modal
 	const [mostrarModal, setMostrarModal] = useState(false);
@@ -119,7 +124,7 @@ function FormularioAnonimo() {
 				handleMostrarModal();
 			}
 		} else {
-			console.log('no captcha');
+			setCaptchaCompleted(false);
 		}
 	};
 
@@ -210,7 +215,14 @@ function FormularioAnonimo() {
 					)}
 				</div>
 				<div>
-					<ReCAPTCHA ref={captcha} sitekey={retCaptchaUrl} />
+					<ReCAPTCHA
+						ref={captcha}
+						sitekey={retCaptchaUrl}
+						onChange={handleChange}
+					/>
+					{!captchaCompleted && (
+						<p className='text-red-500'>Por favor, complete el ReCAPTCHA.</p>
+					)}
 				</div>
 				<button
 					type='submit'
@@ -253,6 +265,7 @@ function FormularioAnonimo() {
 											tipoSolicitud={valores.tipoSolicitud}
 											dependencia={valores.dependencia}
 											descripcion={valores.description}
+											sede={valores.sede}
 											numeroRadicado={numeroRadicado}
 											fechaRadicado={fechaRadicado}
 										/>

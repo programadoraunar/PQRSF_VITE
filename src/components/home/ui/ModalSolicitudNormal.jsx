@@ -21,6 +21,7 @@ function ModalSolicitudNormal({
 	descripcion,
 	semestre,
 	programa,
+	sede,
 	numeroRadicado,
 	fechaRadicado,
 	isLoading,
@@ -80,6 +81,7 @@ function ModalSolicitudNormal({
 								tipoSolicitud={tipoSolicitud}
 								dependencia={dependencia}
 								descripcion={descripcion}
+								sede={sede}
 								numeroRadicado={numeroRadicado}
 								fechaRadicado={fechaRadicado}
 							/>
@@ -123,6 +125,10 @@ function ModalSolicitudNormal({
 								<span>{obtenerNombreCanal(canal)}</span>
 							</div>
 							<div>
+								<p className='font-gothicBold'>Sede:</p>
+								<span>{sede}</span>
+							</div>
+							<div>
 								<p className='font-gothicBold'>Descripción:</p>
 								<span>{descripcion}</span>
 							</div>
@@ -149,6 +155,7 @@ ModalSolicitudNormal.propTypes = {
 	dependencia: PropTypes.string.isRequired, // ID de la dependencia
 	canal: PropTypes.string.isRequired, // Canal de la solicitud
 	descripcion: PropTypes.string.isRequired, // Descripción de la solicitud
+	sede: PropTypes.string,
 	programa: PropTypes.string,
 	semestre: PropTypes.string,
 	isLoading: PropTypes.node,

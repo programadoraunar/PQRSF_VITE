@@ -56,7 +56,7 @@ function Navbar() {
 					>
 						<li className='mr-3'>
 							<Link
-								className='inline-block py-2 px-4 text-white hover:text-gray-200 no-underline'
+								className='inline-block py-2 px-4 text-white hover:text-yellowBase no-underline'
 								to='https://www.aunar.edu.co/politicas-de-proteccion-de-datos/'
 							>
 								Politica Datos Personales
@@ -64,7 +64,7 @@ function Navbar() {
 						</li>
 						<li className='mr-3'>
 							<a
-								className='inline-block text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4'
+								className='inline-block text-white no-underline hover:text-yellowBase hover:text-underline py-2 px-4'
 								href='/#queEs'
 							>
 								¿Que es PQRSF?
@@ -72,7 +72,7 @@ function Navbar() {
 						</li>
 						<li className='mr-3'>
 							<a
-								className='inline-block text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4'
+								className='inline-block text-white no-underline hover:text-yellowBase hover:text-underline py-2 px-4'
 								href='/#formularios'
 							>
 								Formulario
@@ -80,7 +80,7 @@ function Navbar() {
 						</li>
 						<li className='mr-3'>
 							<a
-								className='inline-block text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4'
+								className='inline-block text-white no-underline hover:text-yellowBase hover:text-underline py-2 px-4'
 								href='/consulta'
 							>
 								Consultar

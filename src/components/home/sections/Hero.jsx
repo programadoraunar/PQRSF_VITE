@@ -9,13 +9,13 @@ function Hero() {
 						<p className='uppercase tracking-loose w-full'>
 							Preguntas, Quejas, Reclamos, Sugerencias, Felictaciones
 						</p>
-						<h1 className='my-4 text-5xl font-bold leading-tight'>
+						<h1 className='my-4 text-5xl font-bold leading-tight text-yellowbase'>
 							Sistema PQRSF
 						</h1>
 						<p className='leading-normal text-2xl mb-8'>
 							Bienvenido al Sistema PQRSF!
 						</p>
-						<button className='mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out'>
+						<button className='mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-gothicBold hover:bg-yellowBase rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out'>
 							¿Que es PQRSF?
 						</button>
 					</div>

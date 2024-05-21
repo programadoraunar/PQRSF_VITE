@@ -6,13 +6,18 @@ import {
 } from '../../../utils/options';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { retCaptchaUrl } from '../../../reCaptcha/reCaptcha';
+import {
+	emailJsPublicKey,
+	emailJsService,
+	emailJsTemplate,
+} from '../../../emailjs/emailJs';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { solicitudAnonimaSchema } from '../../../validations/formSchema';
 // import { registrarSolicitudAnonima } from '../../supabase/actions/solicitudesFuntions';
 import { registrarSolicitudAnonima } from '../../../supabase/actions/postPqrsFuntions';
-
+import emailjs from '@emailjs/browser';
 import Modal from '../ui/Modal';
 import Loading from '../../ui/Loading';
 import { PDFDownloadLink } from '@react-pdf/renderer';
@@ -34,6 +39,7 @@ function FormularioAnonimo() {
 	} = useForm({
 		resolver: zodResolver(solicitudAnonimaSchema),
 	});
+
 	// Estado local para manejar los datos de la descripcion
 	const [formData, setFormData] = useState({
 		description: '',
@@ -76,12 +82,33 @@ function FormularioAnonimo() {
 		setMostrarModal(true);
 	};
 	// Manejador para cerrar el modal y limpiar el formulario
-	const handleCerrarModal = () => {
+	const handleCerrarModal = e => {
 		setValue('tipoSolicitud', ''); // Limpiar el valor del campo tipoSolicitud
 		setValue('dependencia', ''); // Limpiar el valor del campo dependencia
 		setValue('description', ''); // Limpiar el valor del campo description
 		setValue('sede', '');
 		setMostrarModal(false); // Ocultar el modal
+	};
+
+	const sendEmail = async () => {
+		try {
+			await emailjs.send(
+				emailJsService,
+				emailJsTemplate,
+				{},
+				{
+					publicKey: emailJsPublicKey,
+				},
+			);
+			console.log('SUCCESS!');
+		} catch (err) {
+			if (err) {
+				console.log('EMAILJS FAILED...', err);
+				return;
+			}
+
+			console.log('ERROR', err);
+		}
 	};
 
 	// Manejador de envío del formulario
@@ -117,6 +144,7 @@ function FormularioAnonimo() {
 					description: valoresFormulario.description,
 					sede: valoresFormulario.sede,
 				});
+				sendEmail();
 			} catch (err) {
 				console.error('Error durante el envío de la solicitud:', err);
 			} finally {

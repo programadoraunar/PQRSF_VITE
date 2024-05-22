@@ -28,7 +28,7 @@ const ExpandingButton = ({ buttonText, expandedContent }) => {
 					variants={fadeIn('down', 0.3)} // Usa la animación de bajada al abrir el contenido expandido
 				>
 					{' '}
-					<div className='w-full md:w-[650px]'>{expandedContent}</div>
+					<div className='w-full'>{expandedContent}</div>
 				</motion.div>
 			)}
 		</div>

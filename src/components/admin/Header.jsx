@@ -36,7 +36,7 @@ function Header() {
 								className='hover:text-blue-zodiac-100'
 								size={30}
 							/>
-							<span className='absolute -top-0.5 right-0 bg-blue-zodiac-700 py-0.5 px-[5px] box-content text-blue-zodiac-50 rounded-full text-[13px] font-bold'>
+							<span className='absolute -top-0.5 right-0 bg-yellowBase py-0.5 px-[5px] box-content text-blue-zodiac-950 rounded-full text-[13px] font-bold'>
 								2
 							</span>
 						</MenuButton>

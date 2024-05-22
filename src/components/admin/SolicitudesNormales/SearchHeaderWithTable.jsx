@@ -182,7 +182,7 @@ function SearchHeaderWithTable({ setDatosSolicitudes, setIsLoading }) {
 					</label>
 					<select
 						{...register('numberOfRecords')}
-						className='select select-info w-full bg-white text-black'
+						className='select select-info w-full bg-white text-black rounded-none'
 					>
 						<option value='' disabled selected>
 							Seleccione el N° de registros
@@ -212,7 +212,7 @@ function SearchHeaderWithTable({ setDatosSolicitudes, setIsLoading }) {
 						<button
 							type='button'
 							onClick={handleSubmit(onSubmitFilterDateRange)}
-							className='btn px-1 py-0 text-xs flex items-center space-x-1'
+							className='btn px-2 text-xs flex items-center space-x-1 rounded-none'
 						>
 							<RiSearch2Line className='h-4 w-4 text-blue-zodiac-950' />
 						</button>
@@ -228,7 +228,7 @@ function SearchHeaderWithTable({ setDatosSolicitudes, setIsLoading }) {
 					<div className='flex'>
 						<select
 							{...register('tipoSolicitud')}
-							className='select select-info w-full bg-white text-black'
+							className='select select-info w-full bg-white text-black rounded-none'
 						>
 							<option value='' disabled selected>
 								Seleccione el tipo de solicitud
@@ -242,7 +242,7 @@ function SearchHeaderWithTable({ setDatosSolicitudes, setIsLoading }) {
 						<button
 							type='button'
 							onClick={handleSubmit(onSubmitFilterDateAndType)}
-							className='btn px-2 py-0 text-xs'
+							className='btn px-2 py-0 text-xs rounded-none'
 						>
 							<RiSearch2Line className='h-4 w-4 text-blue-zodiac-950' />
 						</button>
@@ -260,7 +260,7 @@ function SearchHeaderWithTable({ setDatosSolicitudes, setIsLoading }) {
 						</label>
 						<div className='flex'>
 							<select
-								className='select select-info w-full bg-white text-black'
+								className='select select-info w-full bg-white text-black rounded-none'
 								{...register('estado')}
 							>
 								<option value='' disabled selected>
@@ -272,7 +272,7 @@ function SearchHeaderWithTable({ setDatosSolicitudes, setIsLoading }) {
 							</select>
 							<button
 								type='button'
-								className='btn px-2 py-0 text-xs'
+								className='btn px-2 py-0 text-xs rounded-none'
 								onClick={handleSubmit(onSubmitFilterDateTypeAndState)}
 							>
 								<RiSearch2Line className='h-4 w-4 text-blue-zodiac-950' />

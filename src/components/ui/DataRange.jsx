@@ -8,7 +8,7 @@ function DataRange({ value, onChange }) {
 		<div className='w-full flex flex-col justify-center items-center mb-3'>
 			<div>
 				<DateRangePicker
-					className='text-black bg-white h-11'
+					className='text-black bg-white h-12'
 					onChange={onChange}
 					value={value}
 				/>

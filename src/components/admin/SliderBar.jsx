@@ -31,7 +31,7 @@ function SliderBar() {
 								to='/AdminProfile'
 								className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-blue-zodiac-950 transition-colors lg:text-xl'
 							>
-								<RiHome2Line className='text-blue-zodiac-400' /> Inicio
+								<RiHome2Line className='text-yellowBase' /> Inicio
 							</Link>
 						</li>
 						<li>
@@ -39,7 +39,7 @@ function SliderBar() {
 								to='/AdminProfile/SolicitudesAnonimas'
 								className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-blue-zodiac-950 transition-colors lg:text-xl'
 							>
-								<RiQuestionMark className='text-blue-zodiac-400' /> Solicitudes
+								<RiQuestionMark className='text-yellowBase' /> Solicitudes
 								Anonimas
 							</Link>
 						</li>
@@ -48,7 +48,7 @@ function SliderBar() {
 								to='/AdminProfile/SolicitudesNormales'
 								className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-blue-zodiac-950 transition-colors lg:text-xl'
 							>
-								<RiQuestionAnswerFill className='text-blue-zodiac-400' />
+								<RiQuestionAnswerFill className='text-yellowBase' />
 								Solicitudes Normales
 							</Link>
 						</li>
@@ -59,14 +59,13 @@ function SliderBar() {
 						to='/'
 						className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-blue-950 transition-colors lg:text-xl'
 					>
-						<RiLogoutCircleLine className='text-blue-zodiac-400' /> Cerrar
-						sesión
+						<RiLogoutCircleLine className='text-yellowBase' /> Cerrar sesión
 					</Link>
 				</nav>
 			</div>
 			<button
 				onClick={() => setShowMenu(!showMenu)}
-				className='xl:hidden fixed bottom-4 right-4 bg-blue-zodiac-700 text-blue-zodiac-50 p-3 rounded-full z-50'
+				className='xl:hidden fixed bottom-4 right-4 bg-yellowBase text-blue-zodiac-950 p-3 rounded-full z-50'
 			>
 				{showMenu ? <RiCloseLine /> : <RiMenu3Line />}
 			</button>

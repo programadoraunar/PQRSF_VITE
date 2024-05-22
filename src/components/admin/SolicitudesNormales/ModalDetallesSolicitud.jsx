@@ -2,12 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { RiCloseCircleLine } from '@remixicon/react';
 import useObtenerNombre from '../../../utils/useObtenerNombre';
+import ExpandingButton from '../../home/ui/ExpandingButton';
+import DetallesUsuario from './ModalInfo/DetallesUsuario';
+import DetallesSolicitud from './ModalInfo/DetallesSolicitud';
 
 function ModalDetallesSolicitud({ solicitud, onClose }) {
 	const { obtenerNombreEstado } = useObtenerNombre();
 	return (
 		<div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
-			<div className='bg-white p-6 rounded-lg max-w-xl md:max-w-4xl w-full'>
+			<div className='bg-white p-6 rounded-lg max-w-xl md:max-w-5xl w-full'>
 				<div className='flex justify-between items-center pb-5'>
 					<h2 className='text-xl font-bold'>Detalles de la Solicitud</h2>
 					<button onClick={onClose}>
@@ -15,19 +18,17 @@ function ModalDetallesSolicitud({ solicitud, onClose }) {
 					</button>
 				</div>
 
-				<p>
-					<strong>ID Usuario:</strong> {solicitud.ret_id_usuario}
-				</p>
-				<p>
-					<strong>Estado:</strong>{' '}
-					{obtenerNombreEstado(solicitud.ret_id_estado)}
-				</p>
-				<p>
-					<strong>Canal:</strong> {solicitud.ret_id_canal}
-				</p>
-				<p>
-					<strong>Es Anónima:</strong> {solicitud.ret_es_anonima ? 'Sí' : 'No'}
-				</p>
+				<ExpandingButton
+					buttonText='Detalles de Usuario'
+					expandedContent={<DetallesUsuario />}
+				/>
+
+				<div className='flex flex-col justify-center'>
+					<ExpandingButton
+						buttonText='Detalles de Usuario'
+						expandedContent={<DetallesSolicitud />}
+					/>
+				</div>
 			</div>
 		</div>
 	);

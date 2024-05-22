@@ -20,6 +20,12 @@ import ModalSolicitudNormal from '../ui/ModalSolicitudNormal';
 import TipoSolicitanteSelector from './normal/TipoSolicitanteSelector';
 import { obtnerUltimoRadicado } from '../../../supabase/actions/pqrsfFunctions';
 import ReCAPTCHA from 'react-google-recaptcha';
+import emailjs from '@emailjs/browser';
+import {
+	emailJsPublicKey,
+	emailJsService,
+	emailJsTemplate,
+} from '../../../emailjs/emailJs';
 /**
  * @component FormularioNormal
  * @description Componente que representa un formulario para enviar solicitudes normales.
@@ -41,8 +47,9 @@ function FormularioNormal() {
 		description: '',
 		/* adjunto: null, */
 	});
+	// captcha
 	const captcha = useRef(null);
-	const [captchaCompleted, setCaptchaCompleted] = useState(true); // Estado para controlar si el ReCAPTCHA se ha completado
+	const [captchaCompleted, setCaptchaCompleted] = useState(true);
 
 	// Estado local para manejar el número y la fecha de radicado
 	const [numeroRadicado, setNumeroRadicado] = useState();
@@ -77,6 +84,27 @@ function FormularioNormal() {
 		setValue('description', ''); // Limpiar el valor del campo description
 		setMostrarModal(false); // Ocultar el modal
 	};
+	const sendEmail = async () => {
+		try {
+			await emailjs.send(
+				emailJsService,
+				emailJsTemplate,
+				{},
+				{
+					publicKey: emailJsPublicKey,
+				},
+			);
+			console.log('SUCCESS!');
+		} catch (err) {
+			if (err) {
+				console.log('EMAILJS FAILED...', err);
+				return;
+			}
+
+			console.log('ERROR', err);
+		}
+	};
+
 	const valoresFormulario = getValues();
 	const onSubmit = async data => {
 		if (captcha.current.getValue()) {
@@ -164,7 +192,7 @@ function FormularioNormal() {
 						// Manejar el error adecuadamente
 					}
 				}
-				handleMostrarModal();
+				sendEmail();
 			} catch (err) {
 				console.log(err);
 			} finally {

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import ModalDetallesSolicitud from './ModalDetallesSolicitud';
 import Loading from '../../ui/Loading';
-import { motion } from 'framer-motion';
 import { Toaster, toast } from 'sonner';
 import { RiCheckDoubleFill } from '@remixicon/react';
 import { actualizarEstadoSolicitud } from '../../../supabase/actions/postPqrsFuntions';
 import useObtenerNombre from '../../../utils/useObtenerNombre';
+import { useNavigate } from 'react-router-dom';
+
 /**
  * Componente de tabla para mostrar solicitudes.
  * @param {Object[]} datosSolicitudes - Array de objetos que contiene los datos de las solicitudes.
@@ -14,8 +14,8 @@ import useObtenerNombre from '../../../utils/useObtenerNombre';
  * @returns {JSX.Element} Componente de tabla de solicitudes.
  */
 function Tabla({ datosSolicitudes, isLoading }) {
-	const [selectedSolicitud, setSelectedSolicitud] = useState(null);
 	const [solicitudes, setSolicitudes] = useState(datosSolicitudes);
+	const navigate = useNavigate();
 	useEffect(() => {
 		setSolicitudes(datosSolicitudes);
 	}, [datosSolicitudes]);
@@ -25,14 +25,6 @@ function Tabla({ datosSolicitudes, isLoading }) {
 	const tieneFechaRespuesta = solicitudes.some(
 		solicitud => solicitud.ret_fecha_respuesta,
 	);
-
-	const openModal = solicitud => {
-		setSelectedSolicitud(solicitud);
-	};
-
-	const closeModal = () => {
-		setSelectedSolicitud(null);
-	};
 
 	const asignar = async (idPqrsf, estado) => {
 		console.log(idPqrsf);
@@ -148,8 +140,12 @@ function Tabla({ datosSolicitudes, isLoading }) {
 									</td>
 									<td className='text-sm'>
 										<button
-											onClick={() => openModal(solicitud)}
 											className='btn'
+											onClick={() =>
+												navigate(
+													`/AdminProfile/solicitudDetails/${solicitud.ret_id_radicado}`,
+												)
+											}
 										>
 											Detalles
 										</button>
@@ -178,19 +174,6 @@ function Tabla({ datosSolicitudes, isLoading }) {
 					</tr>
 				</tfoot>
 			</table>
-			{selectedSolicitud && (
-				<motion.div
-					initial={{ opacity: 0, scale: 0.75 }}
-					animate={{ opacity: 1, scale: 1 }}
-					exit={{ opacity: 0, scale: 0 }}
-					className='w-full   h-full fixed top-0 left-0 bg-slate-500 bg-opacity-50 flex justify-center items-center z-50'
-				>
-					<ModalDetallesSolicitud
-						solicitud={selectedSolicitud}
-						onClose={closeModal}
-					/>
-				</motion.div>
-			)}
 			<Toaster
 				icons={{
 					success: <RiCheckDoubleFill />,

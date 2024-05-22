@@ -16,8 +16,7 @@ function CardInfo(props) {
 			title = 'Solicitudes En Estado Registradas';
 			icon = <RiProgress1Line className='w-20 h-16' />;
 			status = 'bg-blue-zodiac-500/10 text-blue-zodiac-800';
-			description =
-				'Slicitudes Que Actualmete se encuentran en estado de registro';
+			description = 'Estado Actual';
 			textColor = 'text-blue-zodiac-800';
 			break;
 		case 'inProcess':
@@ -40,7 +39,7 @@ function CardInfo(props) {
 			borderColor = 'border-t-4 border-red-500';
 			title = 'Total de Solicitudes';
 			icon = <RiListView className='w-20 h-16' />;
-			description = 'Total de solicitudes registradas en el sistema';
+			description = 'Total de solicitudes registradas';
 			status = 'bg-pink-500/10 text-pink-500';
 			textColor = 'text-blue-zodiac-950';
 			break;

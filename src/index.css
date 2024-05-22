@@ -21,7 +21,7 @@
 .slider-bar-container::-webkit-scrollbar {
 	display: none; /* Oculta la barra de desplazamiento */
   }
-  
+
 .custom-select {
 	width: 300px !important; /* Ancho deseado para el componente Select */
 }

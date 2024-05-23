@@ -203,3 +203,41 @@ export async function obtenerPqrsfPorFechasYTipoYEstado(
 		throw new Error('Error al llamar a la función RPC.');
 	}
 }
+
+/**
+ * Fetches PQRSF details based on the given ID_Radicado.
+ *
+ * @param {string} idRadicado - The UUID of the ID_Radicado to fetch details for.
+ * @returns {Promise<{data: any, error: any}>} - A promise that resolves with the fetched data or an error.
+ */
+export const getPqrsfDetails = async idRadicado => {
+	try {
+		const { data, error } = await supabase.rpc('get_pqrsf_details', {
+			p_id_radicado: idRadicado,
+		});
+
+		if (error) {
+			console.error('Error fetching PQRSF details:', error.message);
+			return { data: null, error };
+		}
+		return { data, error: null };
+	} catch (err) {
+		console.error('Unexpected error:', err.message);
+		return { data: null, error: err };
+	}
+};
+
+export const countPqrsfByStatus = async () => {
+	try {
+		const { data, error } = await supabase.rpc('count_pqrsf_by_status');
+
+		if (error) {
+			console.error('Error fetching PQRSF counts:', error.message);
+			return { data: null, error };
+		}
+		return { data, error: null };
+	} catch (err) {
+		console.error('Unexpected error:', err.message);
+		return { data: null, error: err };
+	}
+};

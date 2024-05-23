@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import CardInfo from '../../components/admin/CardInfo';
 import Tabla from '../../components/admin/Profile/Tabla';
-import { obtenerNumeroRegistros } from '../../supabase/actions/pqrsfFunctions';
+import {
+	countPqrsfByStatus,
+	obtenerNumeroRegistros,
+} from '../../supabase/actions/pqrsfFunctions';
 function HomeAdmin() {
 	const [dataConsulta, setDataConsulta] = useState();
+	const [pqrsfCounts, setPqrsfCounts] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
-	console.log(dataConsulta);
 	useEffect(() => {
 		async function fetchData() {
 			try {
@@ -13,6 +16,13 @@ function HomeAdmin() {
 				const datos = await obtenerNumeroRegistros();
 				console.log('Datos de los últimos 7 registros:', datos);
 				setDataConsulta(datos);
+				// Obtener los conteos de PQRSF por estado
+				const { data: counts, error } = await countPqrsfByStatus();
+				if (error) {
+					console.error('Error fetching PQRSF counts:', error.message);
+				} else {
+					setPqrsfCounts(counts[0]);
+				}
 			} catch (error) {
 				console.error(
 					'Error al obtener los últimos 7 registros:',
@@ -24,7 +34,7 @@ function HomeAdmin() {
 		}
 		fetchData();
 	}, []);
-
+	console.log(pqrsfCounts);
 	return (
 		<div>
 			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8'>
@@ -33,9 +43,22 @@ function HomeAdmin() {
 				) : (
 					<>
 						<CardInfo solicitud={'total'} totalSolicitudes={dataConsulta} />
-						<CardInfo solicitud={'register'} totalSolicitudes={dataConsulta} />
-						<CardInfo solicitud={'close'} totalSolicitudes={dataConsulta} />
-						<CardInfo solicitud={'inProcess'} totalSolicitudes={dataConsulta} />
+						{pqrsfCounts && (
+							<>
+								<CardInfo
+									solicitud={'register'}
+									totalSolicitudes={pqrsfCounts.total_registrado}
+								/>
+								<CardInfo
+									solicitud={'close'}
+									totalSolicitudes={pqrsfCounts.total_cerrado}
+								/>
+								<CardInfo
+									solicitud={'inProcess'}
+									totalSolicitudes={pqrsfCounts.total_en_proceso}
+								/>
+							</>
+						)}
 					</>
 				)}
 			</div>

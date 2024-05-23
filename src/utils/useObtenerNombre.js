@@ -3,7 +3,7 @@
  * a identificadores de dependencias y estados de solicitudes.
  * @module useObtenerNombre
  */
-import { optionsDependencias, optionsEstados } from './options';
+import { optionsDependencias, optionsEstados, optionscanal } from './options';
 /**
  * Hook personalizado que proporciona funciones para obtener nombres y colores
  * asociados a identificadores de dependencias y estados de solicitudes.
@@ -37,6 +37,9 @@ const useObtenerNombre = () => {
 	const obtenerNombreEstado = id => {
 		return obtenerNombre(optionsEstados, id);
 	};
+	const obtenerNombreCanal = id => {
+		return obtenerNombre(optionscanal, id);
+	};
 	/**
 	 * Función para obtener el color asociado a un ID de estado.
 	 * @param {number} id - ID del estado.
@@ -56,6 +59,7 @@ const useObtenerNombre = () => {
 		obtenerNombreDependencia,
 		obtenerNombreEstado,
 		obtenerColorEstado,
+		obtenerNombreCanal,
 	};
 };
 

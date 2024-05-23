@@ -3,13 +3,13 @@ import home1 from '../../../assets/img/home1.svg';
 function Hero() {
 	return (
 		<section>
-			<div className='pt-20 bg-blue-zodiac-950'>
+			<div className='pt-32 bg-blue-zodiac-950'>
 				<div className='container px-3 mx-auto flex flex-wrap flex-col md:flex-row items-center'>
 					<div className='flex flex-col w-full md:w-2/5 justify-center items-start text-center md:text-left'>
 						<p className='uppercase tracking-loose w-full'>
 							Preguntas, Quejas, Reclamos, Sugerencias, Felictaciones
 						</p>
-						<h1 className='my-4 text-5xl font-bold leading-tight text-yellowbase'>
+						<h1 className='my-4 text-5xl font-bold leading-tight text-yellowBase'>
 							Sistema PQRSF
 						</h1>
 						<p className='leading-normal text-2xl mb-8'>

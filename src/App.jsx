@@ -11,7 +11,7 @@ import SolicitudesAnonimas from './pages/admin/SolicitudesAnonimas';
 import SolicitudesNormales from './pages/admin/SolicitudesNormales';
 import Consulta from './pages/Consulta';
 import Test from './pages/Test';
-import { ProductDetails } from './pages/admin/ProductDetails';
+import SolicitudDetails from './pages/admin/SolicitudDetails';
 
 function App() {
 	return (
@@ -35,7 +35,7 @@ function App() {
 							></Route>
 							<Route
 								path='solicitudDetails/:id'
-								element={<ProductDetails />}
+								element={<SolicitudDetails />}
 							></Route>
 						</Route>
 					</Route>

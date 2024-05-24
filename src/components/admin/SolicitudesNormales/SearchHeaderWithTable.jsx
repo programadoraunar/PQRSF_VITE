@@ -105,6 +105,7 @@ function SearchHeaderWithTable({ setDatosSolicitudes, setIsLoading }) {
 				tipoSolicitud,
 			);
 			setDatosSolicitudes(data);
+			console.log('estas aqui');
 			setMostrarSelectState(true);
 		} catch (error) {
 			console.log(error);
@@ -169,6 +170,7 @@ function SearchHeaderWithTable({ setDatosSolicitudes, setIsLoading }) {
 			setIsLoading(false);
 		}
 	};
+	console.log(mostrarSelectState);
 
 	return (
 		<div className='bg-blue-zodiac-950 text-white'>
@@ -176,7 +178,7 @@ function SearchHeaderWithTable({ setDatosSolicitudes, setIsLoading }) {
 				onSubmit={handleSubmit(onSubmit)}
 				className='grid grid-cols-1 lg:grid-cols-3 gap-4 py-4 justify-items-center'
 			>
-				<div className='flex flex-col items-center w-full max-w-xs'>
+				<div className='flex flex-col items-center w-[95%] md:w-full max-w-xs'>
 					<label htmlFor='numberOfRecords' className='my-2'>
 						N° Registros
 					</label>

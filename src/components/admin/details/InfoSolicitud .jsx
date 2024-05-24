@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 
 const InfoSolicitud = ({ data }) => {
 	const { obtenerNombreEstado } = useObtenerNombre();
-
 	return (
 		<section id='infoSolicitud' className='w-full'>
 			<h2 className='text-black text-2xl py-5 lg:p-0 lg:pb-5 font-gothicBold '>
@@ -62,7 +61,7 @@ const InfoSolicitud = ({ data }) => {
 InfoSolicitud.propTypes = {
 	data: PropTypes.shape({
 		tipo_solicitud_pqrs: PropTypes.string.isRequired,
-		id_estado: PropTypes.string.isRequired,
+		id_estado: PropTypes.number.isRequired,
 		fecha_asignacion: PropTypes.string,
 	}).isRequired,
 };

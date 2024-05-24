@@ -177,7 +177,7 @@ function SearchHeaderWithTable({ setDatosSolicitudes, setIsLoading }) {
 				onSubmit={handleSubmit(onSubmit)}
 				className='grid grid-cols-1 lg:grid-cols-3 gap-4 py-4 justify-items-center'
 			>
-				<div className='flex flex-col items-center w-full max-w-xs'>
+				<div className='flex flex-col items-center w-[95%] md:w-full max-w-xs'>
 					<label htmlFor='numberOfRecords' className='my-2'>
 						N° Registros
 					</label>

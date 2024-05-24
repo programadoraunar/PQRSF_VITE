@@ -16,7 +16,6 @@ function ProtectedRoutes() {
 	const location = useLocation();
 
 	useEffect(() => {
-		console.log('admin');
 		// Verificar si el usuario está autenticado y si hay un token almacenado en localStorage
 		if (user && localStorage.getItem('sb-ktzxsuqofbirdhuuwigj-auth-token')) {
 			const token = JSON.parse(

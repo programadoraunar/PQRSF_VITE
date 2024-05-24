@@ -15,9 +15,12 @@ function Hero() {
 						<p className='leading-normal text-2xl mb-8'>
 							Bienvenido al Sistema PQRSF!
 						</p>
-						<button className='mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-gothicBold hover:bg-yellowBase rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out'>
+						<a
+							href='/#queEs'
+							className='mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-gothicBold hover:bg-yellowBase rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out'
+						>
 							¿Que es PQRSF?
-						</button>
+						</a>
 					</div>
 					<div className='w-full md:w-3/5 py-6 text-center'>
 						<img className='w-full md:w-3/4 z-50' src={home1} />

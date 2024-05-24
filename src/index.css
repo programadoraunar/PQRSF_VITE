@@ -14,7 +14,12 @@
 	transform: translateY(-100%);
 	transition: transform 1s ease;
   }
-  
+.react-datetime-picker__calendar--open,
+.react-datetime-picker__calendar--closed,
+.react-datetime-picker__clock--open,
+.react-datetime-picker__clock--closed {
+	  position: absolute;
+}
 
 /* Estilos para ocultar las barras de desplazamiento en toda la aplicación, excepto en .tableMov */
 /* SliderBar.css */

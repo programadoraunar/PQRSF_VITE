@@ -226,7 +226,11 @@ export const getPqrsfDetails = async idRadicado => {
 		return { data: null, error: err };
 	}
 };
-
+/**
+ * Counts the number of PQRSF records grouped by their status.
+ * @async
+ * @returns {Promise<{ data: object, error: string }>} An object containing the counts data and any potential error message.
+ */
 export const countPqrsfByStatus = async () => {
 	try {
 		const { data, error } = await supabase.rpc('count_pqrsf_by_status');

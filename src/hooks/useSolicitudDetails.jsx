@@ -8,6 +8,7 @@ const useSolicitudDetails = id => {
 	useEffect(() => {
 		const fetchData = async () => {
 			const { data, error } = await getPqrsfDetails(id);
+			console.log(data);
 			if (data) {
 				setData(data[0]);
 			} else {

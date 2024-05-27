@@ -5,10 +5,12 @@ import {
 	countPqrsfByStatus,
 	obtenerNumeroRegistros,
 } from '../../supabase/actions/pqrsfFunctions';
+import { supabase } from '../../supabase/client';
 function HomeAdmin() {
 	const [dataConsulta, setDataConsulta] = useState();
 	const [pqrsfCounts, setPqrsfCounts] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
+
 	useEffect(() => {
 		async function fetchData() {
 			try {

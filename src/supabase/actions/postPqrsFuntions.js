@@ -275,6 +275,7 @@ export async function registrarSolicitudAnonima(
 	idDependencia,
 	descripcionText,
 	sedeText,
+	urlAdjuntoText,
 ) {
 	try {
 		// Llama a la función RPC 'insertar_pqrsf_anonima' en la base de datos
@@ -283,6 +284,7 @@ export async function registrarSolicitudAnonima(
 			id_dependencia: idDependencia,
 			sede: sedeText,
 			tipo_solicitud_pqrs: tipoSolicitud,
+			url_adjunto: urlAdjuntoText,
 		});
 
 		if (error) {
@@ -299,4 +301,23 @@ export async function registrarSolicitudAnonima(
 		console.error('Error al llamar a la función RPC:', err);
 		return { error: err.message };
 	}
+}
+
+export async function subirArchivo(archivo, nombrePersonalizado) {
+	if (!archivo) {
+		throw new Error('No se ha proporcionado ningún archivo.');
+	}
+
+	const nombreArchivo = nombrePersonalizado || archivo.name;
+	const { data, error } = await supabase.storage
+		.from('archivos')
+		.upload(`public/${nombreArchivo}`, archivo);
+
+	if (error) {
+		console.error('Error al subir el archivo:', error);
+		throw error; // Propaga el error para manejarlo en la llamada de esta función
+	}
+
+	console.log('Archivo subido con éxito:', data);
+	return data; // Devuelve los datos de la subida para su uso posterior
 }

@@ -37,6 +37,8 @@ const sedesNombres = optionsSede.map(option => option.nombre);
  * @constant {z.ZodObject<any>} solicitudAnonimaSchema
  * @description Esquema de validación para el formulario de solicitud anónima utilizando la librería Zod.
  */
+const allowedExtensions = ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png', 'gif'];
+const maxSizeInBytes = 5 * 1024 * 1024; // 5MB
 export const solicitudAnonimaSchema = z.object({
 	tipoSolicitud: z.enum(tipoSolicitudNombres, {
 		errorMap: (issue, context) => {
@@ -77,20 +79,26 @@ export const solicitudAnonimaSchema = z.object({
 		.refine(val => val.trim().length > 0, {
 			message: 'La descripción no puede contener solo espacios en blanco.',
 		}),
-	/* adjunto: z
-        .instanceof(FileList)
-        .refine(file => file?.length === 1, 'Debe adjuntarse un archivo.')
-        .refine(
-            file => {
-                const selectedFile = file[0];
-                if (!selectedFile) return false;
-                const fileNameParts = selectedFile.name.split('.');
-                const fileExtension =
-                    fileNameParts[fileNameParts.length - 1].toLowerCase();
-                return allowedExtensions.includes(fileExtension);
-            },
-            `Extensión de archivo no permitida. Las extensiones permitidas son: ${allowedExtensions.join(', ')}`,
-        ), */
+	archivo: z
+		.instanceof(FileList)
+		.refine(fileList => fileList.length === 1, 'Debe adjuntarse un archivo.')
+		.refine(
+			fileList => {
+				const file = fileList[0];
+				const fileNameParts = file.name.split('.');
+				const fileExtension =
+					fileNameParts[fileNameParts.length - 1].toLowerCase();
+				return allowedExtensions.includes(fileExtension);
+			},
+			`Extensión de archivo no permitida. Las extensiones permitidas son: ${allowedExtensions.join(', ')}`,
+		)
+		.refine(
+			fileList => {
+				const file = fileList[0];
+				return file.size <= maxSizeInBytes;
+			},
+			`El tamaño del archivo no debe exceder los ${maxSizeInBytes / (1024 * 1024)} MB.`,
+		),
 });
 const tiposIdentificacionNombres = optionsIdentificacion.map(
 	option => option.nombre,

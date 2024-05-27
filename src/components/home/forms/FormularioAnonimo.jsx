@@ -16,13 +16,17 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { solicitudAnonimaSchema } from '../../../validations/formSchema';
 // import { registrarSolicitudAnonima } from '../../supabase/actions/solicitudesFuntions';
-import { registrarSolicitudAnonima } from '../../../supabase/actions/postPqrsFuntions';
+import {
+	registrarSolicitudAnonima,
+	subirArchivo,
+} from '../../../supabase/actions/postPqrsFuntions';
 import emailjs from '@emailjs/browser';
 import Modal from '../ui/Modal';
 import Loading from '../../ui/Loading';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import Pdf from '../../pdf/Pdf';
 import { obtnerUltimoRadicado } from '../../../supabase/actions/pqrsfFunctions';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * @component FormularioAnonimo
@@ -51,6 +55,7 @@ function FormularioAnonimo() {
 	const [fechaRadicado, setFechaRadicado] = useState();
 	// Estado local para manejar el estado de carga
 	const [isLoading, setIsLoading] = useState(false);
+	const [file, setFile] = useState(null);
 	// Estado local para manejar los valores del formulario
 	const [valores, setValores] = useState({
 		tipoSolicitud: '', // Estado para el tipo de solicitud
@@ -77,6 +82,9 @@ function FormularioAnonimo() {
 	};
 	// Estado local para mostrar el modal
 	const [mostrarModal, setMostrarModal] = useState(false);
+	const handleFileChange = e => {
+		setFile(e.target.files[0]);
+	};
 	// Manejador para mostrar el modal
 	const handleMostrarModal = () => {
 		setMostrarModal(true);
@@ -121,12 +129,29 @@ function FormularioAnonimo() {
 				const idDependencia = parseInt(dato.dependencia, 10);
 				const descripcionData = dato.description;
 				const sedeText = dato.sede;
+				let urlArchivo = null;
+
+				if (file) {
+					const archivoUuid = uuidv4();
+					const nombreArchivoUnico = `${archivoUuid}_${file.name}`;
+
+					const { data: archivoData, error: archivoError } = await subirArchivo(
+						file,
+						nombreArchivoUnico,
+					);
+					if (archivoError) {
+						throw new Error('Error al subir el archivo:', archivoError);
+					}
+					urlArchivo = `public/${nombreArchivoUnico}`;
+					console.log(urlArchivo);
+				}
 
 				const resultado = await registrarSolicitudAnonima(
 					idtipoSolicitud,
 					idDependencia,
 					descripcionData,
 					sedeText,
+					urlArchivo,
 				);
 				console.log(resultado);
 				const dataRadicado = await obtnerUltimoRadicado();
@@ -144,7 +169,8 @@ function FormularioAnonimo() {
 					description: valoresFormulario.description,
 					sede: valoresFormulario.sede,
 				});
-				sendEmail();
+				console.log(file);
+				// sendEmail();
 			} catch (err) {
 				console.error('Error durante el envío de la solicitud:', err);
 			} finally {
@@ -240,6 +266,17 @@ function FormularioAnonimo() {
 					/>
 					{errors.description && (
 						<p className='text-red-500'>{errors.description.message}</p>
+					)}
+				</div>
+				<div className='flex flex-col'>
+					<input
+						type='file'
+						className='file-input w-full max-w-xs'
+						{...register('archivo')}
+						onChange={handleFileChange}
+					/>
+					{errors.archivo && (
+						<p className='text-red-500'>{errors.archivo.message}</p>
 					)}
 				</div>
 				<div>

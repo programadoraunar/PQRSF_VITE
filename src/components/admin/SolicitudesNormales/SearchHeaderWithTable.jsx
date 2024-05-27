@@ -170,7 +170,6 @@ function SearchHeaderWithTable({ setDatosSolicitudes, setIsLoading }) {
 			setIsLoading(false);
 		}
 	};
-	console.log(mostrarSelectState);
 
 	return (
 		<div className='bg-blue-zodiac-950 text-white'>

@@ -24,7 +24,7 @@ import emailjs from '@emailjs/browser';
 import Modal from '../ui/Modal';
 import Loading from '../../ui/Loading';
 import { PDFDownloadLink } from '@react-pdf/renderer';
-import Pdf from '@/components/pdf/Pdf';
+import PDF from '../../pdf/Pdf';
 import { obtnerUltimoRadicado } from '../../../supabase/actions/pqrsfFunctions';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -326,7 +326,7 @@ function FormularioAnonimo() {
 								<PDFDownloadLink
 									className='bg-blue-zodiac-900 text-white p-2 border rounded-lg hover:bg-blue-zodiac-950 cursor-pointer'
 									document={
-										<Pdf
+										<PDF
 											tipoSolicitud={valores.tipoSolicitud}
 											dependencia={valores.dependencia}
 											descripcion={valores.description}

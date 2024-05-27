@@ -22,7 +22,7 @@ import { optionsDependencias } from '../../utils/options';
  * @param {string} props.fechaRadicado - Fecha de radicado de la solicitud.
  * @returns {React.Element} Elemento de React que representa el PDF generado.
  */
-function Pdf({
+function PDF({
 	tipoIdentificacion,
 	documentNumber,
 	nombres,
@@ -200,7 +200,7 @@ function Pdf({
 }
 
 // Definir PropTypes para las propiedades del componente
-Pdf.propTypes = {
+PDF.propTypes = {
 	tipoSolicitud: PropTypes.string.isRequired,
 	dependencia: PropTypes.string.isRequired,
 	descripcion: PropTypes.string.isRequired,
@@ -217,4 +217,4 @@ Pdf.propTypes = {
 	sede: PropTypes.string, // Correo electrónico
 };
 
-export default Pdf;
+export default PDF;

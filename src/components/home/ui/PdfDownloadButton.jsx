@@ -1,5 +1,5 @@
 import React from 'react';
-import Pdf from '@/components/pdf/Pdf';
+import PDF from '../../pdf/Pdf';
 
 import { usePDF } from '@react-pdf/renderer';
 import PropTypes from 'prop-types';
@@ -23,7 +23,7 @@ function PdfDownloadButton({
 	const [instance, updateInstance] = usePDF({});
 	const handleGeneratePdf = () => {
 		updateInstance(
-			<Pdf
+			<PDF
 				tipoIdentificacion={tipoIdentificacion}
 				documentNumber={documentNumber}
 				nombres={nombres}

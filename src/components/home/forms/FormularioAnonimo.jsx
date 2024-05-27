@@ -24,7 +24,7 @@ import emailjs from '@emailjs/browser';
 import Modal from '../ui/Modal';
 import Loading from '../../ui/Loading';
 import { PDFDownloadLink } from '@react-pdf/renderer';
-import PDF from '../../pdf/Pdf';
+import PDF from '../../pdf/PDF';
 import { obtnerUltimoRadicado } from '../../../supabase/actions/pqrsfFunctions';
 import { v4 as uuidv4 } from 'uuid';
 

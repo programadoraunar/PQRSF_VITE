@@ -1,5 +1,5 @@
 import React from 'react';
-import PDF from '../../pdf/Pdf';
+import PDF from '../../pdf/PDF';
 
 import { usePDF } from '@react-pdf/renderer';
 import PropTypes from 'prop-types';

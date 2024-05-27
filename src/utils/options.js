@@ -92,4 +92,11 @@ export const optionsSolicitud = [
 	{ id: '5', nombre: 'Felicitacion' },
 ];
 
-export const optionsSede = [{ id: '1', nombre: 'Pasto' }];
+export const optionsSede = [
+	{ id: '1', nombre: 'Pasto' },
+	{ id: '2', nombre: 'Ipiales' },
+	{ id: '3', nombre: 'Putumayo' },
+	{ id: '4', nombre: 'Cali' },
+	{ id: '5', nombre: 'Villavicencio' },
+	{ id: '5', nombre: 'Cartagena' },
+];

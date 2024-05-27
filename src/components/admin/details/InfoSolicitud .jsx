@@ -22,7 +22,7 @@ const InfoSolicitud = ({ data }) => {
 						<p className='text-3xl font-gothicBold'>
 							{data.tipo_solicitud_pqrs}
 						</p>
-						<p className='text-blue-500'>Cosa</p>
+						<p className='text-blue-500'>¿Que tipo es?</p>
 					</div>
 				</div>
 				<div className='card card-side bg-white shadow-xl text-black'>
@@ -51,7 +51,7 @@ const InfoSolicitud = ({ data }) => {
 							{data.fecha_asignacion || 'Pendiente'}
 						</p>
 
-						<p className='text-blue-500'>Más detalles sobre la solicitud</p>
+						<p className='text-blue-500'>Fecha cuando se asigno</p>
 					</div>
 				</div>
 			</div>

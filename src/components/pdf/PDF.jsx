@@ -134,10 +134,6 @@ function Pdf({
 							)}
 						</View>
 						<View style={styles.column}>
-							<View style={styles.infoContainer}>
-								<Text style={styles.subtitle}>Sede:</Text>
-								<Text style={styles.infoItem}>{sede}</Text>
-							</View>
 							{direccion && (
 								<View style={styles.infoContainer}>
 									<Text style={styles.subtitle}>Direccion:</Text>
@@ -172,6 +168,10 @@ function Pdf({
 					<View style={styles.infoContainer}>
 						<Text style={styles.subtitle}>Descripción:</Text>
 						<Text style={styles.infoItem}>{descripcion}</Text>
+					</View>
+					<View style={styles.infoContainer}>
+						<Text style={styles.subtitle}>Sede:</Text>
+						<Text style={styles.infoItem}>{sede}</Text>
 					</View>
 					<View style={styles.infoContainer}>
 						<Text style={styles.subtitle}>Número de Radicado:</Text>

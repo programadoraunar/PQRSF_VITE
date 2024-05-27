@@ -222,19 +222,24 @@ export const solicitudNormalesSchema = z.object({
 	email: z.string().email({
 		message: 'Por favor ingrese un correo válido',
 	}),
-	/* adjunto: z
+	archivo: z
 		.instanceof(FileList)
-		.refine(file => file?.length === 1, 'File is required.')
+		.refine(fileList => fileList.length === 1, 'Debe adjuntarse un archivo.')
 		.refine(
-			file => {
-				const selectedFile = file[0];
-				if (!selectedFile) return false;
-				const fileNameParts = selectedFile.name.split('.');
+			fileList => {
+				const file = fileList[0];
+				const fileNameParts = file.name.split('.');
 				const fileExtension =
 					fileNameParts[fileNameParts.length - 1].toLowerCase();
 				return allowedExtensions.includes(fileExtension);
 			},
-			'Archivo no válido. Las extensiones permitidas son: ' +
-				allowedExtensions.join(', '),
-		), */
+			`Extensión de archivo no permitida. Las extensiones permitidas son: ${allowedExtensions.join(', ')}`,
+		)
+		.refine(
+			fileList => {
+				const file = fileList[0];
+				return file.size <= maxSizeInBytes;
+			},
+			`El tamaño del archivo no debe exceder los ${maxSizeInBytes / (1024 * 1024)} MB.`,
+		),
 });

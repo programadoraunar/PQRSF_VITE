@@ -170,7 +170,7 @@ function FormularioAnonimo() {
 					sede: valoresFormulario.sede,
 				});
 				console.log(file);
-				// sendEmail();
+				sendEmail();
 			} catch (err) {
 				console.error('Error durante el envío de la solicitud:', err);
 			} finally {
@@ -268,10 +268,10 @@ function FormularioAnonimo() {
 						<p className='text-red-500'>{errors.description.message}</p>
 					)}
 				</div>
-				<div className='flex flex-col'>
+				<div className='flex flex-col py-4'>
 					<input
 						type='file'
-						className='file-input w-full max-w-xs'
+						className='file-input file-input-bordered file-input-sm w-full max-w-xs'
 						{...register('archivo')}
 						onChange={handleFileChange}
 					/>

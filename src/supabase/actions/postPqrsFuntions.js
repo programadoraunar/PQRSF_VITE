@@ -76,6 +76,7 @@ export async function registrarSolicitudNormalAlumno(
 	programaText,
 	semestreText,
 	sedeText,
+	urlAdjuntoText,
 ) {
 	try {
 		// Llamar a la función RPC 'registrar_pqrsf_normal_alumno' en la base de datos
@@ -97,6 +98,7 @@ export async function registrarSolicitudNormalAlumno(
 				programa: programaText,
 				semestre: semestreText,
 				sede: sedeText,
+				url_adjunto: urlAdjuntoText,
 			},
 		);
 
@@ -147,6 +149,7 @@ export async function registrarSolicitudNormalDocente(
 	descripcionText,
 	facultadText,
 	sedeText,
+	urlAdjuntoText,
 ) {
 	try {
 		// Llamar a la función RPC 'registrar_pqrsf_normal_docente' en la base de datos
@@ -167,6 +170,7 @@ export async function registrarSolicitudNormalDocente(
 				descripcion: descripcionText,
 				facultad: facultadText,
 				sede: sedeText,
+				url_adjunto: urlAdjuntoText,
 			},
 		);
 

@@ -13,6 +13,7 @@ import {
 import {
 	registrarSolicitudNormalAlumno,
 	registrarSolicitudNormalDocente,
+	subirArchivo,
 } from '../../../supabase/actions/postPqrsFuntions';
 import { motion, AnimatePresence } from 'framer-motion';
 import Loading from '../../ui/Loading';
@@ -26,6 +27,8 @@ import {
 	emailJsService,
 	emailJsTemplate,
 } from '../../../emailjs/emailJs';
+import { v4 as uuidv4 } from 'uuid';
+
 /**
  * @component FormularioNormal
  * @description Componente que representa un formulario para enviar solicitudes normales.
@@ -50,7 +53,7 @@ function FormularioNormal() {
 	// captcha
 	const captcha = useRef(null);
 	const [captchaCompleted, setCaptchaCompleted] = useState(true);
-
+	const [file, setFile] = useState(null);
 	// Estado local para manejar el número y la fecha de radicado
 	const [numeroRadicado, setNumeroRadicado] = useState();
 	const [fechaRadicado, setFechaRadicado] = useState();
@@ -70,6 +73,9 @@ function FormularioNormal() {
 		if (captcha.current.getValue()) {
 			setCaptchaCompleted(true); // Actualiza el estado cuando el ReCAPTCHA se ha completado
 		}
+	};
+	const handleFileChange = e => {
+		setFile(e.target.files[0]);
 	};
 	// Estado local para mostrar el modal
 	const [mostrarModal, setMostrarModal] = useState(false);
@@ -126,6 +132,22 @@ function FormularioNormal() {
 				const semestre = data.semestre;
 				const facultad = data.facultad;
 				const sede = data.sede;
+				let urlArchivo = null;
+
+				if (file) {
+					const archivoUuid = uuidv4();
+					const nombreArchivoUnico = `${archivoUuid}_${file.name}`;
+
+					const { data: archivoData, error: archivoError } = await subirArchivo(
+						file,
+						nombreArchivoUnico,
+					);
+					if (archivoError) {
+						throw new Error('Error al subir el archivo:', archivoError);
+					}
+					urlArchivo = `public/${nombreArchivoUnico}`;
+					console.log(urlArchivo);
+				}
 
 				if (data.tipoSolicitante === 'Docente') {
 					try {
@@ -144,6 +166,7 @@ function FormularioNormal() {
 							descripcionData,
 							facultad,
 							sede,
+							urlArchivo,
 						);
 						console.log(res);
 						const dataRadicado = await obtnerUltimoRadicado();
@@ -175,6 +198,7 @@ function FormularioNormal() {
 							programa,
 							semestre,
 							sede,
+							urlArchivo,
 						);
 						console.log(res);
 
@@ -492,19 +516,21 @@ function FormularioNormal() {
 								))}
 							</select>
 						</div>
+						<div className='flex flex-col py-4'>
+							<input
+								type='file'
+								className='file-input file-input-bordered file-input-sm w-full max-w-xs'
+								{...register('archivo')}
+								onChange={handleFileChange}
+							/>
+							{errors.archivo && (
+								<p className='text-red-500'>{errors.archivo.message}</p>
+							)}
+						</div>
 
-						{errors.sede && (
-							<p className='text-red-500'>{errors.sede.message}</p>
+						{errors.archivo && (
+							<p className='text-red-500'>{errors.archivo.message}</p>
 						)}
-
-						{/* <input
-                type='file'
-                className='border text-black border-gray-300 p-2 rounded-md text-sm lg:text-xl'
-                {...register('adjunto')}
-            />
-            {errors.adjunto && (
-                <p className='text-red-500'>{errors.adjunto.message}</p>
-            )} */}
 					</div>
 					<div className='flex flex-col px-6'>
 						<label

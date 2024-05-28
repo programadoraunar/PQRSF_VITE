@@ -20,7 +20,7 @@ function Login() {
 
 	const onSubmit = async () => {
 		const result = await signIn(email, password);
-		console.log(result.error);
+		console.log(result);
 		if (result.error) {
 			// Manejar el error
 			setError(result.error);
@@ -42,11 +42,16 @@ function Login() {
 				});
 			}
 		} else {
-			// Manejar el inicio de sesión exitoso
-			navigate('/AdminProfile');
+			if (result.user.role === 'administrador') {
+				navigate('/AdminProfile');
+			}
+			if (result.user.role === 'dependencia') {
+				navigate('/AdminDependencia');
+			} else {
+				navigate('/');
+			}
 		}
 	};
-
 	return (
 		<div className='bg-blue-zodiac-950'>
 			<div className='font-sans text-#333'>

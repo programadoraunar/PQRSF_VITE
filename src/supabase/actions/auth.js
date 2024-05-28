@@ -48,22 +48,40 @@ export const signIn = async (email, password) => {
  */
 export const getUserProfile = async () => {
 	try {
-		const user = await supabase.auth.getUser();
-		const id = user.data.user.id;
-		if (user) {
-			const { data, error, status } = await supabase
-				.from('usuario')
-				.select('*')
-				.eq('id_usuario', id)
-				.single();
-			if (error && status === 406) {
-				return { error: 'Error al obtener el perfil de usuario.' };
-			}
-			return { username: data.nombres, email: data.correo_electronico };
-		} else {
+		const { data: userData, error: userError } = await supabase.auth.getUser();
+
+		if (userError) {
+			console.error(
+				'Error al obtener el usuario autenticado:',
+				userError.message,
+			);
+			return { error: 'Error al obtener el usuario autenticado.' };
+		}
+
+		const id = userData?.user?.id;
+
+		if (!id) {
+			console.error('El usuario no ha iniciado sesión o el ID es inválido.');
 			return { error: 'El usuario no ha iniciado sesión.' };
 		}
+
+		const { data, error, status } = await supabase
+			.from('usuario')
+			.select('*')
+			.eq('id_usuario', id)
+			.single();
+
+		if (error) {
+			console.error('Error al obtener el perfil de usuario:', error.message);
+			if (status === 406) {
+				return { error: 'No se encontró el perfil de usuario.' };
+			}
+			return { error: 'Error al obtener el perfil de usuario.' };
+		}
+
+		return { username: data.nombres, email: data.correo_electronico };
 	} catch (error) {
+		console.error('Excepción al obtener el perfil de usuario:', error.message);
 		return { error: 'Error al obtener el perfil de usuario.' };
 	}
 };

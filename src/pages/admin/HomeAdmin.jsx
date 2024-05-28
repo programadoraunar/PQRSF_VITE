@@ -5,7 +5,6 @@ import {
 	countPqrsfByStatus,
 	obtenerNumeroRegistros,
 } from '../../supabase/actions/pqrsfFunctions';
-import { supabase } from '../../supabase/client';
 function HomeAdmin() {
 	const [dataConsulta, setDataConsulta] = useState();
 	const [pqrsfCounts, setPqrsfCounts] = useState(null);
@@ -16,7 +15,6 @@ function HomeAdmin() {
 			try {
 				setIsLoading(true);
 				const datos = await obtenerNumeroRegistros();
-				console.log('Datos de los últimos 7 registros:', datos);
 				setDataConsulta(datos);
 				// Obtener los conteos de PQRSF por estado
 				const { data: counts, error } = await countPqrsfByStatus();
@@ -36,7 +34,6 @@ function HomeAdmin() {
 		}
 		fetchData();
 	}, []);
-	console.log(pqrsfCounts);
 	return (
 		<div>
 			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8'>

@@ -27,7 +27,6 @@ function Tabla({ datosSolicitudes, isLoading }) {
 	);
 
 	const asignar = async (idPqrsf, estado) => {
-		console.log(idPqrsf);
 		try {
 			const result = await actualizarEstadoSolicitud(idPqrsf, estado);
 

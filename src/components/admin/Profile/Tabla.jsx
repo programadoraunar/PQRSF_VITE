@@ -10,8 +10,8 @@ import { optionsDependencias, optionsEstados } from '../../../utils/options';
  * @returns {JSX.Element} Elemento de tabla de React.
  */
 function Tabla() {
-	const [datos, setDatos] = useState();
 	const [isLoading, setIsLoading] = useState(false);
+	const [datos, setDatos] = useState([]);
 
 	useEffect(() => {
 		/**
@@ -22,9 +22,8 @@ function Tabla() {
 		async function fetchData() {
 			setIsLoading(true);
 			try {
-				const datos = await obtenerUltimos7Registros();
-				console.log('Datos de los últimos 7 registros:', datos);
-				setDatos(datos);
+				const nuevosDatos = await obtenerUltimos7Registros();
+				setDatos(nuevosDatos);
 			} catch (error) {
 				console.error(
 					'Error al obtener los últimos 7 registros:',

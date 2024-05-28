@@ -65,7 +65,6 @@ export async function obtenerNumeroRegistros() {
 	try {
 		// Llamar a la función RPC 'obtener_ultimo_radicado' en la base de datos
 		const { data, error } = await supabase.rpc('obtenernumeroregistros');
-		console.log(data);
 		if (error) {
 			// Manejar error si ocurre durante la llamada a la función RPC
 			console.error('Error al obtener el total de solicitudes:', error);

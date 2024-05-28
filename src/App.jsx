@@ -6,12 +6,14 @@ import NotFount from './pages/NotFount';
 import { AuthProvider } from './context/AuthContext';
 import LayoutAdmin from './layouts/LayoutAdmin';
 import HomeAdmin from './pages/admin/HomeAdmin';
-import ProtectedRoutes from './ProtectedRoutes';
+import ProtectedRoutes from './components/auth/ProtectedRoutes';
 import SolicitudesAnonimas from './pages/admin/SolicitudesAnonimas';
 import SolicitudesNormales from './pages/admin/SolicitudesNormales';
 import Consulta from './pages/Consulta';
 import Test from './pages/Test';
 import SolicitudDetails from './pages/admin/SolicitudDetails';
+import LayoutDependencia from './layouts/LayoutDependencia';
+import HomeAdminDependencia from './pages/dependencias/HomeAdminDependencia';
 
 function App() {
 	return (
@@ -38,6 +40,10 @@ function App() {
 								element={<SolicitudDetails />}
 							></Route>
 						</Route>
+					</Route>
+
+					<Route path='/AdminDependencia/' element={<LayoutDependencia />}>
+						<Route index element={<HomeAdminDependencia />}></Route>
 					</Route>
 
 					<Route path='*' element={<NotFount />}></Route>

@@ -3,9 +3,9 @@ import home1 from '../../../assets/img/home1.svg';
 function Hero() {
 	return (
 		<section>
-			<div className='pt-32 bg-blue-zodiac-950'>
+			<div className='pt-32 md:pt-10 bg-blue-zodiac-950'>
 				<div className='container px-3 mx-auto flex flex-wrap flex-col md:flex-row items-center'>
-					<div className='flex flex-col w-full md:w-2/5 justify-center items-start text-center md:text-left'>
+					<div className='flex flex-col w-full md:py-24 md:w-2/5 justify-center items-start text-center md:text-left'>
 						<p className='uppercase tracking-loose w-full'>
 							Preguntas, Quejas, Reclamos, Sugerencias, Felictaciones
 						</p>
@@ -27,7 +27,7 @@ function Hero() {
 					</div>
 				</div>
 			</div>
-			<div className='relative  -mt-24 lg:-mt-44 2xl:-mt-56'>
+			<div className='relative -mt-28 lg:-mt-44 2xl:-mt-56'>
 				<svg
 					viewBox='0 0 1428 174'
 					version='1.1'

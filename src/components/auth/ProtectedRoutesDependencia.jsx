@@ -2,11 +2,8 @@ import React, { useEffect } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 function ProtectedRoutesDependencia() {
-	const { user } = useAuth();
-	const role = user.user.role;
-	console.log(role);
+	const { user, role } = useAuth();
 	const location = useLocation();
-
 	const tokenString = localStorage.getItem(
 		'sb-ktzxsuqofbirdhuuwigj-auth-token',
 	);

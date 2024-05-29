@@ -14,6 +14,7 @@ import Test from './pages/Test';
 import SolicitudDetails from './pages/admin/SolicitudDetails';
 import LayoutDependencia from './layouts/LayoutDependencia';
 import HomeAdminDependencia from './pages/dependencias/HomeAdminDependencia';
+import ProtectedRoutesDependencia from './components/auth/ProtectedRoutesDependencia';
 
 function App() {
 	return (
@@ -41,9 +42,10 @@ function App() {
 							></Route>
 						</Route>
 					</Route>
-
-					<Route path='/AdminDependencia/' element={<LayoutDependencia />}>
-						<Route index element={<HomeAdminDependencia />}></Route>
+					<Route element={<ProtectedRoutesDependencia />}>
+						<Route path='/AdminDependencia/' element={<LayoutDependencia />}>
+							<Route index element={<HomeAdminDependencia />}></Route>
+						</Route>
 					</Route>
 
 					<Route path='*' element={<NotFount />}></Route>

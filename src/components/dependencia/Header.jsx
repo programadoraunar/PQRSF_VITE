@@ -11,7 +11,6 @@ import {
 } from '@remixicon/react';
 function Header() {
 	const userProfile = UseProfile();
-	console.log(userProfile);
 	const navigate = useNavigate();
 	const handleLogout = async () => {
 		try {

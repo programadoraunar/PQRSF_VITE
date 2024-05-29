@@ -14,6 +14,7 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
 	// Define estados para el usuario, estado de autenticación y errores.
 	const [user, setUser] = useState();
+	const [role, setRole] = useState();
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [loading, setLoading] = useState(true); // Nuevo estado para controlar la carga
 
@@ -21,11 +22,13 @@ export const AuthProvider = ({ children }) => {
 		const fetchUser = async () => {
 			try {
 				const { data, error } = await supabase.auth.getSession();
+
 				if (error) {
 					throw error;
 				}
 				if (data) {
 					setUser(data.session);
+					setRole(data.session.user.role);
 				}
 			} catch (error) {
 				// console.error('Error fetching user session:', error.message);
@@ -57,7 +60,7 @@ export const AuthProvider = ({ children }) => {
 		return <div>Cargando...</div>;
 	}
 	return (
-		<AuthContext.Provider value={{ user, isAuthenticated }}>
+		<AuthContext.Provider value={{ user, isAuthenticated, role }}>
 			{children}
 		</AuthContext.Provider>
 	);

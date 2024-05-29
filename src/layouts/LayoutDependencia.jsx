@@ -1,5 +1,5 @@
 import React from 'react';
-import SliderBar from '../components/admin/SliderBar';
+import SliderBar from '../components/shared/SliderBar';
 import Header from '../components/dependencia/Header';
 import { Outlet } from 'react-router-dom';
 

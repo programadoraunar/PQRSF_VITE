@@ -43,11 +43,13 @@ function Login() {
 			}
 		} else {
 			if (result.user.role === 'administrador') {
-				navigate('/AdminProfile');
-			}
-			if (result.user.role === 'dependencia') {
-				navigate('/AdminDependencia');
+				console.log('eres administrador');
+				navigate('/AdminProfile', { replace: true });
+			} else if (result.user.role === 'dependencia') {
+				console.log('eres dependencia');
+				navigate('/AdminDependencia', { replace: true });
 			} else {
+				console.log('nada');
 				navigate('/');
 			}
 		}

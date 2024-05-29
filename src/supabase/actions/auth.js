@@ -79,7 +79,11 @@ export const getUserProfile = async () => {
 			return { error: 'Error al obtener el perfil de usuario.' };
 		}
 
-		return { username: data.nombres, email: data.correo_electronico };
+		return {
+			username: data.nombres,
+			email: data.correo_electronico,
+			role: data.id_rol,
+		};
 	} catch (error) {
 		console.error('Excepción al obtener el perfil de usuario:', error.message);
 		return { error: 'Error al obtener el perfil de usuario.' };

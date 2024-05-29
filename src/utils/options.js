@@ -100,3 +100,8 @@ export const optionsSede = [
 	{ id: '5', nombre: 'Villavicencio' },
 	{ id: '5', nombre: 'Cartagena' },
 ];
+
+export const optionsRole = [
+	{ id: '1', nombre: 'Administrador' },
+	{ id: '2', nombre: 'Depenedencia' },
+];

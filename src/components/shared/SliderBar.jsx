@@ -49,7 +49,7 @@ function SliderBar() {
 		<ul>
 			<li>
 				<Link
-					to='/DependenciaProfile'
+					to='/AdminDependencia'
 					className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-blue-zodiac-950 transition-colors lg:text-xl'
 				>
 					<RiHome2Line className='text-yellowBase' /> Inicio

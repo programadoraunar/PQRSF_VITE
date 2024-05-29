@@ -9,9 +9,11 @@ import {
 	RiNotification3Line,
 	RiSettings3Line,
 } from '@remixicon/react';
+import useObtenerNombre from '../../utils/useObtenerNombre';
 function Header() {
 	const userProfile = UseProfile();
 	const navigate = useNavigate();
+	const { obtenerNombreDependencia } = useObtenerNombre();
 	const handleLogout = async () => {
 		try {
 			await signOut(); // Llama a la función para cerrar sesión
@@ -83,7 +85,11 @@ function Header() {
 								src='https://img.freepik.com/foto-gratis/feliz-optimista-guapo-gerente-ventas-latina-apuntando-lado-mirando-camara_1262-12679.jpg'
 								className='w-7 h-7 object-cover rounded-full'
 							/>
-							<span className='text-md lg:text-xl'>Dependencia</span>
+							<span className='text-md lg:text-xl'>
+								{userProfile
+									? obtenerNombreDependencia(userProfile.idDependencia)
+									: 'Sin Datos'}
+							</span>
 							<RiArrowDownSLine />
 						</MenuButton>
 					}

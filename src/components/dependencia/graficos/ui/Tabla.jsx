@@ -21,7 +21,7 @@ function Tabla({ idDependencia }) {
 	}, []);
 
 	return (
-		<div className='overflow-x-auto text-black my-10'>
+		<div className='overflow-x-auto '>
 			<table className='table'>
 				{/* Cabecera */}
 				<thead>

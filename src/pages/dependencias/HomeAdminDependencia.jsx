@@ -14,7 +14,10 @@ function HomeAdminDependencia() {
 						<CardInfo solicitud={'total'} totalSolicitudes={15} />
 						<CardInfo solicitud={'Cerradas'} totalSolicitudes={0} />
 					</div>
-					<div>
+					<div className='text-black my-10'>
+						<h2 className='text-center text-3xl my-3 font-gothicBold'>
+							Solicitudes Por Responder
+						</h2>
 						<Tabla idDependencia={userProfile.idDependencia} />
 					</div>
 					<div className='flex justify-around'>

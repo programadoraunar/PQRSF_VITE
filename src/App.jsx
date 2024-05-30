@@ -15,7 +15,8 @@ import SolicitudDetails from './pages/admin/SolicitudDetails';
 import LayoutDependencia from './layouts/LayoutDependencia';
 import HomeAdminDependencia from './pages/dependencias/HomeAdminDependencia';
 import ProtectedRoutesDependencia from './components/auth/ProtectedRoutesDependencia';
-
+import SolicitudesAnonimasDependencia from './pages/dependencias/SolicitudesAnonimasDependencia';
+import SolicitudDetailsDependencia from './pages/dependencias/SolicitudDetailsDependencia';
 function App() {
 	return (
 		<div className='App'>
@@ -45,6 +46,14 @@ function App() {
 					<Route element={<ProtectedRoutesDependencia />}>
 						<Route path='/AdminDependencia/' element={<LayoutDependencia />}>
 							<Route index element={<HomeAdminDependencia />}></Route>
+							<Route
+								path='SolicitudesAnonimasDependencia'
+								element={<SolicitudesAnonimasDependencia />}
+							></Route>
+							<Route
+								path='solicitudDetailsDependencia/:id'
+								element={<SolicitudDetailsDependencia />}
+							></Route>
 						</Route>
 					</Route>
 

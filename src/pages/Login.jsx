@@ -17,6 +17,15 @@ function Login() {
 	} = useForm({
 		resolver: zodResolver(userSchema),
 	});
+	const handleSuccessfulLogin = (role, navigate) => {
+		if (role === 'administrador') {
+			navigate('/AdminProfile', { replace: true });
+		} else if (role === 'dependencia') {
+			window.location.replace('/AdminDependencia');
+		} else {
+			navigate('/');
+		}
+	};
 
 	const onSubmit = async () => {
 		const result = await signIn(email, password);
@@ -42,16 +51,7 @@ function Login() {
 				});
 			}
 		} else {
-			if (result.user.role === 'administrador') {
-				console.log('eres administrador');
-				navigate('/AdminProfile', { replace: true });
-			} else if (result.user.role === 'dependencia') {
-				console.log('eres dependencia');
-				navigate('/AdminDependencia', { replace: true });
-			} else {
-				console.log('nada');
-				navigate('/');
-			}
+			handleSuccessfulLogin(result.user.role, navigate);
 		}
 	};
 	return (

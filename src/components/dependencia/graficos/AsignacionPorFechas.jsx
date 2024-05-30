@@ -5,12 +5,12 @@ import Chart from 'chart.js/auto';
 import Loading from '../../ui/Loading';
 function AsignacionPorFechas() {
 	const userProfile = UseProfile();
-	const chartRef = useRef(null); // Referencia al gráfico
-	const [loading, setLoading] = useState(); // Estado de carga
+	const chartRef = useRef(null);
+	const [loading, setLoading] = useState(false);
+	const [chartData, setChartData] = useState(null);
 
 	useEffect(() => {
 		if (userProfile && userProfile.idDependencia) {
-			// Realizar la petición con userProfile.idDependencia
 			const fetchData = async () => {
 				setLoading(true);
 				try {
@@ -18,24 +18,27 @@ function AsignacionPorFechas() {
 						userProfile.idDependencia,
 					);
 					console.log(response.data);
+					setChartData(response.data);
 					setLoading(false);
-					// Llamar a la función para generar el gráfico
-					generarGrafico(response.data);
 				} catch (err) {
 					console.error('Error fetching dependencia data:', err);
+					setLoading(false);
 				}
 			};
-
 			fetchData();
 		}
 	}, [userProfile]);
 
-	// Función para generar el gráfico
+	useEffect(() => {
+		if (chartData) {
+			generarGrafico(chartData);
+		}
+	}, [chartData]);
+
 	const generarGrafico = data => {
 		const fechas = data.map(item => item.fecha_asignacion);
 		const cantidades = data.map(item => item.numero_pqrsf_asignadas);
 
-		// Destruir el gráfico anterior si existe
 		if (chartRef.current !== null) {
 			chartRef.current.destroy();
 		}
@@ -69,11 +72,12 @@ function AsignacionPorFechas() {
 	};
 
 	if (!userProfile || loading) {
-		return <Loading />; // Mostrar algo mientras se carga el perfil del usuario
+		return <Loading />;
 	}
 
 	return (
-		<div className='bg-white w-[500px]'>
+		<div className='bg-white my-8'>
+			<span className='text-black'>Pqrsf Que te Asignaron Segun su Fecha</span>
 			<canvas id='myChart' width='400' height='400'></canvas>
 		</div>
 	);

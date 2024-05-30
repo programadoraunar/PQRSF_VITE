@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { obtenerUltimos7Registros } from '../../../supabase/actions/pqrsfFunctions';
 import Loading from '../../ui/Loading';
-import { optionsDependencias, optionsEstados } from '../../../utils/options';
+import useObtenerNombre from '../../../utils/useObtenerNombre';
 
 /**
  * Componente de tabla que muestra los últimos registros.
@@ -23,6 +23,7 @@ function Tabla() {
 			setIsLoading(true);
 			try {
 				const nuevosDatos = await obtenerUltimos7Registros();
+				console.log(nuevosDatos);
 				setDatos(nuevosDatos);
 			} catch (error) {
 				console.error(
@@ -36,31 +37,8 @@ function Tabla() {
 		fetchData();
 	}, []);
 
-	/**
-	 * Función para obtener el nombre de la dependencia basado en su ID.
-	 * @param {string} idDependencia - ID de la dependencia.
-	 * @returns {string} Nombre de la dependencia.
-	 */
-	const obtenerNombreDependencia = idDependencia => {
-		const dependenciaEncontrada = optionsDependencias.find(
-			dep => dep.id === idDependencia.toString(),
-		);
-		return dependenciaEncontrada
-			? dependenciaEncontrada.nombre
-			: 'Dependencia Desconocida';
-	};
-
-	/**
-	 * Función para obtener el nombre del estado basado en su ID.
-	 * @param {string} idEstado - ID del estado.
-	 * @returns {string} Nombre del estado.
-	 */
-	const obtenerNombreEstados = idEstado => {
-		const estadoEncontrado = optionsEstados.find(
-			est => est.id === idEstado.toString(),
-		);
-		return estadoEncontrado ? estadoEncontrado.nombre : 'Estado Desconocida';
-	};
+	const { obtenerNombreDependencia, obtenerNombreEstado, obtenerColorEstado } =
+		useObtenerNombre();
 
 	return (
 		<div>
@@ -72,6 +50,7 @@ function Tabla() {
 							<th>Dependencia</th>
 							<th>Fecha De Envio</th>
 							<th>Estado</th>
+							<th>Anónima</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -81,7 +60,13 @@ function Tabla() {
 									<th>{index + 1}</th>
 									<td>{obtenerNombreDependencia(dato.id_dependencia)}</td>
 									<td>{dato.fecha_envio}</td>
-									<td>{obtenerNombreEstados(dato.id_estado)}</td>
+									<td
+										className={`${obtenerColorEstado(dato.id_estado)} text-sm`}
+									>
+										{obtenerNombreEstado(dato.id_estado)}
+									</td>
+									<td>{dato.esanonima ? 'Anónima' : 'Normal'}</td>{' '}
+									{/* Muestra 'Anónima' si es true, 'Normal' si es false */}
 								</tr>
 							))
 						) : (

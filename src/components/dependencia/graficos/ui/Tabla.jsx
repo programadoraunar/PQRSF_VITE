@@ -39,7 +39,7 @@ function Tabla({ idDependencia }) {
 					{datos.map((item, index) => (
 						<tr
 							key={index}
-							className='hover:border hover:border-blue-zodiac-950 hover'
+							className=' hover:bg-blue-zodiac-100'
 						>
 							<td>{item.id_radicado}</td>
 							<td>{item.tipo_solicitud_pqrs}</td>

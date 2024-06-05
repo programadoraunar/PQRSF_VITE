@@ -7,7 +7,7 @@ function InfoSolicitud({ data }) {
 	const { obtenerNombreEstado } = useObtenerNombre();
 	return (
 		<section id='infoSolicitud' className='w-full'>
-			<h2 className='text-black text-2xl py-5 lg:p-0 lg:pb-5 font-gothicBold '>
+			<h2 className='text-black xl:text-xl 2xl:text-2xl py-5 lg:p-0 lg:pb-5 font-gothicBold '>
 				Detalles de la Solicitud
 			</h2>
 			<div className='grid grid-cols-1 gap-5 lg:grid-cols-3'>
@@ -19,7 +19,7 @@ function InfoSolicitud({ data }) {
 						<div className='flex items-center justify-between mb-4'>
 							<h3 className='text-lg'>Tipo de Solicitud</h3>
 						</div>
-						<p className='text-3xl font-gothicBold'>
+						<p className='xl:text-xl 2xl:text-2xl font-gothicBold'>
 							{data.tipo_solicitud_pqrs}
 						</p>
 						<p className='text-blue-500'>¿Que tipo es?</p>
@@ -33,7 +33,7 @@ function InfoSolicitud({ data }) {
 						<div className='flex items-center justify-between mb-4'>
 							<h3 className='text-lg'>Estado de la Solicitud</h3>
 						</div>
-						<p className='text-3xl font-gothicBold'>
+						<p className='xl:text-xl 2xl:text-2xl font-gothicBold'>
 							{obtenerNombreEstado(data.id_estado)}
 						</p>
 						<p className='text-blue-500'>Estado Actual de la Solicitud</p>
@@ -47,7 +47,7 @@ function InfoSolicitud({ data }) {
 						<div className='flex items-center justify-between mb-4'>
 							<h3 className='text-lg'>Fecha De Asignacion</h3>
 						</div>
-						<p className='text-3xl font-gothicBold'>
+						<p className='xl:text-xl 2xl:text-2xl font-gothicBold'>
 							{data.fecha_asignacion || 'Pendiente'}
 						</p>
 

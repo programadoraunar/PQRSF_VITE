@@ -9,7 +9,7 @@ function HomeAdminDependencia() {
 		<>
 			{userProfile && userProfile.idDependencia && (
 				<>
-					<div className='text-black grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8'>
+					<div className='text-black grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
 						<CardInfo solicitud={'Asignadas'} totalSolicitudes={15} />
 						<CardInfo solicitud={'total'} totalSolicitudes={15} />
 						<CardInfo solicitud={'Cerradas'} totalSolicitudes={0} />

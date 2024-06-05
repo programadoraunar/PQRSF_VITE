@@ -11,10 +11,10 @@ function InfoSolicitante({ data }) {
 			<div className='card bg-white text-black shadow-lg lg:h-full '>
 				<div className='card-body flex flex-col justify-center items-center'>
 					<RiUserSearchFill className='w-48 h-48 object-cover rounded-full text-blue-zodiac-950' />
-					<h2 className='card-title font-gothicBold'>
+					<h2 className='card-title font-gothicBold xl:text-lg 2xl:text-xl'>
 						{`${data.nombres} ${data.primer_apellido} ${data.segundo_apellido}`}
 					</h2>
-					<div className='card-body '>
+					<div className='card-body p-1'>
 						<p>Detalles sobre el solicitante y sus datos relevantes.</p>
 						<span className='font-gothicBold'>Tipo de Documento</span>
 						<p>{data.tipo_documento}</p>

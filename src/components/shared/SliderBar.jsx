@@ -21,7 +21,7 @@ function SliderBar() {
 			<li>
 				<Link
 					to='/AdminProfile'
-					className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-blue-zodiac-950 transition-colors lg:text-xl'
+					className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-blue-zodiac-950 transition-colors lg:text-sm xl:text-lg'
 				>
 					<RiHome2Line className='text-yellowBase' /> Inicio
 				</Link>
@@ -29,7 +29,7 @@ function SliderBar() {
 			<li>
 				<Link
 					to='/AdminProfile/SolicitudesAnonimas'
-					className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-blue-zodiac-950 transition-colors lg:text-xl'
+					className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-blue-zodiac-950 transition-colors lg:text-sm xl:text-lg'
 				>
 					<RiQuestionMark className='text-yellowBase' /> Solicitudes Anonimas
 				</Link>
@@ -37,7 +37,7 @@ function SliderBar() {
 			<li>
 				<Link
 					to='/AdminProfile/SolicitudesNormales'
-					className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-blue-zodiac-950 transition-colors lg:text-xl'
+					className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-blue-zodiac-950 transition-colors lg:text-sm xl:text-lg'
 				>
 					<RiQuestionAnswerFill className='text-yellowBase' /> Solicitudes
 					Normales
@@ -50,7 +50,7 @@ function SliderBar() {
 			<li>
 				<Link
 					to='/AdminDependencia'
-					className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-blue-zodiac-950 transition-colors lg:text-xl'
+					className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-blue-zodiac-950 transition-colors lg:text-sm xl:text-lg'
 				>
 					<RiHome2Line className='text-yellowBase' /> Inicio
 				</Link>
@@ -58,7 +58,7 @@ function SliderBar() {
 			<li>
 				<Link
 					to='/AdminDependencia/SolicitudesAnonimasDependencia'
-					className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-blue-zodiac-950 transition-colors lg:text-xl'
+					className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-blue-zodiac-950 transition-colors lg:text-sm xl:text-lg'
 				>
 					<RiQuestionMark className='text-yellowBase' /> Solicitudes Anonimas
 				</Link>
@@ -66,7 +66,7 @@ function SliderBar() {
 			<li>
 				<Link
 					to='/AdminProfile/SolicitudesNormales'
-					className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-blue-zodiac-950 transition-colors lg:text-xl'
+					className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-blue-zodiac-950 transition-colors lg:text-sm xl:text-lg'
 				>
 					<RiQuestionAnswerFill className='text-yellowBase' /> Solicitudes
 					Normales
@@ -91,10 +91,10 @@ function SliderBar() {
 						/>
 					</div>
 					<div className='flex justify-center'>
-						<span className='text-base gap-4 py-2 px-4 lg:text-base text-blue-zodiac-50'>
-							{' —— '}
+						<span className='text-base gap-4 py-2 px-4 lg:text-sm text-blue-zodiac-50'>
+							{' — '}
 							{userProfile ? obtenerNombreRole(userProfile.role) : 'Sin Datos'}
-							{' —— '}
+							{' — '}
 						</span>
 					</div>
 
@@ -106,7 +106,7 @@ function SliderBar() {
 				<nav>
 					<Link
 						to='/'
-						className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-blue-950 transition-colors lg:text-xl'
+						className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-blue-950 transition-colors lg:text-sm xl:text-lg'
 					>
 						<RiLogoutCircleLine className='text-yellowBase' /> Cerrar sesión
 					</Link>

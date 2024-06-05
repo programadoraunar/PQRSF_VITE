@@ -57,7 +57,7 @@ function SolicitudDetailsDependencia() {
 				<section id='infoSolicitud' className='w-full'>
 					<InfoSolicitud data={data} />
 					<Tabla data={data} />
-					<button className='btn btn-neutral'>Neutral</button>
+					<button className='btn btn-neutral'>Cerrar</button>
 				</section>
 			</div>
 		</div>

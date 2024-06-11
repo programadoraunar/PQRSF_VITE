@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import CardInfo from '../../components/admin/CardInfo';
+import CardInfo from '../../components/admin/Profile/CardInfo';
 import Tabla from '../../components/admin/Profile/Tabla';
 import {
 	countPqrsfByStatus,

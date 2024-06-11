@@ -4,12 +4,12 @@ import { obtenerPqrsfPorFechaGrafica } from '../../../supabase/actions/getGraphi
 import Chart from 'chart.js/auto';
 import Loading from '../../ui/Loading';
 function AsignacionPorFechas() {
-	const userProfile = UseProfile();
+	/* 	const userProfile = UseProfile();
 	const chartRef = useRef(null);
 	const [loading, setLoading] = useState(false);
-	const [chartData, setChartData] = useState(null);
+	const [chartData, setChartData] = useState(null); */
 
-	useEffect(() => {
+	/* useEffect(() => {
 		if (userProfile && userProfile.idDependencia) {
 			const fetchData = async () => {
 				setLoading(true);
@@ -33,8 +33,8 @@ function AsignacionPorFechas() {
 		if (chartData) {
 			generarGrafico(chartData);
 		}
-	}, [chartData]);
-
+	}, [chartData]); */
+	/* 
 	const generarGrafico = data => {
 		const fechas = data.map(item => item.fecha_asignacion);
 		const cantidades = data.map(item => item.numero_pqrsf_asignadas);
@@ -69,16 +69,17 @@ function AsignacionPorFechas() {
 				},
 			});
 		}
-	};
+	}; */
 
-	if (!userProfile || loading) {
+	/* if (!userProfile || loading) {
 		return <Loading />;
-	}
+	} */
 
 	return (
 		<div className='bg-white my-8'>
 			<span className='text-black'>Pqrsf Que te Asignaron Segun su Fecha</span>
-			<canvas id='myChart' width='400' height='400'></canvas>
+			{/* 			<canvas id='myChart' width='400' height='400'></canvas>
+			 */}{' '}
 		</div>
 	);
 }

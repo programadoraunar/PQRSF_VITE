@@ -6,6 +6,7 @@ import {
 	RiQuestionMark,
 	RiLogoutCircleLine,
 	RiHome2Line,
+	RiLineChartLine
 } from '@remixicon/react';
 import { Link } from 'react-router-dom';
 import UseProfile from '../../hooks/UseProfile';
@@ -41,6 +42,14 @@ function SliderBar() {
 				>
 					<RiQuestionAnswerFill className='text-yellowBase' /> Solicitudes
 					Normales
+				</Link>
+			</li>
+			<li>
+				<Link
+					to='/AdminProfile/Informes'
+					className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-blue-zodiac-950 transition-colors lg:text-sm xl:text-lg'
+				>
+					<RiLineChartLine className='text-yellowBase' /> Informes
 				</Link>
 			</li>
 		</ul>

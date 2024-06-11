@@ -50,7 +50,7 @@ function Tabla() {
 							<th>Dependencia</th>
 							<th>Fecha De Envio</th>
 							<th>Estado</th>
-							<th>Anónima</th>
+							<th>Categoria</th>
 						</tr>
 					</thead>
 					<tbody>

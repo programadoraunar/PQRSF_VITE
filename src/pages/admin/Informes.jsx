@@ -12,7 +12,7 @@ function Informes() {
 			</p>
 			<div className='flex flex-col justify-center gap-3 py-5'>
 				<ExpandingButton
-					buttonText='Formulario Anónimo'
+					buttonText='Informes Generales'
 					expandedContent={<InformeGeneral />}
 				/>
 				<ExpandingButton

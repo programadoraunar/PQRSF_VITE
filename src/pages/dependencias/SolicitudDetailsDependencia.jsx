@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { obtenerDetallesPqrsfDependencia } from '../../supabase/actions/getPqrsfFuntionsDepen';
+import {
+	descargarArchivo,
+	obtenerDetallesPqrsfDependencia,
+} from '../../supabase/actions/getPqrsfFuntionsDepen';
 import InfoSolicitante from '../../components/dependencia/details/InfoSolicitante';
 import Loading from '../../components/ui/Loading';
 import InfoSolicitud from '../../components/dependencia/details/InfoSolicitud';
 import Tabla from '../../components/dependencia/details/Tabla';
 import ModalConfirmacion from '../../components/dependencia/details/ModalConfirmacion';
+import { supabase } from '../../supabase/client';
 /**
  * Componente para mostrar los detalles de una solicitud de PQRSF de una dependencia.
  * Utiliza el parámetro de URL `id` para obtener los detalles de la solicitud específica.
@@ -55,6 +59,20 @@ function SolicitudDetailsDependencia() {
 		return <p>No se encontraron datos.</p>; // Manejo del caso donde no hay datos
 	}
 
+	const handleDescargarAdjunto = async url => {
+		const { data } = supabase.storage.from('images').getPublicUrl('qr.png');
+		// Construir la URL de descarga con el parámetro ?download
+		const downloadUrl = `${data.publicUrl}?download=qr.png`;
+		console.log(downloadUrl);
+
+		// Crear un enlace temporal y hacer clic en él para iniciar la descarga
+		const link = document.createElement('a');
+		link.href = downloadUrl;
+		link.setAttribute('download', 'qr.png'); // Especificar el nombre de descarga
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+	};
 	return (
 		<div className='flex flex-col lg:flex-row lg:gap-5'>
 			{/** Condicional data.esanonima === false: Muestra el componente InfoSolicitante solo si la solicitud no es anónima. */}
@@ -63,6 +81,15 @@ function SolicitudDetailsDependencia() {
 				<section id='infoSolicitud' className='w-full'>
 					<InfoSolicitud data={data} />
 					<Tabla data={data} />
+					<button
+						className='btn'
+						onClick={() => {
+							handleDescargarAdjunto(data.urladjunto); // Asegúrate de que data.urladjunto contiene la ruta del archivo
+						}}
+					>
+						Descargar Adjunto
+					</button>
+
 					<button
 						onClick={() => setMostrarModal(true)}
 						className='btn btn-neutral'

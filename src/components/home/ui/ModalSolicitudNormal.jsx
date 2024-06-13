@@ -41,7 +41,7 @@ function ModalSolicitudNormal({
 	};
 
 	return (
-		<div className=' w-[90vw] max-w-[600px] min-h-[100px] sm:w-[550px] sm:h-[700px] md:w-[550px] lg:w-[700px] lg:h-[800px] bg-white border rounded-lg'>
+		<div className='w-full max-w-[90vw] sm:w-[550px] md:w-[600px] lg:w-[700px] xl:w-[800px] min-h-[100px] bg-white border rounded-lg'>
 			<div className='flex justify-between bg-blue-zodiac-950 py-3 px-4'>
 				<h1 className='text-white'>Resumen Solicitud</h1>
 				<button className='' onClick={onClose}>

@@ -1,4 +1,4 @@
-import React, { Children, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { obtenerDetallesPqrsfDependencia } from '../../supabase/actions/getPqrsfFuntionsDepen';
 import InfoSolicitante from '../../components/dependencia/details/InfoSolicitante';
@@ -19,9 +19,9 @@ function SolicitudDetailsDependencia() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [mostrarModal, setMostrarModal] = useState(false);
 	const handleCerrarModal = () => {
-		console.log(mostrarModal)
+		console.log(mostrarModal);
 		setMostrarModal(false);
-	}
+	};
 	/**
 	 * Efecto para obtener los detalles de la solicitud de PQRSF cuando el componente se monta o el ID cambia.
 	 */
@@ -63,11 +63,15 @@ function SolicitudDetailsDependencia() {
 				<section id='infoSolicitud' className='w-full'>
 					<InfoSolicitud data={data} />
 					<Tabla data={data} />
-					<button onClick={() => setMostrarModal(true)} className='btn btn-neutral'>Cerrar</button>
+					<button
+						onClick={() => setMostrarModal(true)}
+						className='btn btn-neutral'
+					>
+						Cerrar Solicitud
+					</button>
 				</section>
 			</div>
 			{mostrarModal && <ModalConfirmacion onClose={handleCerrarModal} />}
-			
 		</div>
 	);
 }

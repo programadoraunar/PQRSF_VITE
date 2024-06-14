@@ -9,7 +9,6 @@ function InformeGeneral() {
 	const [tipoGrafico, setTipoGrafico] = useState(null);
 
 	const fetchData = async tipo => {
-		console.log(tipo);
 		try {
 			const response = await obtenerInformeGeneral(tipo);
 			console.log(response);
@@ -32,7 +31,7 @@ function InformeGeneral() {
 				incluyen el total de Pqrsf registradas, el total de las pqrsf por tipo
 				(normal y anonima) y distribucion_tipo
 			</p>
-			<div className='flex flex-col w-1/2 gap-3'>
+			<div className='flex flex-col w-full lg:w-1/2 gap-3'>
 				<button
 					className='btn bg-yellowBase text-blue-zodiac-950 hover:bg-[#dcb716]'
 					onClick={() => handleGenerarGrafico('total')}

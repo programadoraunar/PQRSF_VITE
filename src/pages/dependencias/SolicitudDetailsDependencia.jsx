@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import {
-	descargarArchivo,
-	obtenerDetallesPqrsfDependencia,
-} from '../../supabase/actions/getPqrsfFuntionsDepen';
+import { obtenerDetallesPqrsfDependencia } from '../../supabase/actions/getPqrsfFuntionsDepen';
 import InfoSolicitante from '../../components/dependencia/details/InfoSolicitante';
 import Loading from '../../components/ui/Loading';
 import InfoSolicitud from '../../components/dependencia/details/InfoSolicitud';
@@ -60,15 +57,15 @@ function SolicitudDetailsDependencia() {
 	}
 
 	const handleDescargarAdjunto = async url => {
-		const { data } = supabase.storage.from('images').getPublicUrl('qr.png');
+		const { data } = supabase.storage.from('archivos').getPublicUrl(url);
 		// Construir la URL de descarga con el parámetro ?download
-		const downloadUrl = `${data.publicUrl}?download=qr.png`;
+		const downloadUrl = `${data.publicUrl}?download=${url}`;
 		console.log(downloadUrl);
 
 		// Crear un enlace temporal y hacer clic en él para iniciar la descarga
 		const link = document.createElement('a');
 		link.href = downloadUrl;
-		link.setAttribute('download', 'qr.png'); // Especificar el nombre de descarga
+		link.setAttribute('download', 'adjunto_pqrsf'); // Especificar el nombre de descarga
 		document.body.appendChild(link);
 		link.click();
 		document.body.removeChild(link);

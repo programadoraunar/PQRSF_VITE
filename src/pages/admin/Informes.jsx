@@ -1,7 +1,7 @@
 import React from 'react';
 import ExpandingButton from '../../components/home/ui/ExpandingButton';
 import InformeGeneral from '../../components/admin/informes/infomesGenerales/InformeGeneral';
-import InformePorDependencia from '../../components/admin/informes/InformePorDependencia';
+import InformePorDependencia from '../../components/admin/informes/InformesPorDependencia/InformePorDependencia';
 function Informes() {
 	return (
 		<div className='text-black'>

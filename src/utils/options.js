@@ -76,8 +76,8 @@ export const optionsFacultad = [
 export const optionsEstados = [
 	{ id: '1', nombre: 'Registrada' },
 	{ id: '2', nombre: 'Asignada' },
-	{ id: '3', nombre: 'En Espera' },
-	{ id: '4', nombre: 'Respondida' },
+/* 	{ id: '3', nombre: 'En Espera' }, */
+	{ id: '3', nombre: 'Respondida' },
 ];
 
 /**

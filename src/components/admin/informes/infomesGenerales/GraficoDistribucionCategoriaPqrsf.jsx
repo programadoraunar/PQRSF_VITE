@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 let myChart;
 
 function GraficoDistribucionCategoriaPqrsf({ data }) {
-	console.log(data);
 	useEffect(() => {
 		if (!Array.isArray(data) || data.length === 0) {
 			// Si los datos no son un array o están vacíos, no hacemos nada

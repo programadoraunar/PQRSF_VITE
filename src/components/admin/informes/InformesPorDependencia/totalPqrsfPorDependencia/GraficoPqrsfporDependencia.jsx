@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Chart } from 'chart.js';
-import useObtenerNombre from '../../../../utils/useObtenerNombre';
+import useObtenerNombre from '../../../../../utils/useObtenerNombre';
 const GraficoPqrsfporDependencia = ({ data }) => {
 	const { obtenerNombreDependencia } = useObtenerNombre(); // Asegúrate de usar la función correcta del hook personalizado
 	let myChart = null; // Declaración de la variable del gráfico fuera del useEffect

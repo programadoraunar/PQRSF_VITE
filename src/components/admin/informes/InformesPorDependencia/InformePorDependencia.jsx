@@ -149,7 +149,7 @@ function InformePorDependencia() {
 				>
 					Total de PQRSF por dependencia según su Estado
 				</button>
-				<div className='w-full lg:w-3/5'>{renderContent()}</div>
+				<div className='w-'>{renderContent()}</div>
 			</div>
 		</div>
 	);

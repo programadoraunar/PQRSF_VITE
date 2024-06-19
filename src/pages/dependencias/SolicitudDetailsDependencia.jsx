@@ -7,6 +7,9 @@ import InfoSolicitud from '../../components/dependencia/details/InfoSolicitud';
 import Tabla from '../../components/dependencia/details/Tabla';
 import ModalConfirmacion from '../../components/dependencia/details/ModalConfirmacion';
 import { supabase } from '../../supabase/client';
+import { Toaster, toast } from 'sonner';
+import { RiCheckDoubleFill } from '@remixicon/react';
+
 /**
  * Componente para mostrar los detalles de una solicitud de PQRSF de una dependencia.
  * Utiliza el parámetro de URL `id` para obtener los detalles de la solicitud específica.
@@ -58,6 +61,22 @@ function SolicitudDetailsDependencia() {
 
 	const handleDescargarAdjunto = async url => {
 		const { data } = supabase.storage.from('archivos').getPublicUrl(url);
+		// Verificar si la URL contiene "null"
+		if (data.publicUrl.includes('/null')) {
+			toast('Sin archivo adjunto!', {
+				description: 'La solicitud no contiene un archivo adjunto',
+				duration: 5000,
+				position: 'bottom-center',
+				unstyled: true,
+				classNames: {
+					toast:
+						'bg-[#FDF7E5] p-4 text-black font-gothicRegular rounded-lg border-l-4 border-[#FF5733]',
+					title: 'text-xl font-gothicBold',
+				},
+			});
+			console.log('No hay archivo adjunto.');
+			return;
+		}
 		// Construir la URL de descarga con el parámetro ?download
 		const downloadUrl = `${data.publicUrl}?download=${url}`;
 		console.log(downloadUrl);
@@ -96,6 +115,11 @@ function SolicitudDetailsDependencia() {
 				</section>
 			</div>
 			{mostrarModal && <ModalConfirmacion onClose={handleCerrarModal} />}
+			<Toaster
+				icons={{
+					success: <RiCheckDoubleFill />,
+				}}
+			/>
 		</div>
 	);
 }

@@ -34,10 +34,10 @@ export const obtenerPqrsPorDependencia = async idDependencia => {
  * @param {number} idRadicado - El ID de radicado de la PQRSF para la cual se desean obtener los detalles.
  * @returns {Promise<{ data: any, error: any }>} Un objeto que contiene los datos de los detalles obtenidos y cualquier error que haya ocurrido.
  */
-export const obtenerDetallesPqrsfDependencia = async idRadicado => {
+export const obtenerDetallesPqrsf = async idRadicado => {
 	try {
 		const { data, error } = await supabase.rpc(
-			'obtener_detalle_pqrsf_dependencia',
+			'obtener_detalle_pqrsf',
 			{
 				id_radicado_param: idRadicado,
 			},

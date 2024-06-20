@@ -6,6 +6,7 @@ import { actualizarEstadoSolicitud } from '../../../supabase/actions/postPqrsFun
 import { Toaster, toast } from 'sonner';
 import { RiCheckDoubleFill } from '@remixicon/react';
 import { formatearFecha } from '../../../utils/dateUtils';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * Componente de tabla para mostrar una lista de solicitudes anónimas.
@@ -16,7 +17,7 @@ import { formatearFecha } from '../../../utils/dateUtils';
  * @returns {JSX.Element} The rendered component.
  */
 function Tabla({ datosSolicitudes, isLoading }) {
-	console.log(datosSolicitudes);
+	const navigate = useNavigate();
 	const [solicitudes, setSolicitudes] = useState(datosSolicitudes);
 	useEffect(() => {
 		setSolicitudes(datosSolicitudes);
@@ -86,6 +87,7 @@ function Tabla({ datosSolicitudes, isLoading }) {
 						{tieneFechaRespuesta && <th>Fecha de Respuesta</th>}
 						<th>Estado</th>
 						<th>Asignar</th>
+						<th>Detalles</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -135,6 +137,18 @@ function Tabla({ datosSolicitudes, isLoading }) {
 											className='btn'
 										>
 											Asignar
+										</button>
+									</td>
+									<td className='text-sm'>
+										<button
+											className='btn'
+											onClick={() =>
+												navigate(
+													`/AdminProfile/solicitudDetails/${solicitud.ret_id_radicado}`,
+												)
+											}
+										>
+											Detalles
 										</button>
 									</td>
 								</tr>

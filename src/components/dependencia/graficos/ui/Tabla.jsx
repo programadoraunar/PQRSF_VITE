@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { obtenerPqrsPorDependencia } from '../../../../supabase/actions/getPqrsfFuntionsDepen';
 import { useNavigate } from 'react-router-dom';
+import { formatearFecha } from '../../../../utils/dateUtils';
 
 function Tabla({ idDependencia }) {
 	const navigate = useNavigate();
@@ -37,13 +38,10 @@ function Tabla({ idDependencia }) {
 				<tbody className='bg-white'>
 					{/* Filas */}
 					{datos.map((item, index) => (
-						<tr
-							key={index}
-							className=' hover:bg-blue-zodiac-100'
-						>
+						<tr key={index} className=' hover:bg-blue-zodiac-100'>
 							<td>{item.id_radicado}</td>
 							<td>{item.tipo_solicitud_pqrs}</td>
-							<td>{item.fecha_asignacion}</td>
+							<td>{formatearFecha(item.fecha_asignacion)}</td>
 							<td>{item.descripcion}</td>
 							<td>{item.esanonima ? 'Anónima' : 'Normal'}</td>
 							<td>

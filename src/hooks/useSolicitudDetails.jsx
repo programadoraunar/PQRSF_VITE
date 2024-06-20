@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getPqrsfDetails } from '../../src/supabase/actions/pqrsfFunctions';
+import { obtenerDetallesPqrsf } from '../../src/supabase/actions/getPqrsfFuntionsDepen';
 
 const useSolicitudDetails = id => {
 	const [data, setData] = useState(null);
@@ -7,7 +7,7 @@ const useSolicitudDetails = id => {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const { data, error } = await getPqrsfDetails(id);
+			const { data, error } = await obtenerDetallesPqrsf(id);
 			console.log(data);
 			if (data) {
 				setData(data[0]);

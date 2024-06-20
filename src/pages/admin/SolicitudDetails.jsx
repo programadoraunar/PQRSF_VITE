@@ -9,7 +9,6 @@ import InfoSolicitud from '../../components/admin/details/InfoSolicitud ';
 function SolicitudDetails() {
 	const { id } = useParams();
 	const { data, error } = useSolicitudDetails(id);
-	console.log(data);
 	if (error) {
 		return <div>error</div>;
 	}
@@ -20,7 +19,7 @@ function SolicitudDetails() {
 
 	return (
 		<div className='flex flex-col lg:flex-row lg:gap-5'>
-			<InfoSolicitante data={data} />
+			{data.esanonima === false && <InfoSolicitante data={data} />}
 			<div className='flex flex-col items-center'>
 				<section id='infoSolicitud' className='w-full'>
 					<InfoSolicitud data={data} />

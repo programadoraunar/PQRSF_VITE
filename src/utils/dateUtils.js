@@ -16,6 +16,10 @@ import { format } from 'date-fns';
  * @returns {string} La fecha formateada en un formato legible.
  */
 export const formatearFecha = dateString => {
+  if (!dateString) {
+    return 'No hay Fecha';
+  }
+
   const date = new Date(dateString);
 
   // Verificar si la cadena de fecha incluye tiempo

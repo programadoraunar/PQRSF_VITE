@@ -16,26 +16,26 @@ function Table({ data }) {
 						<th>Fecha Respuesta</th>
 						<th>Descripcion</th>
 						<th>Dependecia</th>
-						<th>Canal</th>
+						{data.id_canal && <td>Canal</td>}
 					</tr>
 				</thead>
 				<tbody>
 					{/* row 1 */}
 					<tr className=' bg-white'>
-						<td>{formatearFecha(data.fecha_envio)}</td>
+						<td>{data.fecha_envio}</td>
 						<td>
 							{data.fecha_asignacion
-								? formatearFecha(data.fecha_asignacion)
+								? data.fecha_asignacion
 								: 'Fecha no asignada'}
 						</td>
 						<td>
 							{data.fecha_respuesta
-								? formatearFecha(data.fecha_respuesta)
+								? data.fecha_respuesta
 								: 'Fecha no asignada'}
 						</td>
 						<td>{data.descripcion}</td>
 						<td>{obtenerNombreDependencia(data.id_dependencia)}</td>
-						<td>{obtenerNombreCanal(data.id_canal)}</td>
+						{data.id_canal && <td>{obtenerNombreCanal(data.id_canal)}</td>}
 					</tr>
 				</tbody>
 			</table>

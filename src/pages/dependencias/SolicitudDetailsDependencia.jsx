@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { obtenerDetallesPqrsfDependencia } from '../../supabase/actions/getPqrsfFuntionsDepen';
 import InfoSolicitante from '../../components/dependencia/details/InfoSolicitante';
 import Loading from '../../components/ui/Loading';
 import InfoSolicitud from '../../components/dependencia/details/InfoSolicitud';
@@ -9,6 +8,7 @@ import ModalConfirmacion from '../../components/dependencia/details/ModalConfirm
 import { supabase } from '../../supabase/client';
 import { Toaster, toast } from 'sonner';
 import { RiCheckDoubleFill } from '@remixicon/react';
+import useSolicitudDetails from '../../hooks/useSolicitudDetails';
 
 /**
  * Componente para mostrar los detalles de una solicitud de PQRSF de una dependencia.
@@ -19,48 +19,24 @@ import { RiCheckDoubleFill } from '@remixicon/react';
  */
 function SolicitudDetailsDependencia() {
 	const { id } = useParams();
-	const [data, setData] = useState(null);
-	const [isLoading, setIsLoading] = useState(false);
+	const { data, error } = useSolicitudDetails(id);
+
 	const [mostrarModal, setMostrarModal] = useState(false);
 	const handleCerrarModal = () => {
 		console.log(mostrarModal);
 		setMostrarModal(false);
 	};
-	/**
-	 * Efecto para obtener los detalles de la solicitud de PQRSF cuando el componente se monta o el ID cambia.
-	 */
-	useEffect(() => {
-		/**
-		 * Función para obtener los detalles de la solicitud de PQRSF.
-		 */
-		async function fetchData() {
-			try {
-				setIsLoading(true);
-				const nuevosDatos = await obtenerDetallesPqrsfDependencia(id);
-				setData(nuevosDatos.data[0]); // Suponiendo que quieres el primer elemento
-				console.log(nuevosDatos.data[0]);
-			} catch (error) {
-				console.error(
-					'Error al obtener los últimos 7 registros:',
-					error.message,
-				);
-			} finally {
-				setIsLoading(false);
-			}
-		}
-		fetchData();
-	}, [id]);
-
-	if (isLoading) {
-		return <Loading />;
-	}
 
 	if (!data) {
-		return <p>No se encontraron datos.</p>; // Manejo del caso donde no hay datos
+		return <Loading />;
+	}
+	if (error) {
+		return <div>error</div>;
 	}
 
 	const handleDescargarAdjunto = async url => {
 		const { data } = supabase.storage.from('archivos').getPublicUrl(url);
+		console.log(data);
 		// Verificar si la URL contiene "null"
 		if (data.publicUrl.includes('/null')) {
 			toast('Sin archivo adjunto!', {

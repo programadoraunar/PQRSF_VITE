@@ -2,6 +2,7 @@ import React from 'react';
 import { RiListCheck, RiProgress1Line, RiTimeZoneFill } from '@remixicon/react';
 import useObtenerNombre from '../../../utils/useObtenerNombre';
 import PropTypes from 'prop-types';
+import { formatearFecha } from '../../../utils/dateUtils';
 
 const InfoSolicitud = ({ data }) => {
 	const { obtenerNombreEstado } = useObtenerNombre();
@@ -48,7 +49,7 @@ const InfoSolicitud = ({ data }) => {
 							<h3 className='text-lg'>Fecha De Asignacion</h3>
 						</div>
 						<p className='text-3xl font-gothicBold'>
-							{data.fecha_asignacion || 'Pendiente'}
+							{formatearFecha(data.fecha_asignacion) || 'Pendiente'}
 						</p>
 
 						<p className='text-blue-500'>Fecha cuando se asigno</p>

@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import useObtenerNombre from '../../../utils/useObtenerNombre';
+import { formatearFecha } from '../../../utils/dateUtils';
+
 function Tabla({ data }) {
 	const { obtenerNombreDependencia, obtenerNombreCanal } = useObtenerNombre();
 	return (
@@ -23,12 +25,12 @@ function Tabla({ data }) {
 						<td>{data.fecha_envio}</td>
 						<td>
 							{data.fecha_asignacion
-								? data.fecha_asignacion
+								? formatearFecha(data.fecha_asignacion)
 								: 'Fecha no asignada'}
 						</td>
 						<td>
 							{data.fecha_respuesta
-								? data.fecha_respuesta
+								? formatearFecha(data.fecha_respuesta)
 								: 'Fecha no asignada'}
 						</td>
 						<td>{data.descripcion}</td>

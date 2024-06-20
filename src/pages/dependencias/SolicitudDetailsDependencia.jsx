@@ -114,7 +114,9 @@ function SolicitudDetailsDependencia() {
 					</button>
 				</section>
 			</div>
-			{mostrarModal && <ModalConfirmacion onClose={handleCerrarModal} />}
+			{mostrarModal && (
+				<ModalConfirmacion onClose={handleCerrarModal} idPqrsf={id} />
+			)}
 			<Toaster
 				icons={{
 					success: <RiCheckDoubleFill />,

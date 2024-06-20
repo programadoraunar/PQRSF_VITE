@@ -57,7 +57,7 @@ const useObtenerNombre = () => {
 		const colores = {
 			1: 'bg-blue-zodiac-500/20',
 			2: 'bg-yellow-500/10',
-			3: 'orange',
+			3: 'bg-green-500/50',
 			4: 'green',
 		};
 		return colores[id] || 'gray';

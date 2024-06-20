@@ -5,6 +5,8 @@ import useObtenerNombre from '../../../utils/useObtenerNombre';
 import { actualizarEstadoSolicitud } from '../../../supabase/actions/postPqrsFuntions';
 import { Toaster, toast } from 'sonner';
 import { RiCheckDoubleFill } from '@remixicon/react';
+import { formatearFecha } from '../../../utils/dateUtils';
+
 /**
  * Componente de tabla para mostrar una lista de solicitudes anónimas.
  *
@@ -14,6 +16,7 @@ import { RiCheckDoubleFill } from '@remixicon/react';
  * @returns {JSX.Element} The rendered component.
  */
 function Tabla({ datosSolicitudes, isLoading }) {
+	console.log(datosSolicitudes);
 	const [solicitudes, setSolicitudes] = useState(datosSolicitudes);
 	useEffect(() => {
 		setSolicitudes(datosSolicitudes);
@@ -104,19 +107,21 @@ function Tabla({ datosSolicitudes, isLoading }) {
 										{obtenerNombreDependencia(solicitud.ret_id_dependencia)}
 									</td>
 									<td className='text-sm'>{solicitud.ret_descripcion}</td>
-									<td className='text-sm'>{solicitud.ret_fecha_envio}</td>
+									<td className='text-sm'>
+										{formatearFecha(solicitud.ret_fecha_envio)}
+									</td>
 									{tieneFechaAsignacion && (
 										<td className='text-sm'>
 											{solicitud.ret_fecha_asignacion
-												? solicitud.ret_fecha_asignacion
+												? formatearFecha(solicitud.ret_fecha_asignacion)
 												: 'No Hay Fecha'}
 										</td>
 									)}
 									{tieneFechaRespuesta && (
 										<td className='text-sm'>
 											{solicitud.ret_fecha_respuesta
-												? solicitud.ret_fecha_respuesta
-												: 'N/A'}
+												? formatearFecha(solicitud.ret_fecha_respuesta)
+												: 'No Hay Fecha'}
 										</td>
 									)}
 									<td

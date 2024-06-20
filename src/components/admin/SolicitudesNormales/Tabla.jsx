@@ -6,6 +6,7 @@ import { RiCheckDoubleFill } from '@remixicon/react';
 import { actualizarEstadoSolicitud } from '../../../supabase/actions/postPqrsFuntions';
 import useObtenerNombre from '../../../utils/useObtenerNombre';
 import { useNavigate } from 'react-router-dom';
+import { formatearFecha } from '../../../utils/dateUtils';
 
 /**
  * Componente de tabla para mostrar solicitudes.
@@ -108,18 +109,20 @@ function Tabla({ datosSolicitudes, isLoading }) {
 										{obtenerNombreDependencia(solicitud.ret_id_dependencia)}
 									</td>
 									<td className='text-sm'>{solicitud.ret_descripcion}</td>
-									<td className='text-sm'>{solicitud.ret_fecha_envio}</td>
+									<td className='text-sm'>
+										{formatearFecha(solicitud.ret_fecha_envio)}
+									</td>
 									{tieneFechaAsignacion && (
 										<td className='text-sm'>
 											{solicitud.ret_fecha_asignacion
-												? solicitud.ret_fecha_asignacion
+												? formatearFecha(solicitud.ret_fecha_asignacion)
 												: 'Sin Fecha'}
 										</td>
 									)}
 									{tieneFechaRespuesta && (
 										<td className='text-sm '>
 											{solicitud.ret_fecha_respuesta
-												? solicitud.ret_fecha_respuesta
+												? formatearFecha(solicitud.ret_fecha_respuesta)
 												: 'N/A'}
 										</td>
 									)}

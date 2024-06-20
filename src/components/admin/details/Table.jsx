@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import useObtenerNombre from '../../../utils/useObtenerNombre';
+import { formatearFecha } from '../../../utils/dateUtils';
 
 function Table({ data }) {
 	const { obtenerNombreDependencia, obtenerNombreCanal } = useObtenerNombre();
@@ -21,15 +22,15 @@ function Table({ data }) {
 				<tbody>
 					{/* row 1 */}
 					<tr className=' bg-white'>
-						<td>{data.fecha_envio}</td>
+						<td>{formatearFecha(data.fecha_envio)}</td>
 						<td>
 							{data.fecha_asignacion
-								? data.fecha_asignacion
+								? formatearFecha(data.fecha_asignacion)
 								: 'Fecha no asignada'}
 						</td>
 						<td>
 							{data.fecha_respuesta
-								? data.fecha_respuesta
+								? formatearFecha(data.fecha_respuesta)
 								: 'Fecha no asignada'}
 						</td>
 						<td>{data.descripcion}</td>

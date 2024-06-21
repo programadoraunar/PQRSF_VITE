@@ -34,15 +34,11 @@ function Consulta() {
 
 	const onSubmit = async datos => {
 		const numeroRadicado = datos.radicado;
-		console.log(numeroRadicado);
 		setIsLoading(true); // Establecer isLoading en true antes de realizar la consulta
 		try {
-			const { data, error } = await supabase.rpc('get_user_pqrsf', {
+			const { data } = await supabase.rpc('get_user_pqrsf', {
 				radicado_id: numeroRadicado,
 			});
-
-			console.log('Respuesta de Supabase:', { data, error });
-
 			setDataConsulta(data);
 		} catch (err) {
 			console.error('Error inesperado:', err);

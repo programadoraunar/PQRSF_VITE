@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { obtenerUltimos7Registros } from '../../../supabase/actions/pqrsfFunctions';
 import Loading from '../../ui/Loading';
 import useObtenerNombre from '../../../utils/useObtenerNombre';
-
+import { formatearFecha } from '../../../utils/dateUtils';
 /**
  * Componente de tabla que muestra los últimos registros.
  * @component
@@ -59,7 +59,7 @@ function Tabla() {
 								<tr key={dato.id_pqrsf}>
 									<th>{index + 1}</th>
 									<td>{obtenerNombreDependencia(dato.id_dependencia)}</td>
-									<td>{dato.fecha_envio}</td>
+									<td>{formatearFecha(dato.fecha_envio)}</td>
 									<td
 										className={`${obtenerColorEstado(dato.id_estado)} text-sm`}
 									>

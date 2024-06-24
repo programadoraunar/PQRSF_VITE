@@ -135,6 +135,10 @@ function Tabla({ datosSolicitudes, isLoading }) {
 										<button
 											onClick={() => asignar(solicitud.ret_id_radicado, 2)}
 											className='btn'
+											disabled={
+												solicitud.ret_id_estado === 2 ||
+												solicitud.ret_id_estado === 3
+											}
 										>
 											Asignar
 										</button>

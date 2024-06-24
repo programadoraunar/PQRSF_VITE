@@ -5,6 +5,9 @@ import Loading from '../../components/ui/Loading';
 import useSolicitudDetails from '../../hooks/useSolicitudDetails';
 import InfoSolicitante from '../../components/admin/details/InfoSolicitante';
 import InfoSolicitud from '../../components/admin/details/InfoSolicitud ';
+import { Toaster } from 'sonner';
+import { RiCheckDoubleFill } from '@remixicon/react';
+import { handleDescargarAdjunto } from '../../utils/utilsAdminyDepen/utils';
 
 function SolicitudDetails() {
 	const { id } = useParams();
@@ -24,8 +27,21 @@ function SolicitudDetails() {
 				<section id='infoSolicitud' className='w-full'>
 					<InfoSolicitud data={data} />
 					<Table data={data} />
+					<button
+						className='btn'
+						onClick={() => {
+							handleDescargarAdjunto(data.urladjunto); // Asegúrate de que data.urladjunto contiene la ruta del archivo
+						}}
+					>
+						Descargar Adjunto
+					</button>
 				</section>
 			</div>
+			<Toaster
+				icons={{
+					success: <RiCheckDoubleFill />,
+				}}
+			/>
 		</div>
 	);
 }

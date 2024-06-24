@@ -4,8 +4,8 @@
  * Actualmente incluye una función para manejar la descarga de archivos adjuntos desde el almacenamiento de Supabase.
  */
 
-import { toast } from 'react-hot-toast';
-import { supabase } from './supabaseClient'; // Asegúrate de ajustar la ruta a tu configuración de Supabase
+import { toast } from 'sonner';
+import { supabase } from '../../supabase/client';
 
 /**
  * Maneja la descarga de un archivo adjunto desde Supabase Storage.

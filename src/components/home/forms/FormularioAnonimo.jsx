@@ -143,7 +143,6 @@ function FormularioAnonimo() {
 						throw new Error('Error al subir el archivo:', archivoError);
 					}
 					urlArchivo = `public/${nombreArchivoUnico}`;
-					console.log(urlArchivo);
 				}
 
 				const resultado = await registrarSolicitudAnonima(
@@ -169,7 +168,6 @@ function FormularioAnonimo() {
 					description: valoresFormulario.description,
 					sede: valoresFormulario.sede,
 				});
-				console.log(file);
 				sendEmail();
 			} catch (err) {
 				console.error('Error durante el envío de la solicitud:', err);
@@ -216,7 +214,6 @@ function FormularioAnonimo() {
 					className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer bg-white'
 					{...register('dependencia')}
 					onChange={e => {
-						console.log('Valor seleccionado:', e.target.value);
 						setValue('dependencia', e.target.value);
 					}}
 				>
@@ -236,7 +233,6 @@ function FormularioAnonimo() {
 					className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer bg-white'
 					{...register('sede')}
 					onChange={e => {
-						console.log('Valor seleccionado:', e.target.value);
 						setValue('sede', e.target.value);
 					}}
 				>

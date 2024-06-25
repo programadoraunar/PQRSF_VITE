@@ -146,7 +146,6 @@ function FormularioNormal() {
 						throw new Error('Error al subir el archivo:', archivoError);
 					}
 					urlArchivo = `public/${nombreArchivoUnico}`;
-					console.log(urlArchivo);
 				}
 
 				if (data.tipoSolicitante === 'Docente') {
@@ -168,9 +167,7 @@ function FormularioNormal() {
 							sede,
 							urlArchivo,
 						);
-						console.log(res);
 						const dataRadicado = await obtnerUltimoRadicado();
-						console.log(dataRadicado);
 						const fechaFormateada = new Date(
 							dataRadicado.fecha_hora_radicacion,
 						).toLocaleString('es-CO', { timeZone: 'America/Bogota' });
@@ -200,11 +197,9 @@ function FormularioNormal() {
 							sede,
 							urlArchivo,
 						);
-						console.log(res);
 
 						// Aquí puedes realizar operaciones adicionales después de registrar la solicitud normal
 						const dataRadicado = await obtnerUltimoRadicado();
-						console.log(dataRadicado);
 						const fechaFormateada = new Date(
 							dataRadicado.fecha_hora_radicacion,
 						).toLocaleString('es-CO', { timeZone: 'America/Bogota' });
@@ -279,7 +274,6 @@ function FormularioNormal() {
 								className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer bg-white'
 								{...register('tipoIdentificacion')}
 								onChange={e => {
-									console.log('Valor seleccionado:', e.target.value);
 									setValue('tipoIdentificacion', e.target.value);
 								}}
 							>
@@ -433,10 +427,6 @@ function FormularioNormal() {
 								className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer bg-white'
 								{...register('tipoSolicitud')}
 								onChange={e => {
-									console.log(
-										'Valor seleccionado tipoSolicitud:',
-										e.target.value,
-									);
 									setValue('tipoSolicitud', e.target.value);
 								}}
 							>
@@ -458,10 +448,6 @@ function FormularioNormal() {
 								className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer bg-white'
 								{...register('dependencia')}
 								onChange={e => {
-									console.log(
-										'Valor seleccionado dependencia:',
-										e.target.value,
-									);
 									setValue('dependencia', e.target.value);
 								}}
 							>
@@ -484,7 +470,6 @@ function FormularioNormal() {
 								className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer bg-white'
 								{...register('canal')}
 								onChange={e => {
-									console.log('Valor seleccionado:', e.target.value);
 									setValue('canal', e.target.value);
 								}}
 							>
@@ -505,7 +490,6 @@ function FormularioNormal() {
 								className='w-full text-blue-zodiac-900 border-2 py-2 hover:border-blue-zodiac-950 cursor-pointer bg-white'
 								{...register('sede')}
 								onChange={e => {
-									console.log('Valor seleccionado:', e.target.value);
 									setValue('sede', e.target.value);
 								}}
 							>

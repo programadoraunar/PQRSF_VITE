@@ -6,6 +6,7 @@ import { Chart } from 'chart.js';
 function GraficoEstadoPorDependencia({ data }) {
 	const { obtenerNombreDependencia, obtenerNombreEstado } = useObtenerNombre();
 	let myChart = null;
+
 	useEffect(() => {
 		if (
 			!data ||
@@ -19,22 +20,33 @@ function GraficoEstadoPorDependencia({ data }) {
 			myChart.destroy();
 		}
 
+		// Agrupar los datos por dependencia
+		const groupedData = data.resultado.reduce((acc, item) => {
+			const dependencia = obtenerNombreDependencia(item.dependencia);
+			if (!acc[dependencia]) {
+				acc[dependencia] = { 1: 0, 2: 0, 3: 0 };
+			}
+			acc[dependencia][item.estado] += item.total_pqrsf;
+			return acc;
+		}, {});
+
+		const labels = Object.keys(groupedData);
+		const datasetRegistrada = labels.map(label => groupedData[label][1]);
+		const datasetAsignada = labels.map(label => groupedData[label][2]);
+		const datasetRespondida = labels.map(label => groupedData[label][3]);
+
 		const ctx = document
 			.getElementById('graficoEstadoPorDependencia')
 			.getContext('2d');
 		myChart = new Chart(ctx, {
 			type: 'bar',
 			data: {
-				labels: data.resultado.map(item =>
-					obtenerNombreDependencia(item.dependencia),
-				),
+				labels,
 				datasets: [
 					{
 						// Estado Registrada
 						label: obtenerNombreEstado(1),
-						data: data.resultado
-							.filter(item => item.estado === 1)
-							.map(item => item.total_pqrsf),
+						data: datasetRegistrada,
 						backgroundColor: 'rgba(255, 99, 132, 0.6)',
 						borderColor: 'rgba(255, 99, 132, 1)',
 						borderWidth: 1,
@@ -42,9 +54,7 @@ function GraficoEstadoPorDependencia({ data }) {
 					{
 						// Estado Asignada
 						label: obtenerNombreEstado(2),
-						data: data.resultado
-							.filter(item => item.estado === 2)
-							.map(item => item.total_pqrsf),
+						data: datasetAsignada,
 						backgroundColor: 'rgba(54, 162, 235, 0.6)',
 						borderColor: 'rgba(54, 162, 235, 1)',
 						borderWidth: 1,
@@ -52,9 +62,7 @@ function GraficoEstadoPorDependencia({ data }) {
 					{
 						// Estado respondida
 						label: obtenerNombreEstado(3),
-						data: data.resultado
-							.filter(item => item.estado === 3)
-							.map(item => item.total_pqrsf),
+						data: datasetRespondida,
 						backgroundColor: 'rgba(75, 192, 192, 0.6)',
 						borderColor: 'rgba(75, 192, 192, 1)',
 						borderWidth: 1,
@@ -86,6 +94,7 @@ function GraficoEstadoPorDependencia({ data }) {
 		<canvas id='graficoEstadoPorDependencia' width='500' height='400'></canvas>
 	);
 }
+
 GraficoEstadoPorDependencia.propTypes = {
 	data: PropTypes.shape({
 		resultado: PropTypes.arrayOf(
